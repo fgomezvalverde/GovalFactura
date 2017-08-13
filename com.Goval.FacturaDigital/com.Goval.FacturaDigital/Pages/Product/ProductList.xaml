@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="com.Goval.FacturaDigital.Pages.Product.ProductList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Agregar" Order="Primary" Icon="icon.png" Text="Agregar" Priority="0" Clicked="AddProduct_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="ProductListView" ItemSelected="ProductListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Code}" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" HorizontalOptions="CenterAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" HorizontalOptions="EndAndExpand"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

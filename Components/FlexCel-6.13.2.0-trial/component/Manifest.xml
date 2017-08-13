@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="FlexCel">
+  <name>TMS FlexCel Studio for .NET TRIAL</name>
+  <publisher>tmssoftware.com</publisher>
+  <publisher-url>http://www.tmssoftware.com/site/flexcelnet.asp</publisher-url>
+  <version>6.13.2.0</version>
+  <summary>Manipulate Excel files, create reports based on templates, and export Excel files to Pdf and HTML.</summary>
+  <samples>
+    <sample id="Android">
+      <name>Android Examples. A solution with examples for Android apps.</name>
+      <summary>Android Examples. A solution with examples for Android apps.</summary>
+    </sample>
+    <sample id="iOS.UnifiedApi">
+      <name>iOS Unified Examples. A solution with examples for iOS unified api apps.</name>
+      <summary>iOS Unified Examples. A solution with examples for iOS unified api apps.</summary>
+    </sample>
+    <sample id="OSX.UnifiedApi">
+      <name>OSX Unified Examples. A solution with examples for OSX unified api apps.</name>
+      <summary>OSX Unified Examples. A solution with examples for OSX unified api apps.</summary>
+    </sample>
+    <sample id="MonoTools">
+      <name>OSX Tools. You can get those tools precompiled from our webpage.</name>
+      <summary>OSX Tools. You can get those tools precompiled from our webpage.</summary>
+    </sample>
+  </samples>
+</component>

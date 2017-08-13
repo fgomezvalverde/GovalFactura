@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"[]>
+<plist version="1.0">
+  <dict>
+    <key>CFBundleName</key>
+    <string>ApiMate</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.8</string>
+    <key>NSMainNibFile</key>
+    <string>MainMenu</string>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>CFBundleShortVersionString</key>
+    <string>6.13.2.0</string>
+    <key>CFBundleIconFile</key>
+    <string>App</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.developer-tools</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>tms software</string>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xls</string>
+          <string>xlsx</string>
+          <string>xlsm</string>
+          <string>xlt</string>
+          <string>xltx</string>
+          <string>xltm</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Viewer</string>
+        <key>CFBundleTypeName</key>
+        <string>Excel files</string>
+        <key>NSDocumentClass</key>
+        <string>ApiMateDoc</string>
+        <key>CFBundleTypeIconFile</key>
+        <string>Resources/App</string>
+        <key>LSItemContentTypes</key>
+        <array>
+          <string>com.microsoft.excel.xls</string>
+          <string>com.tms.flexcel.xlsx</string>
+          <string>org.openxmlformats.spreadsheetml.sheet</string>
+        </array>
+        <key>LSHandlerRank</key>
+        <string>Alternate</string>
+      </dict>
+    </array>
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+      <dict>
+        <key>UTTypeTagSpecification</key>
+        <dict>
+          <key>public.filename-extension</key>
+          <array>
+            <string>xlsx</string>
+          </array>
+          <key>public.mime-type</key>
+          <array>
+            <string>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</string>
+          </array>
+        </dict>
+        <key>UTTypeDescription</key>
+        <string>Excel xlsx file</string>
+        <key>UTTypeIdentifier</key>
+        <string>com.tms.flexcel.xlsx</string>
+        <key>UTTypeConformsTo</key>
+        <array>
+          <string>public.data</string>
+        </array>
+      </dict>
+    </array>
+    <key>CFBundleVersion</key>
+    <string>6.13.2.0</string>
+    <key>CFBundleDisplayName</key>
+    <string>APIMate for OSX</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.tmssoftware.apimate</string>
+  </dict>
+</plist>

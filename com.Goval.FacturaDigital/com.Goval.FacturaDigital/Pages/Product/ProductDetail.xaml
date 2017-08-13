@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="com.Goval.FacturaDigital.Pages.Product.ProductDetail">
+    <ContentPage.Content>
+        <StackLayout Spacing="15">
+            <Label FontSize="Large" FontAttributes="Bold" Text="Modificar Producto" HorizontalOptions="CenterAndExpand" ></Label>
+            <TableView>
+                <TableView.Root>
+                    <TableSection>
+                        <EntryCell
+                           Label="Codigo"
+                           Text="{Binding Code, Mode=TwoWay}"
+                            Placeholder="Nuevo Codigo"
+                            IsEnabled="False"
+                          >
+                        </EntryCell>
+
+                        <EntryCell 
+                          Label="Descripcion"
+                          Text="{Binding Description, Mode=TwoWay}"
+                                   Placeholder="Nueva Descripcion"
+                          >
+                        </EntryCell>
+
+                        <EntryCell 
+                          Label="Precio"
+                          Text="{Binding Price, Mode=TwoWay}"
+                          Placeholder="Nuevo Precio"
+                          Keyboard="Numeric"
+                          >
+                        </EntryCell>
+                    </TableSection>
+                </TableView.Root>
+            </TableView>
+            <Button Text="Guardar" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Eliminar" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
