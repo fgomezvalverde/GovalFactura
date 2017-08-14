@@ -15,5 +15,8 @@ namespace com.Goval.FacturaDigital.Model
         public string Code { get; set; }
         public string Description { get; set; }
         public double Price { get; set; } = 0;
+
+        // This is to assign to a Client
+        public Boolean IsUsed { get; set; }
     }
 }

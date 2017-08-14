@@ -12,5 +12,10 @@ namespace com.Goval.FacturaDigital.Model
     [AddINotifyPropertyChangedInterface]
     public class Client
     {
+        public string ClientId { get; set; }
+
+        public string Name { get; set; }
+
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

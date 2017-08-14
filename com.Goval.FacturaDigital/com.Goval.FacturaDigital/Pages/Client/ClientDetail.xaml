@@ -3,8 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="com.Goval.FacturaDigital.Pages.Client.ClientDetail">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+        <StackLayout Spacing="15">
+            <Label FontSize="Large" FontAttributes="Bold" Text="Modificar Cliente" HorizontalOptions="CenterAndExpand" ></Label>
+            <TableView>
+                <TableView.Root>
+                    <TableSection>
+                        <EntryCell
+                           Label="Codigo de Client"
+                           Text="{Binding ClientId, Mode=TwoWay}"
+                            Placeholder="Nuevo Codigo"
+                            IsEnabled="False"
+                          >
+                        </EntryCell>
+
+                        <EntryCell 
+                          Label="Nombre"
+                          Text="{Binding Name, Mode=TwoWay}"
+                                   Placeholder="Nombre"
+                          >
+                        </EntryCell>
+                    </TableSection>
+                </TableView.Root>
+            </TableView>
+
+            <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="ProductListView" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Code}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                <Switch Grid.Row="0" Grid.Column="2" IsToggled="{Binding IsUsed}" VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="Guardar" Clicked="SaveClient_Clicked" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Eliminar" Clicked="DeleteClient_Clicked" HorizontalOptions="FillAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

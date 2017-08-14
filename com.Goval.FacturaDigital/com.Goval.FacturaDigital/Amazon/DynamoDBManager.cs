@@ -53,6 +53,6 @@ namespace com.Goval.FacturaDigital.Amazon
             var search = DDB_CONTEXT.ScanAsync<T>(conditions);
             return await search.GetNextSetAsync();
         }
-       
+
     }
 }

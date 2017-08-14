@@ -21,11 +21,11 @@ namespace com.Goval.FacturaDigital.Pages.Client
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            /*var clientList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Client>();
+            var clientList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Client>();
             if (clientList != null || clientList.Count != 0)
             {
-                //ProductListView.ItemsSource = clientList;
-            }*/
+                ClientListView.ItemsSource = clientList;
+            }
         }
 
         private void AddClient_Clicked(object sender, EventArgs e)

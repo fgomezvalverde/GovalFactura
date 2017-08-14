@@ -21,9 +21,9 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Code}" HorizontalOptions="StartAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" HorizontalOptions="CenterAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" HorizontalOptions="EndAndExpand"/>
+                                <Label Grid.Row="0" VerticalOptions="Center" Grid.Column="0" Text="{Binding Code}" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0" VerticalOptions="Center" Grid.Column="1" Text="{Binding Description}" HorizontalOptions="CenterAndExpand"/>
+                                <Label Grid.Row="0" VerticalOptions="Center" Grid.Column="2" Text="{Binding Price}" HorizontalOptions="EndAndExpand"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
