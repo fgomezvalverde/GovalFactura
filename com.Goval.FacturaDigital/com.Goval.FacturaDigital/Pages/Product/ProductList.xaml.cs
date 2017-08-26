@@ -16,16 +16,36 @@ namespace com.Goval.FacturaDigital.Pages.Product
         public ProductList()
         {
             InitializeComponent();
+            
         }
-
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+
+            if (App.AdminPrivilegies && this.ToolbarItems.Count ==0)
+            {
+                ToolbarItem item = new ToolbarItem
+                {
+                    Order = ToolbarItemOrder.Primary,
+                    Icon = "ic_action_add.png",
+                    Text = "Agregar",
+                    Priority = 0,
+
+                };
+                item.Clicked += AddProduct_Clicked;
+                this.ToolbarItems.Add(item);
+            }
+
             var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
-            if (productList != null || productList.Count != 0)
+            if (productList != null && productList.Count != 0)
             {
                  ProductListView.ItemsSource = productList;
             }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
 
         private void AddProduct_Clicked(object sender, EventArgs e)

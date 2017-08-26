@@ -23,12 +23,14 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
 {
     public class ReportingService : IReportingService
     {
+        string fileName = "FacturaGoval.xlsx";
+
         #region SpecialLogic
         private XlsFile OpenFile()
         {
             XlsFile reportFile = new XlsFile(true);
 
-            using (var template = Android.App.Application.Context.Assets.Open("Factura.xlsx"))
+            using (var template = Android.App.Application.Context.Assets.Open(fileName))
             {
                 using (var memTemplate = new MemoryStream())
                 {
@@ -41,6 +43,33 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
 
             return reportFile;
         }
+
+
+        private XlsFile EvaluateBill(Dictionary<string, string> pParameters, XlsFile pReport)
+        {
+            for (int namedVariableCount = 1; namedVariableCount <= pReport.NamedRangeCount; namedVariableCount++)
+            {
+                var namedVariable = pReport.GetNamedRange(namedVariableCount);
+                if (namedVariable != null)
+                {
+                    string value = "";
+                    if (pParameters.TryGetValue(namedVariable.Name, out value))
+                    {
+                        pReport.SetCellValue(namedVariable.Top, namedVariable.Left, value);
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR", "ESTO NO PUEDE PASAR");
+                    }
+                    
+                }
+            }
+
+            pReport.Recalc();
+            return pReport;
+        }
+
+
 
         private XlsFile EvaluateBill(Bill pBill,XlsFile pReport)
         {
@@ -84,7 +113,7 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
         #endregion
 
         #region Interface Implementation
-        public void RunReport(Bill pBill)
+        public void RunReport(Dictionary<string,string> pBill)
         {
             var reportFile = OpenFile();
             reportFile = EvaluateBill(pBill, reportFile);

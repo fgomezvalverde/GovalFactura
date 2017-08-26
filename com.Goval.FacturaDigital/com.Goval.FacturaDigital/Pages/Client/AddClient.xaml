@@ -19,14 +19,51 @@
                           Label="Nombre"
                           Text="{Binding Name, Mode=TwoWay}"
                                    Placeholder="Nombre"
-                          >
-                        </EntryCell>
+                          />
+                        <EntryCell 
+                          Label="Plazo(dias)"
+                            Keyboard="Numeric"
+                          Text="{Binding Term, Mode=TwoWay}"
+                                   Placeholder="Dias"
+                          />
+                        <EntryCell 
+                          Label="Descuento(%)"
+                          Keyboard="Numeric"
+                          Text="{Binding DiscountPercentage, Mode=TwoWay}"
+                                   Placeholder="Porcentage"
+                          />
+
+                        <EntryCell 
+                          Label="Dirección"
+                          Text="{Binding Direction, Mode=TwoWay}"
+                                   Placeholder="Direccion"
+                          />
+
+                        <EntryCell 
+                          Label="Telefono"
+                            Keyboard="Telephone"
+                          Text="{Binding Telephone, Mode=TwoWay}"
+                                   Placeholder="Telefono"
+                          />
+
+                        <EntryCell 
+                          Label="Email"
+                            Keyboard="Email"
+                          Text="{Binding Email, Mode=TwoWay}"
+                                   Placeholder="Email"
+                          />
+
+                        <EntryCell 
+                          Label="Cedula Juridica/Fisica"
+                          Text="{Binding LegalId, Mode=TwoWay}"
+                                   Placeholder="Cedula"
+                          />
                     </TableSection>
                 </TableView.Root>
             </TableView>
 
             <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
-            <ListView x:Name="ProductListView" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
+            <ListView x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

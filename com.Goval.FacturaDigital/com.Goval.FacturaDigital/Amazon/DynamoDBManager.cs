@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Amazon.CognitoIdentity;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using System.Diagnostics;
 
 namespace com.Goval.FacturaDigital.Amazon
 {
@@ -32,26 +33,51 @@ namespace com.Goval.FacturaDigital.Amazon
             return INSTANCE;
         }
 
-        public async Task SaveAsync<T>(T pNewObject)
+        public async Task<Boolean> SaveAsync<T>(T pNewObject)
         {
-            await DDB_CONTEXT.SaveAsync<T>(pNewObject);
+            try
+            {
+                await DDB_CONTEXT.SaveAsync<T>(pNewObject);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("DynamoDBManager.SaveAsync:" + ex.Message);
+                return false;
+            }
+            
         }
 
-        public void Save<T>(T pNewObject)
-        {
-             DDB_CONTEXT.SaveAsync<T>(pNewObject);
-        }
 
-        public async Task Delete<T>(T pDeleteObject)
+        public async Task<Boolean> Delete<T>(T pDeleteObject)
         {
-            await DDB_CONTEXT.DeleteAsync<T>(pDeleteObject);
+            try
+            {
+                await DDB_CONTEXT.DeleteAsync<T>(pDeleteObject);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("DynamoDBManager.Delete:"+ex.Message);
+                return false;
+            }
+            
         }
 
         public async Task<List<T>> GetItemsAsync<T>()
         {
-            List<ScanCondition> conditions = new List<ScanCondition>();
-            var search = DDB_CONTEXT.ScanAsync<T>(conditions);
-            return await search.GetNextSetAsync();
+            try
+            {
+                List<ScanCondition> conditions = new List<ScanCondition>();
+                var search = DDB_CONTEXT.ScanAsync<T>(conditions);
+                return await search.GetNextSetAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("DynamoDBManager.GetItemsAsync:" + ex.Message);
+                return null;
+            }
+           
         }
 
     }

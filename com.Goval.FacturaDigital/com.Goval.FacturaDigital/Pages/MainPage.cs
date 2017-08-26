@@ -23,12 +23,18 @@ namespace com.Goval.FacturaDigital.Pages
             var productPage = new ProductList();
             productPage.Title = "Productos";
 
+            var configurationPage = new ConfigurationPage();
+            configurationPage.Title = "Configuración";
+
             Children.Add(
                 new NavigationPage(billPage) { Title= "Facturas" });
             Children.Add(
                 new NavigationPage(clientPage) { Title = "Clientes" });
             Children.Add(
                 new NavigationPage(productPage) { Title = "Productos" });
+
+            Children.Add(
+                new NavigationPage(configurationPage) { Title = "Config" });
         }
     }
 }

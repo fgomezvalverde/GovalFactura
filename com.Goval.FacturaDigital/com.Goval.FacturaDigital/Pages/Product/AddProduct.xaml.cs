@@ -29,11 +29,18 @@ namespace com.Goval.FacturaDigital.Pages.Product
                 {
                     try
                     {
-                        await DynamoDBManager.GetInstance().SaveAsync<Model.Product>(
+                        if (await DynamoDBManager.GetInstance().SaveAsync<Model.Product>(
                          NewProduct
-                        );
+                        ))
+                    {
                         await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
                         this.SendBackButtonPressed();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                            }
+                        
                     }
                     catch (Exception ex)
                     {

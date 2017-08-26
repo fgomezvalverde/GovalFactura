@@ -9,13 +9,14 @@ namespace com.Goval.FacturaDigital
 {
     public partial class App : Application
     {
-
+        
         public static Page RootPage;
+        public static Boolean AdminPrivilegies = false;
 
         public App()
         {
             InitializeComponent();
-            RootPage = new com.Goval.FacturaDigital.Pages.MainPage();
+            RootPage = new Pages.MasterDetail.RootPage();
             MainPage = RootPage;
         }
 

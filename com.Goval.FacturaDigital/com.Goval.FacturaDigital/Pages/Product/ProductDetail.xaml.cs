@@ -17,6 +17,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
         {
             InitializeComponent();
             this.BindingContext = pProduct;
+
         }
 
         private async void SaveProduct_Clicked(object sender, EventArgs e)
@@ -27,11 +28,17 @@ namespace com.Goval.FacturaDigital.Pages.Product
             {
                 try
                 {
-                    await DynamoDBManager.GetInstance().SaveAsync<Model.Product>(
+                    if (await DynamoDBManager.GetInstance().SaveAsync<Model.Product>(
                      NewProduct
-                    );
-                    await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
-                    this.SendBackButtonPressed();
+                    ))
+                    {
+                        await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
+                        this.SendBackButtonPressed();
+                    }
+                    else {
+                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -52,11 +59,17 @@ namespace com.Goval.FacturaDigital.Pages.Product
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
             if (deleteProduct != null && answer)
             {
-                await DynamoDBManager.GetInstance().Delete<Model.Product>(
+                if (await DynamoDBManager.GetInstance().Delete<Model.Product>(
                      deleteProduct
-                    );
-                await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
-                this.SendBackButtonPressed();
+                    ))
+                {
+                    await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
+                    this.SendBackButtonPressed();
+                }
+                else{
+                    await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                }
+                
             }
         }
     }

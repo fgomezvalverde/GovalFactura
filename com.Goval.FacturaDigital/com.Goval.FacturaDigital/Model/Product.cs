@@ -18,5 +18,10 @@ namespace com.Goval.FacturaDigital.Model
 
         // This is to assign to a Client
         public Boolean IsUsed { get; set; }
+
+        // This is to assign to a Bill
+        public int? Amount { get; set; } 
+
+        public double TotalCost { get; set; } = 0;
     }
 }

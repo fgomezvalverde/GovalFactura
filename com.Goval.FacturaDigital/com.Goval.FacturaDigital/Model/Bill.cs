@@ -12,11 +12,18 @@ namespace com.Goval.FacturaDigital.Model
     [AddINotifyPropertyChangedInterface]
     public class Bill
     {
-        public string ClientName { get; set; } = "Fabian Gomez";
-        public string ProductOneName { get; set; } = "Mecate 6mts";
-        public int CostTest { get; set; } = 2000;
-        public double FloatTest { get; set; } = 3.555;
-        public Boolean BoolTest { get; set; } = true;
-        public DateTime Today { get; set; } = DateTime.Now;
+        public int Id { get; set; }
+
+        public Client AssignClient { get; set; }
+
+        public DateTime BillDate { get; set; }
+
+
+        public double subTotalProducts { get; set; } = 0;
+        public double discountAmount { get; set; } = 0;
+        public double taxesToPay { get; set; } = 0;
+        public double totalAfterDiscount { get; set; } = 0;
+        public double TotalToPay { get; set; } = 0;
+
     }
 }

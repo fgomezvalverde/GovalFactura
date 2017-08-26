@@ -4,7 +4,41 @@
              x:Class="com.Goval.FacturaDigital.Pages.Bill.AddBill">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+            <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding AssignClient.Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Entry Grid.Row="0" TextChanged="EntryAmount_TextChanged" Grid.Column="0" Text="{Binding Amount}" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="60"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <StackLayout Padding="10">
+                <Label x:Name="TotalProducts" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="DescountAmount" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="TotalAfterDescount" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="TaxesAmount" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="Total" HorizontalOptions="EndAndExpand" FontAttributes="Bold" />
+            </StackLayout>
+
+            <Button x:Name="Button_CreateBill" IsVisible="False" Text="Generar Factura" Clicked="Generate_Bill" HorizontalOptions="FillAndExpand"/>
+            <!--Button x:Name="" Text="Guardar Borrador" Clicked="Save_Changes"  HorizontalOptions="FillAndExpand"/-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="Facturas"
-             x:Class="com.Goval.FacturaDigital.Pages.Bill.BillList">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Agregar" Order="Primary" Icon="ic_action_add.png" Text="Agregar" Priority="0" Clicked="AddBill_Clicked" />
-    </ContentPage.ToolbarItems>
+             x:Class="com.Goval.FacturaDigital.Pages.Bill.BillClientSelection">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="BillListView" ItemSelected="billListView_ItemSelected">
+            <Label FontSize="Large" FontAttributes="Bold" Text="Seleccionar Cliente" HorizontalOptions="CenterAndExpand" ></Label>
+            <ListView x:Name="ClientListView" ItemSelected="ClientListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -19,12 +16,10 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Id}" HorizontalOptions="StartAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding AssignClient.Name}" HorizontalOptions="CenterAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="2" VerticalOptions="Center" Text="{Binding TotalToPay}" HorizontalOptions="EndAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding ClientId}" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Name}" HorizontalOptions="CenterAndExpand"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

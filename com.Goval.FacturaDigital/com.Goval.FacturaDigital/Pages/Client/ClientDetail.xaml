@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:com.Goval.FacturaDigital" 
              x:Class="com.Goval.FacturaDigital.Pages.Client.ClientDetail">
     <ContentPage.Content>
         <StackLayout Spacing="15">
@@ -13,21 +14,75 @@
                            Text="{Binding ClientId, Mode=TwoWay}"
                             Placeholder="Nuevo Codigo"
                             IsEnabled="False"
-                          >
-                        </EntryCell>
+                          />
 
                         <EntryCell 
                           Label="Nombre"
+                          x:Name="EntryName"
                           Text="{Binding Name, Mode=TwoWay}"
                                    Placeholder="Nombre"
-                          >
-                        </EntryCell>
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+
+
+
+                        <EntryCell 
+                            x:Name="EntryTerm"
+                          Label="Plazo(dias)"
+                            Keyboard="Numeric"
+                          Text="{Binding Term, Mode=TwoWay}"
+                                   Placeholder="Dias"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+                        <EntryCell 
+                            x:Name="EntryDiscount"
+                          Label="Descuento(%)"
+                          Keyboard="Numeric"
+                          Text="{Binding DiscountPercentage, Mode=TwoWay}"
+                                   Placeholder="Porcentage"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+                        
+                        <EntryCell 
+                            x:Name="EntryDirection"
+                          Label="Dirección"
+                          Text="{Binding Direction, Mode=TwoWay}"
+                                   Placeholder="Direccion"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+
+                        <EntryCell 
+                          Label="Telefono"
+                            x:Name="EntryPhone"
+                            Keyboard="Telephone"
+                          Text="{Binding Telephone, Mode=TwoWay}"
+                                   Placeholder="Telefono"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+
+                        <EntryCell 
+                          Label="Email"
+                            x:Name="EntryEmail"
+                            Keyboard="Email"
+                          Text="{Binding Email, Mode=TwoWay}"
+                                   Placeholder="Email"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+
+                        <EntryCell 
+                            x:Name="EntryId"
+                          Label="Cedula Juridica/Fisica"
+                          Text="{Binding LegalId, Mode=TwoWay}"
+                                   Placeholder="Cedula"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                          />
+
                     </TableSection>
                 </TableView.Root>
             </TableView>
 
             <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
-            <ListView x:Name="ProductListView" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
+            <ListView  x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -43,15 +98,18 @@
 
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Code}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
                                 <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
-                                <Switch Grid.Row="0" Grid.Column="2" IsToggled="{Binding IsUsed}" VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"/>
+                                <Switch Grid.Row="0" Grid.Column="2" IsToggled="{Binding IsUsed}" VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"
+                                        IsEnabled="{x:Static local:App.AdminPrivilegies}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button Text="Guardar" Clicked="SaveClient_Clicked" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Eliminar" Clicked="DeleteClient_Clicked" HorizontalOptions="FillAndExpand"/>
+            <Button x:Name="ButtonSave" Text="Guardar" Clicked="SaveClient_Clicked" HorizontalOptions="FillAndExpand" 
+                            IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+            <Button x:Name="ButtonDelete" Text="Eliminar" Clicked="DeleteClient_Clicked" HorizontalOptions="FillAndExpand"
+                            IsVisible="{x:Static local:App.AdminPrivilegies}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

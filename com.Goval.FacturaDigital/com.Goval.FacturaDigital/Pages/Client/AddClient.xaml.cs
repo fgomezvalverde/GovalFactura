@@ -24,7 +24,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
         {
             
             var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
-            if (productList != null || productList.Count != 0)
+            if (productList != null && productList.Count != 0)
             {
                 this.BindingContext = new Model.Client() {Products= productList};
             }
@@ -44,11 +44,18 @@ namespace com.Goval.FacturaDigital.Pages.Client
                 try
                 {
                     NewClient.Products = RemoveUnUsedProduct(NewClient.Products);
-                    await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(
+                    if (await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(
                      NewClient
-                    );
-                    await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
-                    this.SendBackButtonPressed();
+                    ))
+                    {
+                        await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
+                        this.SendBackButtonPressed();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                    }
+                    
                 }
                 catch (Exception ex)
                 {

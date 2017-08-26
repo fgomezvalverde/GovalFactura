@@ -34,11 +34,19 @@ namespace com.Goval.FacturaDigital.Pages.Client
             {
                 try
                 {
-                    await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(
+                    NewClient.RemoveOnUsedProducts();
+                    if (await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(
                      NewClient
-                    );
-                    await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
-                    this.SendBackButtonPressed();
+                    ))
+                    {
+                        await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
+                        this.SendBackButtonPressed();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -59,11 +67,18 @@ namespace com.Goval.FacturaDigital.Pages.Client
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
             if (deleteClient != null && answer)
             {
-                await DynamoDBManager.GetInstance().Delete<Model.Client>(
+                if (await DynamoDBManager.GetInstance().Delete<Model.Client>(
                      deleteClient
-                    );
-                await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
-                this.SendBackButtonPressed();
+                    ))
+                {
+                    await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
+                    this.SendBackButtonPressed();
+                }
+                else
+                {
+                    await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                }
+                
             }
         }
 
@@ -93,6 +108,10 @@ namespace com.Goval.FacturaDigital.Pages.Client
                 
             }
         }
+
+
+        
+
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ProductListView.SelectedItem = null;

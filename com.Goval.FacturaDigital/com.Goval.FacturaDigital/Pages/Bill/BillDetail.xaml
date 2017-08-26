@@ -4,7 +4,39 @@
              x:Class="com.Goval.FacturaDigital.Pages.Bill.BillDetail">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+            <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding AssignClient.Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Entry Grid.Row="0" Grid.Column="0" Text="{Binding Amount}" IsEnabled="False" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="60"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <StackLayout Padding="10">
+                <Label  Text="{Binding subTotalProducts, StringFormat='Subtotal: {0:N}'}" HorizontalOptions="EndAndExpand" />
+                <Label  Text="{Binding discountAmount, StringFormat='-Descuento: {0:N}'}" HorizontalOptions="EndAndExpand" />
+                <Label  Text="{Binding totalAfterDiscount, StringFormat='SubTotal: {0:N}'}" HorizontalOptions="EndAndExpand" />
+                <Label  Text="{Binding taxesToPay, StringFormat='+Impuestos: {0:N}'}" HorizontalOptions="EndAndExpand" />
+                <Label  Text="{Binding TotalToPay, StringFormat='TOTAL: {0:N}'}" HorizontalOptions="EndAndExpand" FontAttributes="Bold" />
+                <Button Text="Ver Factura" Clicked="Button_SeeBill_Clicked" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

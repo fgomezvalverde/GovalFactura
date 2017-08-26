@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:com.Goval.FacturaDigital"
              x:Class="com.Goval.FacturaDigital.Pages.Product.ProductDetail">
     <ContentPage.Content>
         <StackLayout Spacing="15">
@@ -17,24 +18,28 @@
                         </EntryCell>
 
                         <EntryCell 
+                            x:Name="EntryDescription"
                           Label="Descripcion"
                           Text="{Binding Description, Mode=TwoWay}"
                                    Placeholder="Nueva Descripcion"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
                           >
                         </EntryCell>
 
                         <EntryCell 
+                            x:Name="EntryPrice"
                           Label="Precio"
                           Text="{Binding Price, Mode=TwoWay}"
                           Placeholder="Nuevo Precio"
+                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
                           Keyboard="Numeric"
                           >
                         </EntryCell>
                     </TableSection>
                 </TableView.Root>
             </TableView>
-            <Button Text="Guardar" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Eliminar" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand"/>
+            <Button x:Name="ButtonSave" Text="Guardar" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+            <Button x:Name="ButtonDelete" Text="Eliminar" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
