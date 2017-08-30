@@ -24,10 +24,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             this.BindingContext = ActualBill;
         }
 
-        private void Button_SeeBill_Clicked(object sender, EventArgs e)
+        private async void Button_SeeBill_Clicked(object sender, EventArgs e)
         {
-            Dictionary<string, string> values = Utils.BillToDictionary(ActualBill);
-            DependencyService.Get<IReportingService>().RunReport(values);
+            Dictionary<string, string> values = Utils.BillSecurity.BillToDictionary(ActualBill);
+            await DependencyService.Get<IReportingService>().RunReport(values, ActualBill.Id + "");
         }
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

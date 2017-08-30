@@ -18,6 +18,7 @@ namespace com.Goval.FacturaDigital.Model
 
         public DateTime BillDate { get; set; }
 
+        public string PurchaseOrder { get; set; } = string.Empty;
 
         public double subTotalProducts { get; set; } = 0;
         public double discountAmount { get; set; } = 0;

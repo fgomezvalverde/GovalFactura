@@ -1,4 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Amazon;
+using com.Goval.FacturaDigital.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +29,27 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }
         }
 
-        private void ClientListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void ClientListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var detailClient = e.SelectedItem as Model.Client;
-            Navigation.PushModalAsync (
-               new AddBill(new Model.Bill {
-                   Id=new Random().Next(),
+            int nextBillNumber = 0;
+            nextBillNumber = await BillSecurity.GetNextBillNumber();
+            if (nextBillNumber != 0)
+            {
+               await Navigation.PushModalAsync(
+               new AddBill(new Model.Bill
+               {
+                   Id = nextBillNumber,
                    AssignClient = detailClient,
                    BillDate = DateTime.Now
                })
                );
+            }
+            else
+            {
+                await DisplayAlert("Sistema", "Hubo un problema al conseguir el Numero de Factura", "Ok");
+            }
+            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Amazon;
+using com.Goval.FacturaDigital.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            var billList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Bill>();
+            var billList = await BillSecurity.GetBillList();
             if (billList != null && billList.Count != 0)
             {
                 BillListView.ItemsSource = billList;

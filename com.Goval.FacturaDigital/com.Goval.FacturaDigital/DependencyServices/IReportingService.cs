@@ -9,6 +9,6 @@ namespace com.Goval.FacturaDigital.DependencyServices
 {
     public interface IReportingService
     {
-        void RunReport(Dictionary<string, string> pBill);
+        Task RunReport(Dictionary<string, string> pBill, string pBillNumber);
     }
 }

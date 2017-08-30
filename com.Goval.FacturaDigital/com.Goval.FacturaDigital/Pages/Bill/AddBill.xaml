@@ -19,7 +19,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Entry Grid.Row="0" TextChanged="EntryAmount_TextChanged" Grid.Column="0" Text="{Binding Amount}" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="60"/>
+                                <Entry Grid.Row="0" TextChanged="EntryAmount_TextChanged" Grid.Column="0" Text="{Binding Amount, Mode=TwoWay}" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="60"/>
                                 <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
                                 <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
                             </Grid>
@@ -27,6 +27,19 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+
+            <TableView>
+                <TableView.Root>
+                    <TableSection>
+                        <EntryCell
+                           Label="Orden de Compra"
+                           Text="{Binding PurchaseOrder, Mode=TwoWay}"
+                            Placeholder="Codigo"
+                          />
+                    </TableSection>
+                </TableView.Root>
+            </TableView>
 
 
             <StackLayout Padding="10">

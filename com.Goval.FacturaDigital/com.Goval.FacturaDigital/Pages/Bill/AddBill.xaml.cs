@@ -74,11 +74,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
                 ActualBill.TotalToPay = ActualBill.taxesToPay + ActualBill.totalAfterDiscount;
 
-                TotalProducts.Text = "Subtotal: " + ActualBill.subTotalProducts;
-                DescountAmount.Text = string.Format("Descuento({0}%): -{1}", ActualBill.AssignClient.DiscountPercentage, ActualBill.discountAmount);
-                TotalAfterDescount.Text = "SubTotal: " + ActualBill.totalAfterDiscount;
-                TaxesAmount.Text = string.Format("+Impuestos({0}%): +{1}", ActualBill.AssignClient.TaxesPercentage, ActualBill.taxesToPay);
-                Total.Text = "TOTAL: " + ActualBill.TotalToPay + " col";
+                TotalProducts.Text = "Subtotal: " + Utils.Utils.FormatNumericToString(ActualBill.subTotalProducts);
+                TotalAfterDescount.Text = "SubTotal: " + Utils.Utils.FormatNumericToString(ActualBill.totalAfterDiscount);
+                TaxesAmount.Text = string.Format("+Impuestos({0}%): +{1}", ActualBill.AssignClient.TaxesPercentage, Utils.Utils.FormatNumericToString(ActualBill.taxesToPay));
+                Total.Text = "TOTAL: " + Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + " col";
 
                 Button_CreateBill.IsVisible = true;
 
@@ -109,8 +108,8 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 ))
                 {
                     await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
-                    Dictionary<string, string> values = Utils.BillToDictionary(ActualBill);
-                    DependencyService.Get<IReportingService>().RunReport(values);
+                    Dictionary<string, string> values = Utils.BillSecurity.BillToDictionary(ActualBill);
+                    await DependencyService.Get<IReportingService>().RunReport(values, ActualBill.Id+"");
                     this.SendBackButtonPressed();
                     this.SendBackButtonPressed();
                 }

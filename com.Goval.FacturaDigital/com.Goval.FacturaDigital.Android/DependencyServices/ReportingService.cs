@@ -17,6 +17,14 @@ using System.IO;
 using FlexCel.Render;
 using com.Goval.FacturaDigital.Model;
 using Newtonsoft.Json.Linq;
+using Syncfusion.XlsIO;
+using System.Reflection;
+using System.Net;
+using Syncfusion.Pdf.Parsing;
+using Syncfusion.Pdf;
+using System.Net.Http;
+using System.Threading.Tasks;
+using com.Goval.FacturaDigital.Droid.Utils;
 
 [assembly: Xamarin.Forms.Dependency(typeof(ReportingService))]
 namespace com.Goval.FacturaDigital.Droid.DependencyServices
@@ -24,116 +32,81 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
     public class ReportingService : IReportingService
     {
         string fileName = "FacturaGoval.xlsx";
-
-        #region SpecialLogic
-        private XlsFile OpenFile()
-        {
-            XlsFile reportFile = new XlsFile(true);
-
-            using (var template = Android.App.Application.Context.Assets.Open(fileName))
-            {
-                using (var memTemplate = new MemoryStream())
-                {
-                    template.CopyTo(memTemplate);
-                    memTemplate.Position = 0;
-                    reportFile.Open(memTemplate);
-                }
-            }
-
-
-            return reportFile;
-        }
-
-
-        private XlsFile EvaluateBill(Dictionary<string, string> pParameters, XlsFile pReport)
-        {
-            for (int namedVariableCount = 1; namedVariableCount <= pReport.NamedRangeCount; namedVariableCount++)
-            {
-                var namedVariable = pReport.GetNamedRange(namedVariableCount);
-                if (namedVariable != null)
-                {
-                    string value = "";
-                    if (pParameters.TryGetValue(namedVariable.Name, out value))
-                    {
-                        pReport.SetCellValue(namedVariable.Top, namedVariable.Left, value);
-                    }
-                    else
-                    {
-                        Console.WriteLine("ERROR", "ESTO NO PUEDE PASAR");
-                    }
-                    
-                }
-            }
-
-            pReport.Recalc();
-            return pReport;
-        }
-
-
-
-        private XlsFile EvaluateBill(Bill pBill,XlsFile pReport)
-        {
-            var billObj = JObject.FromObject(pBill);
-            for (int namedVariableCount = 1; namedVariableCount <= pReport.NamedRangeCount; namedVariableCount++)
-            {
-                var namedVariable = pReport.GetNamedRange(namedVariableCount);
-                if (namedVariable != null)
-                {
-                    var property = billObj[namedVariable.Name];
-                    switch(property.Type)
-                    {
-                        case JTokenType.Boolean:
-                            pReport.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<Boolean>());
-                            break;
-                        case JTokenType.Float:
-                            pReport.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<float>());
-                            break;
-                        case JTokenType.String:
-                            pReport.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<string>());
-                            break;
-                        case JTokenType.Integer:
-                            pReport.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<double>());
-                            break;
-                        case JTokenType.Date:
-                            var date = property.Value<DateTime>();
-                            pReport.SetCellValue(namedVariable.Top, namedVariable.Left, date.ToString());
-                            break;
-                        default:
-                            pReport.SetCellValue(namedVariable.Top, namedVariable.Left, property.ToString());
-                            break;
-
-                    }
-                }
-            }
-
-            pReport.Recalc();
-            return pReport;
-        }
-
-        #endregion
+        string apiKey = "a09f3c3881f70d340e8746d136bb4c763299a6b6a7a824853f0ac442c16ef998";
 
         #region Interface Implementation
-        public void RunReport(Dictionary<string,string> pBill)
+        public async Task RunReport(Dictionary<string,string> pBill,string pBillNumber)
         {
-            var reportFile = OpenFile();
-            reportFile = EvaluateBill(pBill, reportFile);
-            string path = System.IO.Path.Combine(
-                Android.OS.Environment.ExternalStorageDirectory.Path, "result.pdf"
-                );
-            using (FlexCelPdfExport pdf = new FlexCelPdfExport(reportFile, true))
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+
+            application.DefaultVersion = ExcelVersion.Excel2013;
+
+            string resourcePath = "com.Goval.FacturaDigital.Droid.Reports."+fileName;
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream fileStream = assembly.GetManifestResourceStream(resourcePath);
+
+            IWorkbook workbook = application.Workbooks.Open(fileStream);
+            IWorksheet sheet = workbook.Worksheets[0]; 
+            foreach (Syncfusion.XlsIO.Implementation.NameImpl namedVariable in workbook.Names)
             {
-                using (FileStream fs = new FileStream(path, FileMode.Create))
+                string value = "";
+                if (pBill.TryGetValue(namedVariable.Address, out value))
                 {
-                    pdf.FontMapping = FlexCel.Pdf.TFontMapping.ReplaceAllFonts;
-                    pdf.Export(fs);
+                    sheet.Range[namedVariable.AddressLocal].Text = value;
+                }
+                else
+                {
+                    Console.WriteLine("ERROR", "ESTO NO PUEDE PASAR");
                 }
             }
-            Java.IO.File file = new Java.IO.File(path);
-            Intent intent = new Intent(Intent.ActionView);
-            intent.SetDataAndType(Android.Net.Uri.FromFile(file), "application/pdf");
-            intent.SetFlags(ActivityFlags.NewTask);
-            Android.App.Application.Context.StartActivity(intent);
+
+            MemoryStream stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            workbook.Close();
+            excelEngine.Dispose();
+            var data = stream.ToArray();
+            var stringData = Convert.ToBase64String(data);
+            JObject obj = new JObject();
+            obj["api_key"] = apiKey;
+            obj["document"] = stringData;
+            try
+            {
+                var httpClient = new HttpClient();
+                var uri = new Uri("http://getoutpdf.com/api/convert/document-to-pdf");
+                var content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PostAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    var jobjectResponse = JObject.Parse(responseString);
+                    var stringBase64 = jobjectResponse["pdf_base64"].Value<String>();
+                    var responseBytes = Convert.FromBase64String(stringBase64);
+                    try
+                    {
+                        SaveAndroid androidSave = new SaveAndroid();
+                        androidSave.Save("Factura.pdf", "application/pdf", new MemoryStream(responseBytes));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                    
+            }
+
+            catch (WebException exception)
+            {
+                string responseText;
+                using (var reader = new StreamReader(exception.Response.GetResponseStream()))
+                {
+                    responseText = reader.ReadToEnd();
+                    Console.WriteLine(responseText);
+                }
+            }
         }
-#endregion
+        #endregion
     }
 }
