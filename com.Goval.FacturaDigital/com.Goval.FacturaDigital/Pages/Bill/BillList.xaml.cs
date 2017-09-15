@@ -22,11 +22,13 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            App.ShowLoading(true);
             var billList = await BillSecurity.GetBillList();
             if (billList != null && billList.Count != 0)
             {
-                BillListView.ItemsSource = billList;
+                BillListView.ItemsSource = billList.OrderByDescending(x => x.Id);
             }
+            App.ShowLoading(false);
         }
 
         private void AddBill_Clicked(object sender, EventArgs e)

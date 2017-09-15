@@ -23,6 +23,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void AddProduct_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             var NewProduct = this.BindingContext as Model.Product;
                 if (NewProduct!= null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
                     NewProduct.Price != 0)
@@ -33,24 +34,28 @@ namespace com.Goval.FacturaDigital.Pages.Product
                          NewProduct
                         ))
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
                             }
                         
                     }
                     catch (Exception ex)
                     {
-                        await DisplayAlert("Sistema",ex.Message , "ok");
+                    App.ShowLoading(false);
+                    await DisplayAlert("Sistema",ex.Message , "ok");
                     }
                     
                 }
                 else
                 {
-                    await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
+                App.ShowLoading(false);
+                await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
                 }
             
         }

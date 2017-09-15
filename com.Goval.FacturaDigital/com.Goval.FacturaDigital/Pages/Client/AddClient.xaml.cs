@@ -22,7 +22,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         protected async override void OnAppearing()
         {
-            
+            App.ShowLoading(true);
             var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
             if (productList != null && productList.Count != 0)
             {
@@ -33,11 +33,12 @@ namespace com.Goval.FacturaDigital.Pages.Client
                 this.BindingContext = new Model.Client() { };
             }
             base.OnAppearing();
-
+            App.ShowLoading(false);
         }
 
         private async void AddClient_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             var NewClient = this.BindingContext as Model.Client;
             if (NewClient != null && !string.IsNullOrEmpty(NewClient.ClientId) && !string.IsNullOrEmpty(NewClient.Name))
             {
@@ -48,23 +49,27 @@ namespace com.Goval.FacturaDigital.Pages.Client
                      NewClient
                     ))
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
                     }
                     
                 }
                 catch (Exception ex)
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", ex.Message, "ok");
                 }
 
             }
             else
             {
+                App.ShowLoading(false);
                 await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
             }
 

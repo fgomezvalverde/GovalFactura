@@ -146,8 +146,11 @@ namespace com.Goval.FacturaDigital.Utils
             values.Add("billTotal",
                     "¢" + Utils.FormatNumericToString(ActualBill.TotalToPay));
 
+
+            Utils util = new Utils();
+
             values.Add("billTotalInText",
-                   Utils.IntegerToWritten(((int)ActualBill.TotalToPay)));
+                   util.IntegerToWritten((ActualBill.TotalToPay.ToString("0.##"))));
 
             return values;
         }

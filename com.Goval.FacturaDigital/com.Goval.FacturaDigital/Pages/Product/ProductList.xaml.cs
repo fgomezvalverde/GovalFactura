@@ -20,6 +20,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
         }
         protected async override void OnAppearing()
         {
+            App.ShowLoading(true);
             base.OnAppearing();
 
             if (App.AdminPrivilegies && this.ToolbarItems.Count ==0)
@@ -41,6 +42,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
             {
                  ProductListView.ItemsSource = productList;
             }
+            App.ShowLoading(false);
         }
 
         protected override void OnDisappearing()

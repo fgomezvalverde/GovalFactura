@@ -10,7 +10,6 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using com.Goval.FacturaDigital.DependencyServices;
 using com.Goval.FacturaDigital.Droid.DependencyServices;
 using FlexCel.XlsAdapter;
 using System.IO;
@@ -25,6 +24,7 @@ using Syncfusion.Pdf;
 using System.Net.Http;
 using System.Threading.Tasks;
 using com.Goval.FacturaDigital.Droid.Utils;
+using com.Goval.FacturaDigital.Abstraction.DependencyServices;
 
 [assembly: Xamarin.Forms.Dependency(typeof(ReportingService))]
 namespace com.Goval.FacturaDigital.Droid.DependencyServices
@@ -32,17 +32,19 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
     public class ReportingService : IReportingService
     {
         string fileName = "FacturaGoval.xlsx";
+        string pdfResultName = "FacturaN{0}.pdf";
         string apiKey = "a09f3c3881f70d340e8746d136bb4c763299a6b6a7a824853f0ac442c16ef998";
 
         #region Interface Implementation
-        public async Task RunReport(Dictionary<string,string> pBill,string pBillNumber)
+        public async Task<Stream> CreateAndRunReport(Dictionary<string,string> pBill,string pBillNumber)
         {
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
+            string billReportName = string.Format(pdfResultName, pBillNumber);
 
             application.DefaultVersion = ExcelVersion.Excel2013;
 
-            string resourcePath = "com.Goval.FacturaDigital.Droid.Reports."+fileName;
+            string resourcePath = "com.Goval.FacturaDigital.Droid.Reports."+ fileName;
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream fileStream = assembly.GetManifestResourceStream(resourcePath);
 
@@ -87,7 +89,9 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
                     try
                     {
                         SaveAndroid androidSave = new SaveAndroid();
-                        androidSave.Save("Factura.pdf", "application/pdf", new MemoryStream(responseBytes));
+                        var streamResult = new MemoryStream(responseBytes);
+                        androidSave.Save(billReportName, "application/pdf", streamResult);
+                        return streamResult;
                     }
                     catch (Exception ex)
                     {
@@ -106,6 +110,7 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
                     Console.WriteLine(responseText);
                 }
             }
+            return null;
         }
         #endregion
     }

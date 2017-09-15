@@ -1,4 +1,4 @@
-﻿using com.Goval.FacturaDigital.DependencyServices;
+﻿using com.Goval.FacturaDigital.Abstraction.DependencyServices;
 using com.Goval.FacturaDigital.Test;
 using System;
 using System.Collections.Generic;
@@ -26,8 +26,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
         private async void Button_SeeBill_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             Dictionary<string, string> values = Utils.BillSecurity.BillToDictionary(ActualBill);
-            await DependencyService.Get<IReportingService>().RunReport(values, ActualBill.Id + "");
+            await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id + "");
+            App.ShowLoading(false);
         }
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

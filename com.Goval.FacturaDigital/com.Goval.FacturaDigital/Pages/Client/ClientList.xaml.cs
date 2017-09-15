@@ -20,6 +20,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         protected async override void OnAppearing()
         {
+            App.ShowLoading(true);
             base.OnAppearing();
 
             if (App.AdminPrivilegies && this.ToolbarItems.Count == 0)
@@ -41,6 +42,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
             {
                 ClientListView.ItemsSource = clientList;
             }
+            App.ShowLoading(false);
         }
 
         private void AddClient_Clicked(object sender, EventArgs e)

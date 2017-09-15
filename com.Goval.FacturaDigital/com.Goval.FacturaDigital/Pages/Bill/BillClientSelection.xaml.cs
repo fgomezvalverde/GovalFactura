@@ -22,17 +22,20 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            App.ShowLoading(true);
             var clientList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Client>();
             if (clientList != null && clientList.Count != 0)
             {
                 ClientListView.ItemsSource = clientList;
             }
+            App.ShowLoading(false);
         }
 
         private async void ClientListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var detailClient = e.SelectedItem as Model.Client;
             int nextBillNumber = 0;
+            App.ShowLoading(true);
             nextBillNumber = await BillSecurity.GetNextBillNumber();
             if (nextBillNumber != 0)
             {
@@ -49,7 +52,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             {
                 await DisplayAlert("Sistema", "Hubo un problema al conseguir el Numero de Factura", "Ok");
             }
-            
+            App.ShowLoading(false);
         }
     }
 }

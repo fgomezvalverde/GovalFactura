@@ -22,6 +22,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void SaveProduct_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             var NewProduct = this.BindingContext as Model.Product;
             if (NewProduct != null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
                 NewProduct.Price != 0)
@@ -32,22 +33,26 @@ namespace com.Goval.FacturaDigital.Pages.Product
                      NewProduct
                     ))
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
                         this.SendBackButtonPressed();
                     }
                     else {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
                     }
                     
                 }
                 catch (Exception ex)
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", ex.Message, "ok");
                 }
 
             }
             else
             {
+                App.ShowLoading(false);
                 await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
             }
 
@@ -55,6 +60,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void DeleteProduct_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             var deleteProduct = this.BindingContext as Model.Product;
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
             if (deleteProduct != null && answer)
@@ -63,10 +69,12 @@ namespace com.Goval.FacturaDigital.Pages.Product
                      deleteProduct
                     ))
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
                     this.SendBackButtonPressed();
                 }
                 else{
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
                 }
                 

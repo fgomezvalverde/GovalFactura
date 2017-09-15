@@ -29,6 +29,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         private async void SaveClient_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             var NewClient = this.BindingContext as Model.Client;
             if (NewClient != null && !string.IsNullOrEmpty(NewClient.ClientId) && !string.IsNullOrEmpty(NewClient.Name))
             {
@@ -39,23 +40,27 @@ namespace com.Goval.FacturaDigital.Pages.Client
                      NewClient
                     ))
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
                     }
                     
                 }
                 catch (Exception ex)
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", ex.Message, "ok");
                 }
 
             }
             else
             {
+                App.ShowLoading(false);
                 await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
             }
 
@@ -63,6 +68,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         private async void DeleteClient_Clicked(object sender, EventArgs e)
         {
+            App.ShowLoading(true);
             var deleteClient = this.BindingContext as Model.Client;
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
             if (deleteClient != null && answer)
@@ -71,11 +77,13 @@ namespace com.Goval.FacturaDigital.Pages.Client
                      deleteClient
                     ))
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
                     this.SendBackButtonPressed();
                 }
                 else
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
                 }
                 
@@ -85,6 +93,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         private async Task SetProducts()
         {
+            App.ShowLoading(true);
             var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
             if (productList != null || productList.Count != 0)
             {
@@ -97,6 +106,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
                     }
                     else
                     {
+                        App.ShowLoading(false);
                         await DisplayAlert("Sistema", "El item " + product.Description + " ha sido elimado, y ya era referencia a este cliente", "ok");
                     }
                 }
@@ -104,9 +114,10 @@ namespace com.Goval.FacturaDigital.Pages.Client
             }
             else
             {
+                App.ShowLoading(false);
                 await DisplayAlert("Sistema", "No se han podido traer los productos del server", "ok");
-                
             }
+            App.ShowLoading(false);
         }
 
 

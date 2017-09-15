@@ -1,4 +1,6 @@
-﻿using com.Goval.FacturaDigital.Utils;
+﻿using Acr.UserDialogs;
+using com.Goval.FacturaDigital.Test;
+using com.Goval.FacturaDigital.Utils;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace com.Goval.FacturaDigital
         
         public static Page RootPage;
         public static Boolean AdminPrivilegies = false;
-        public static int StarterBillNumber = 257;
+        public static int StarterBillNumber = 2500;
 
         public App()
         {
@@ -41,7 +43,7 @@ namespace com.Goval.FacturaDigital
         protected async override void OnStart()
         {
             // Handle when your app starts
-            //await BillSecurity.SaveBaseBill();
+            await BillSecurity.SaveBaseBill();
         }
 
         protected override void OnSleep()
@@ -53,5 +55,20 @@ namespace com.Goval.FacturaDigital
         {
             // Handle when your app resumes
         }
+
+        public static void ShowLoading(Boolean pIsRunning, string pMessage = "Cargando")
+        {
+            if (pIsRunning)
+            {
+                UserDialogs.Instance.ShowLoading(pMessage);
+            }
+            else
+            {
+                UserDialogs.Instance.Loading().Hide();
+            }
+        }
     }
+
+
+    
 }

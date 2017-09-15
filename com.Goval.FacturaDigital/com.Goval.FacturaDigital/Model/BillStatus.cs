@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace com.Goval.FacturaDigital.Model
 {
-    public class SystemConfiguration
+    public enum BillStatus
     {
-        public string PdfGeneratorKey { get; set; }
+        Aprobada,Anulada,BaseNoValida
     }
 }
