@@ -21,7 +21,9 @@ namespace com.Goval.FacturaDigital
         public App()
         {
             InitializeComponent();
-
+#if DEBUG
+            AdminPrivilegies = true;
+#endif
             CrossConnectivity.Current.ConnectivityChanged += ConnectivityChanged;
 
             RootPage = new Pages.MasterDetail.RootPage();

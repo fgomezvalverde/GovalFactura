@@ -17,7 +17,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
         {
             InitializeComponent();
             this.BindingContext = pProduct;
-
+            UnityPicker.SelectedItem = pProduct.UnityType;
         }
 
         private async void SaveProduct_Clicked(object sender, EventArgs e)
@@ -25,10 +25,11 @@ namespace com.Goval.FacturaDigital.Pages.Product
             App.ShowLoading(true);
             var NewProduct = this.BindingContext as Model.Product;
             if (NewProduct != null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
-                NewProduct.Price != 0)
+                NewProduct.Price != 0 && UnityPicker.SelectedItem != null && !string.IsNullOrEmpty(Convert.ToString(UnityPicker.SelectedItem)))
             {
                 try
                 {
+                    NewProduct.UnityType = Convert.ToString(UnityPicker.SelectedItem);
                     if (await DynamoDBManager.GetInstance().SaveAsync<Model.Product>(
                      NewProduct
                     ))

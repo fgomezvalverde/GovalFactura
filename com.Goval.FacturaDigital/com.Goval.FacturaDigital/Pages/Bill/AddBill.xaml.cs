@@ -77,6 +77,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 ActualBill.TotalToPay = ActualBill.taxesToPay + ActualBill.totalAfterDiscount;
 
                 TotalProducts.Text = "Subtotal: " + Utils.Utils.FormatNumericToString(ActualBill.subTotalProducts);
+                DescountAmount.Text = string.Format("-Descuento({0}%): -{1}", ActualBill.AssignClient.DiscountPercentage, Utils.Utils.FormatNumericToString(ActualBill.discountAmount));
                 TotalAfterDescount.Text = "SubTotal: " + Utils.Utils.FormatNumericToString(ActualBill.totalAfterDiscount);
                 TaxesAmount.Text = string.Format("+Impuestos({0}%): +{1}", ActualBill.AssignClient.TaxesPercentage, Utils.Utils.FormatNumericToString(ActualBill.taxesToPay));
                 Total.Text = "TOTAL: " + Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + " col";
@@ -111,7 +112,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 ))
                 {
                     
-                    Dictionary<string, string> values = Utils.BillSecurity.BillToDictionary(ActualBill);
+                    Dictionary<string, string> values = await Utils.BillSecurity.BillToDictionary(ActualBill);
                     var streamResult = await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id+"");
 
                     if (streamResult != null)
@@ -146,7 +147,8 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             string mailBody = DependencyService.Get<IFileManagement>().OpenPlainTextFile("MailTemplate.html");
             string subject = string.Format(ConfigurationConstants.MailBillSubject, ActualBill.Id + "");
             mailBody = mailBody.Replace("$NUMERO_FACTURA$", ActualBill.Id+"");
-            mailBody = mailBody.Replace("$FECHA$", ActualBill.BillDate.ToString("g"));
+            mailBody = mailBody.Replace("$FECHA$", ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat));
+            mailBody = mailBody.Replace("$MONTO_TOTAL$", Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + "");
 
             DependencyService.Get<IMailService>().SendMail(subject, mailBody,
                             ConfigurationConstants.EmailsToSendBill,

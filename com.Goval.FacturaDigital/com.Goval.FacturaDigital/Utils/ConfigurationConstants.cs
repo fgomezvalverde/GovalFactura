@@ -13,6 +13,7 @@ namespace com.Goval.FacturaDigital.Utils
         public static string MailBillSubject = "Factura #{0} ";
 
         public static string BillNameFile = "FacturaN{0}.pdf";
+        public static string DateTimeFormat = "d";
         public static Boolean NumberToNameInCapitalLetters = true;
     }
 }

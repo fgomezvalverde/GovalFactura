@@ -38,7 +38,18 @@
                     </TableSection>
                 </TableView.Root>
             </TableView>
-            <Button x:Name="ButtonSave" Text="Guardar" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+            <StackLayout Spacing="0">
+                <Label Text="Seleccione el Tipo de Presentación"/>
+                <Picker x:Name="UnityPicker" Title="Seleccione Tipo" IsEnabled="{x:Static local:App.AdminPrivilegies}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Unidad</x:String>
+                            <x:String>Docena</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            <Button x:Name="ButtonSave" Text="Guardar" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="false"/>
             <Button x:Name="ButtonDelete" Text="Eliminar" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
         </StackLayout>
     </ContentPage.Content>

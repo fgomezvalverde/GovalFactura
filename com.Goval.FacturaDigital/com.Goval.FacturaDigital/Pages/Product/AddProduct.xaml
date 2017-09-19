@@ -29,9 +29,22 @@
                           Keyboard="Numeric"
                           >     
                         </EntryCell>
+                        
                     </TableSection>
                 </TableView.Root>
             </TableView>
+            <StackLayout Spacing="0">
+                <Label Text="Seleccione el Tipo de Presentación"/>
+                <Picker x:Name="UnityPicker" Title="Seleccione Tipo">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Unitaria</x:String>
+                            <x:String>Docena</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            
             <Button Text="Agregar" Clicked="AddProduct_Clicked" HorizontalOptions="FillAndExpand"/>
         </StackLayout>
     </ContentPage.Content>

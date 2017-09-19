@@ -67,8 +67,9 @@ namespace com.Goval.FacturaDigital.Utils
         }
 
 
-        public static Dictionary<string, string> BillToDictionary(Model.Bill ActualBill)
+        public async static Task<Dictionary<string, string>> BillToDictionary(Model.Bill ActualBill)
         {
+            return await Task.Run(() => { 
             var values = new Dictionary<string, string>();
 
             //Products Values
@@ -78,8 +79,11 @@ namespace com.Goval.FacturaDigital.Utils
                 values.Add("productAmount" + cont,
                     ActualBill.AssignClient.Products[cont].Amount + "");
 
-                values.Add("productCode" + cont,
-                    ActualBill.AssignClient.Products[cont].Code + "");
+                values.Add("productBarCode" + cont,
+                    ActualBill.AssignClient.Products[cont].Code);
+
+                values.Add("productType" + cont,
+                    ActualBill.AssignClient.Products[cont].UnityType);
 
                 values.Add("productDescription" + cont,
                     ActualBill.AssignClient.Products[cont].Description);
@@ -112,13 +116,14 @@ namespace com.Goval.FacturaDigital.Utils
             values.Add("clientTaxes",
                 string.Format("IMPUESTO VENTAS({0}%)", ActualBill.AssignClient.TaxesPercentage));
 
+
             if (ActualBill.AssignClient.Term > 0)
             {
                 values.Add("clientTerm",
                    ActualBill.AssignClient.Term + " dias");
 
                 values.Add("billExpiration",
-                    ActualBill.BillDate.AddDays(ActualBill.AssignClient.Term).ToString("g"));
+                    ActualBill.BillDate.AddDays(ActualBill.AssignClient.Term).ToString(ConfigurationConstants.DateTimeFormat));
             }
             else
             {
@@ -130,7 +135,7 @@ namespace com.Goval.FacturaDigital.Utils
 
             //Bill Info
             values.Add("billDate",
-                    ActualBill.BillDate.ToString("g"));
+                    ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat));
             values.Add("billPurchaseOrder",
                     ActualBill.PurchaseOrder);
             values.Add("billId",
@@ -153,6 +158,7 @@ namespace com.Goval.FacturaDigital.Utils
                    util.IntegerToWritten((ActualBill.TotalToPay.ToString("0.##"))));
 
             return values;
+            });
         }
     }
 }

@@ -27,7 +27,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         private async void Button_SeeBill_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
-            Dictionary<string, string> values = Utils.BillSecurity.BillToDictionary(ActualBill);
+            Dictionary<string, string> values = await Utils.BillSecurity.BillToDictionary(ActualBill);
             await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id + "");
             App.ShowLoading(false);
         }

@@ -16,7 +16,7 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
         public RootPage()
         {
             InitializeComponent();
-
+            BackgroundColor = Color.FromHex("#455A64");
             masterPage.ListView.ItemSelected += OnItemSelected;
 
             if (Device.RuntimePlatform == Device.Windows)
