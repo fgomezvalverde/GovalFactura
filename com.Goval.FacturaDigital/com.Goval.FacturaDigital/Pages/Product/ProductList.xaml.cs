@@ -1,4 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Amazon;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductList : ContentPage
     {
+        List<Model.Product> _ProductList;
         public ProductList()
         {
             InitializeComponent();
@@ -37,10 +39,10 @@ namespace com.Goval.FacturaDigital.Pages.Product
                 this.ToolbarItems.Add(item);
             }
 
-            var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
-            if (productList != null && productList.Count != 0)
+            _ProductList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
+            if (_ProductList != null && _ProductList.Count != 0)
             {
-                 ProductListView.ItemsSource = productList;
+                 ProductListView.ItemsSource = _ProductList;
             }
             App.ShowLoading(false);
         }
@@ -52,9 +54,20 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private void AddProduct_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(
-                new AddProduct()
-                );
+            int newId = 1;
+
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                if (_ProductList != null && _ProductList.Count != 0)
+                    newId = _ProductList.Max(t => t.Id) + 1;
+                Navigation.PushModalAsync(
+                    new AddProduct (new Model.Product { Id= newId})
+                    );
+            }
+            else
+            {
+                DisplayAlert("Sistema", "No hay internet", "Ok");
+            }
         }
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

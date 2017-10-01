@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="com.Goval.FacturaDigital.Pages.Bill.BillDetail">
+             x:Class="com.Goval.FacturaDigital.Pages.Bill.BillDetail"
+             xmlns:local="clr-namespace:com.Goval.FacturaDigital">
     <ContentPage.Content>
         <StackLayout>
             <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
@@ -39,8 +40,12 @@
                     </TableSection>
                 </TableView.Root>
             </TableView>
-
-
+            <StackLayout HorizontalOptions="FillAndExpand" Spacing="0">
+                <Label Text="Estado de la Factura" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+                <Picker x:Name="StatusPicker" Title="Cambiar Estado" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+                <Button Text="Modificar Estado" Clicked="SetStatusClicked" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+            </StackLayout>
+            
             <StackLayout Padding="10">
                 <Label  Text="{Binding subTotalProducts, StringFormat='Subtotal: {0:N}'}" HorizontalOptions="EndAndExpand" />
                 <Label  Text="{Binding discountAmount, StringFormat='-Descuento: {0:N}'}" HorizontalOptions="EndAndExpand" />

@@ -40,6 +40,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ColorConverter.cs" />
+    <Compile Include="Converters\DatetimeConverter.cs" />
+    <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="Model\Bill.cs" />
     <Compile Include="Model\BillStatus.cs" />
     <Compile Include="Model\Client.cs" />

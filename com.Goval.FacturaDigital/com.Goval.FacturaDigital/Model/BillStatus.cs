@@ -10,4 +10,7 @@ namespace com.Goval.FacturaDigital.Model
     {
         Aprobada,Anulada,BaseNoValida
     }
+
+    
+
 }

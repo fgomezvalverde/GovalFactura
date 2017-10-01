@@ -14,10 +14,10 @@ namespace com.Goval.FacturaDigital.Pages.Product
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddProduct : ContentPage
     {
-        public AddProduct()
+        public AddProduct(Model.Product pNewProduct)
         {
             InitializeComponent();
-            this.BindingContext =new Model.Product();
+            this.BindingContext = pNewProduct;
         }
 
 

@@ -5,21 +5,21 @@
              x:Class="com.Goval.FacturaDigital.Pages.Client.ClientList">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="ClientListView" ItemSelected="ClientListView_ItemSelected">
+            <ListView x:Name="ClientListView" ItemSelected="ClientListView_ItemSelected"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="5">
+                            <Grid Padding="9" RowSpacing="0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-
-                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding ClientId}" HorizontalOptions="StartAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Name}" HorizontalOptions="CenterAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding ClientId,StringFormat='Código de Cliente: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

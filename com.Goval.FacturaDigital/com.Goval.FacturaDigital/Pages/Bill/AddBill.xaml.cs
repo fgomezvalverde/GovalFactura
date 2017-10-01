@@ -147,11 +147,19 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             string mailBody = DependencyService.Get<IFileManagement>().OpenPlainTextFile("MailTemplate.html");
             string subject = string.Format(ConfigurationConstants.MailBillSubject, ActualBill.Id + "");
             mailBody = mailBody.Replace("$NUMERO_FACTURA$", ActualBill.Id+"");
-            mailBody = mailBody.Replace("$FECHA$", ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat));
+            mailBody = mailBody.Replace("$FECHA$", ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat,ConfigurationConstants.Culture));
             mailBody = mailBody.Replace("$MONTO_TOTAL$", Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + "");
+            var emailsToSend = new List<String>(ConfigurationConstants.EmailsToSendBill);
+
+            // Add client email to send email
+            if (ConfigurationConstants.SendBillToClientEmail && !string.IsNullOrEmpty(ActualBill.AssignClient.Email))
+            {
+                emailsToSend.Add(ActualBill.AssignClient.Email);
+            }
+
 
             DependencyService.Get<IMailService>().SendMail(subject, mailBody,
-                            ConfigurationConstants.EmailsToSendBill,
+                            emailsToSend,
                             new List<Abstraction.Mail.AttachmentMail>() {
                                 new Abstraction.Mail.AttachmentMail
                                 {

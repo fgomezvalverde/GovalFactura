@@ -2,27 +2,38 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="Productos"
-             x:Class="com.Goval.FacturaDigital.Pages.Product.ProductList">
+             x:Class="com.Goval.FacturaDigital.Pages.Product.ProductList"
+             xmlns:converter="clr-namespace:com.Goval.FacturaDigital.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:MoneyConverter x:Key="MoneyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="ProductListView" ItemSelected="ProductListView_ItemSelected">
+            <ListView x:Name="ProductListView" ItemSelected="ProductListView_ItemSelected"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="5">
+                            <Grid Padding="9" BackgroundColor="#FFFFFF" RowSpacing="0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="0.7*" />
+                                    <ColumnDefinition Width="0.3*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Row="0" VerticalOptions="Center" Grid.Column="0" Text="{Binding Code}" HorizontalOptions="StartAndExpand"/>
-                                <Label Grid.Row="0" VerticalOptions="Center" Grid.Column="1" Text="{Binding Description}" HorizontalOptions="CenterAndExpand"/>
-                                <Label Grid.Row="0" VerticalOptions="Center" Grid.Column="2" Text="{Binding Price}" HorizontalOptions="EndAndExpand"/>
+
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Code}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding Description}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+
+                                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Price, Converter={StaticResource MoneyConverter}}" FontAttributes="Bold" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End"/>
+
                             </Grid>
+
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

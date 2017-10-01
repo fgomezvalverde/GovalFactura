@@ -33,7 +33,6 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
     {
         string fileName = "FacturaGoval.xlsx";
         string pdfResultName = "FacturaN{0}.pdf";
-        string apiKey = "a09f3c3881f70d340e8746d136bb4c763299a6b6a7a824853f0ac442c16ef998";
 
         #region Interface Implementation
         public async Task<Stream> CreateAndRunReport(Dictionary<string,string> pBill,string pBillNumber)
@@ -70,7 +69,7 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
             var data = stream.ToArray();
             var stringData = Convert.ToBase64String(data);
             JObject obj = new JObject();
-            obj["api_key"] = apiKey;
+            obj["api_key"] = com.Goval.FacturaDigital.Utils.ConfigurationConstants.PDFGeneratorKey;
             obj["document"] = stringData;
             try
             {

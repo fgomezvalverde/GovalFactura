@@ -123,7 +123,7 @@ namespace com.Goval.FacturaDigital.Utils
                    ActualBill.AssignClient.Term + " dias");
 
                 values.Add("billExpiration",
-                    ActualBill.BillDate.AddDays(ActualBill.AssignClient.Term).ToString(ConfigurationConstants.DateTimeFormat));
+                    ActualBill.BillDate.AddDays(ActualBill.AssignClient.Term).ToString(ConfigurationConstants.DateTimeFormat,ConfigurationConstants.Culture));
             }
             else
             {
@@ -135,7 +135,7 @@ namespace com.Goval.FacturaDigital.Utils
 
             //Bill Info
             values.Add("billDate",
-                    ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat));
+                    ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat,ConfigurationConstants.Culture));
             values.Add("billPurchaseOrder",
                     ActualBill.PurchaseOrder);
             values.Add("billId",
@@ -155,7 +155,7 @@ namespace com.Goval.FacturaDigital.Utils
             Utils util = new Utils();
 
             values.Add("billTotalInText",
-                   util.IntegerToWritten((ActualBill.TotalToPay.ToString("0.##"))));
+                   util.IntegerToWritten((Utils.FormatNumericToString(ActualBill.TotalToPay))));
 
             return values;
             });

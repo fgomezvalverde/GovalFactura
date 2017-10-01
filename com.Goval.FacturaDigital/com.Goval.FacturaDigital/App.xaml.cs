@@ -1,6 +1,8 @@
 ﻿using Acr.UserDialogs;
+using com.Goval.FacturaDigital.Amazon;
 using com.Goval.FacturaDigital.Test;
 using com.Goval.FacturaDigital.Utils;
+using Newtonsoft.Json;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
@@ -46,6 +48,19 @@ namespace com.Goval.FacturaDigital
         {
             // Handle when your app starts
             await BillSecurity.SaveBaseBill();
+
+            //Get the ConfigurationFile
+            var configObj = await DynamoDBManager.GetInstance().GetItemsAsync<Model.SystemConfiguration>();
+            if (configObj != null && configObj.Count != 0)
+            {
+                Utils.ConfigurationConstants.EmailsToSendBill = configObj.FirstOrDefault().EmailsToSendBill;
+                Utils.ConfigurationConstants.SendBillToClientEmail = configObj.FirstOrDefault().SendBillToClientEmail;
+                Utils.ConfigurationConstants.PDFGeneratorKey = configObj.FirstOrDefault().PdfGeneratorKey;
+            }
+            else
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Sistema", "No se ha podido cargar el archivo de configuración, vuelva a iniciar el APP", "Ok");
+            }
         }
 
         protected override void OnSleep()

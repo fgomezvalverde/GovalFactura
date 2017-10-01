@@ -10,7 +10,7 @@
                 <TableView.Root>
                     <TableSection>
                         <EntryCell
-                           Label="Codigo de Client"
+                           Label="Codigo de Cliente"
                            Text="{Binding ClientId, Mode=TwoWay}"
                             Placeholder="Nuevo Codigo"
                             IsEnabled="False"

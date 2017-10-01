@@ -27,8 +27,8 @@ namespace com.Goval.FacturaDigital.Utils
             String literal = "";
             String parte_decimal;
             //si el numero utiliza (.) en lugar de (,) -> se reemplaza
+            numero = numero.Replace(",","");
             numero = numero.Replace(".", ",");
-
             //si el numero no tiene parte decimal, se le agrega ,00
             if (numero.IndexOf(",") == -1)
             {
