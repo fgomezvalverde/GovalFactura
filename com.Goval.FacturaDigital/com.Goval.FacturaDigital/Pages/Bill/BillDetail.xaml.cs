@@ -24,14 +24,23 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             ActualBill = pCurrentBill;
             StatusPicker.ItemsSource = Enum.GetNames(typeof(Model.BillStatus));
             StatusPicker.SelectedItem = pCurrentBill.Status;
+            StatusPicker.SelectedIndexChanged += SetStatusClicked;
             this.BindingContext = ActualBill;
+            ProductListView.HeightRequest = pCurrentBill.AssignClient.Products.Count * 60;
         }
 
         private async void Button_SeeBill_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
             Dictionary<string, string> values = await Utils.BillSecurity.BillToDictionary(ActualBill);
-            await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id + "");
+            if (Model.BillStatus.Aprobada.ToString().Equals(ActualBill.Status))
+            {
+                await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id + "", Utils.ConfigurationConstants.BillExcelCopyFormat);
+            }
+            else if (Model.BillStatus.Anulada.ToString().Equals(ActualBill.Status))
+            {
+                await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id + "", Utils.ConfigurationConstants.BillExcelCanceledFormat);
+            }
             App.ShowLoading(false);
         }
 
@@ -77,6 +86,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 await DisplayAlert("Sistema", "El status esta vacío", "ok");
             }
         }
+
 
     }
 }

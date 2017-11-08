@@ -18,5 +18,9 @@ namespace com.Goval.FacturaDigital.Utils
         public static string DateTimeFormat = "d";
         public static CultureInfo Culture = new CultureInfo("pt-BR");
         public static Boolean NumberToNameInCapitalLetters = true;
+
+        public static string BillExcelOriginalFormat = "FacturaGovalFormatoOriginal.xlsx";
+        public static string BillExcelCopyFormat = "FacturaGovalFormatoCopia.xlsx";
+        public static string BillExcelCanceledFormat = "FacturaGovalFormatoAnulado.xlsx";
     }
 }

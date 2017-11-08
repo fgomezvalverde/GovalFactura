@@ -39,7 +39,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             nextBillNumber = await BillSecurity.GetNextBillNumber();
             if (nextBillNumber != 0)
             {
-               await Navigation.PushModalAsync(
+               await Navigation.PushAsync(
                new AddBill(new Model.Bill
                {
                    Id = nextBillNumber,

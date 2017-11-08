@@ -22,6 +22,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         {
             InitializeComponent();
             this.BindingContext = pClient;
+            ProductListView.HeightRequest = pClient.AssignClient.Products.Count * 60;
         }
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -58,45 +59,43 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 }
                 
             }
+            //We need to apply a discount
+            if (ActualBill.AssignClient.DiscountPercentage != 0)
+            {
+                ActualBill.discountAmount = (ActualBill.subTotalProducts / 100) * ActualBill.AssignClient.DiscountPercentage;
+            }
+
+            ActualBill.totalAfterDiscount = ActualBill.subTotalProducts - ActualBill.discountAmount;
+
+            if (ActualBill.AssignClient.TaxesPercentage != 0)
+            {
+                ActualBill.taxesToPay = (ActualBill.totalAfterDiscount / 100) * ActualBill.AssignClient.TaxesPercentage;
+            }
+            ActualBill.TotalToPay = ActualBill.taxesToPay + ActualBill.totalAfterDiscount;
+
+            //Setting Amounts
+
+            TotalProducts.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.subTotalProducts);
+
+
+            DescountAmountLabel.Text = string.Format("-Descuento({0}%)", ActualBill.AssignClient.DiscountPercentage);
+            DescountAmount.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.discountAmount);
+
+            TotalAfterDescount.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.totalAfterDiscount);
+
+
+            TaxesAmountLabel.Text = string.Format("+Impuestos({0}%)", ActualBill.AssignClient.TaxesPercentage);
+            TaxesAmount.Text = "₡"+Utils.Utils.FormatNumericToString(ActualBill.taxesToPay);
+
+            Total.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + " cols";
+
 
             if (ActualBill.subTotalProducts != 0)
             {
-                //We need to apply a discount
-                if (ActualBill.AssignClient.DiscountPercentage != 0)
-                {
-                    ActualBill.discountAmount = (ActualBill.subTotalProducts / 100) * ActualBill.AssignClient.DiscountPercentage;
-                }
-
-                ActualBill.totalAfterDiscount = ActualBill.subTotalProducts - ActualBill.discountAmount;
-
-                if (ActualBill.AssignClient.TaxesPercentage != 0)
-                {
-                    ActualBill.taxesToPay = (ActualBill.totalAfterDiscount / 100) * ActualBill.AssignClient.TaxesPercentage;
-                }
-
-                ActualBill.TotalToPay = ActualBill.taxesToPay + ActualBill.totalAfterDiscount;
-
-                TotalProducts.Text = "Subtotal: " + Utils.Utils.FormatNumericToString(ActualBill.subTotalProducts);
-                DescountAmount.Text = string.Format("-Descuento({0}%): -{1}", ActualBill.AssignClient.DiscountPercentage, Utils.Utils.FormatNumericToString(ActualBill.discountAmount));
-                TotalAfterDescount.Text = "SubTotal: " + Utils.Utils.FormatNumericToString(ActualBill.totalAfterDiscount);
-                TaxesAmount.Text = string.Format("+Impuestos({0}%): +{1}", ActualBill.AssignClient.TaxesPercentage, Utils.Utils.FormatNumericToString(ActualBill.taxesToPay));
-                Total.Text = "TOTAL: " + Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + " col";
-
                 Button_CreateBill.IsVisible = true;
-
-                TotalProducts.IsVisible = true;
-                DescountAmount.IsVisible = true;
-                TotalAfterDescount.IsVisible = true;
-                TaxesAmount.IsVisible = true;
-                Total.IsVisible = true;
             }
             else
             {
-                TotalProducts.IsVisible = false;
-                DescountAmount.IsVisible = false;
-                TotalAfterDescount.IsVisible = false;
-                TaxesAmount.IsVisible = false;
-                Total.IsVisible = false;
                 Button_CreateBill.IsVisible = false;
             }
         }
@@ -113,7 +112,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 {
                     
                     Dictionary<string, string> values = await Utils.BillSecurity.BillToDictionary(ActualBill);
-                    var streamResult = await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id+"");
+                    var streamResult = await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id+"", Utils.ConfigurationConstants.BillExcelOriginalFormat);
 
                     if (streamResult != null)
                     {

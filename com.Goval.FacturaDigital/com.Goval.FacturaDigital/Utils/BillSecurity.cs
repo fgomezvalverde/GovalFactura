@@ -75,25 +75,28 @@ namespace com.Goval.FacturaDigital.Utils
             //Products Values
             for (int cont = 0; cont < ActualBill.AssignClient.Products.Count; cont++)
             {
+                if (ActualBill.AssignClient.Products[cont].Amount != 0)
+                {
+                        values.Add("productAmount" + cont,
+                        ActualBill.AssignClient.Products[cont].Amount + "");
 
-                values.Add("productAmount" + cont,
-                    ActualBill.AssignClient.Products[cont].Amount + "");
+                        values.Add("productBarCode" + cont,
+                            ActualBill.AssignClient.Products[cont].Code);
 
-                values.Add("productBarCode" + cont,
-                    ActualBill.AssignClient.Products[cont].Code);
+                        values.Add("productType" + cont,
+                            ActualBill.AssignClient.Products[cont].UnityType);
 
-                values.Add("productType" + cont,
-                    ActualBill.AssignClient.Products[cont].UnityType);
+                        values.Add("productDescription" + cont,
+                            ActualBill.AssignClient.Products[cont].Description);
 
-                values.Add("productDescription" + cont,
-                    ActualBill.AssignClient.Products[cont].Description);
+                        values.Add("productPrice" + cont, "¢" +
+                            Utils.FormatNumericToString(ActualBill.AssignClient.Products[cont].Price));
 
-                values.Add("productPrice" + cont, "¢" +
-                    Utils.FormatNumericToString(ActualBill.AssignClient.Products[cont].Price));
-
-                values.Add("productTotalCost" + cont, "¢" +
-                    Utils.FormatNumericToString(ActualBill.AssignClient.Products[cont].Amount *
-                      ActualBill.AssignClient.Products[cont].Price));
+                        values.Add("productTotalCost" + cont, "¢" +
+                            Utils.FormatNumericToString(ActualBill.AssignClient.Products[cont].Amount *
+                              ActualBill.AssignClient.Products[cont].Price));
+                    }
+                
 
 
             }

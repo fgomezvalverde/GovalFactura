@@ -1,51 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="com.Goval.FacturaDigital.Pages.Product.AddProduct">
+             x:Class="com.Goval.FacturaDigital.Pages.Product.AddProduct"
+             Title="Nuevo Producto">
     <ContentPage.Content>
-        <StackLayout Spacing="15">
-            <Label FontSize="Large" FontAttributes="Bold" Text="Nuevo Producto" HorizontalOptions="CenterAndExpand" ></Label>
-            <TableView>
-                <TableView.Root>
-                    <TableSection>
-                        <EntryCell
-                           Label="Codigo"
-                           Text="{Binding Code, Mode=TwoWay}"
-                            Placeholder="Nuevo Codigo"
-                          >
-                          </EntryCell>
-
-                          <EntryCell 
-                          Label="Descripcion"
-                          Text="{Binding Description, Mode=TwoWay}"
-                                   Placeholder="Nueva Descripcion"
-                          >
-                          </EntryCell>
-
-                         <EntryCell 
-                          Label="Precio"
-                          Text="{Binding Price, Mode=TwoWay}"
-                          Placeholder="Nuevo Precio"
-                          Keyboard="Numeric"
-                          >     
-                        </EntryCell>
-                        
-                    </TableSection>
-                </TableView.Root>
-            </TableView>
-            <StackLayout Spacing="0">
-                <Label Text="Seleccione el Tipo de Presentación"/>
-                <Picker x:Name="UnityPicker" Title="Seleccione Tipo">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Unitaria</x:String>
-                            <x:String>Docena</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+        <ScrollView >
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding Code, Mode=TwoWay}"
+                                Placeholder="Nuevo Código" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Descripción" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Description, Mode=TwoWay}"
+                                Placeholder="Nueva Descripción" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Precio(colones)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Price, Mode=TwoWay}"
+                                Placeholder="Nuevo Precio" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Seleccione el Tipo de Presentación" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="UnityPicker" BackgroundColor="White" Title="Seleccionar Tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Unitaria</x:String>
+                                <x:String>Docena</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <Button  TextColor="White"  BackgroundColor="#90A4AE" Text="Agregar Producto" Clicked="AddProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            
-            <Button Text="Agregar" Clicked="AddProduct_Clicked" HorizontalOptions="FillAndExpand"/>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

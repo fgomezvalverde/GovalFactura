@@ -2,55 +2,54 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:com.Goval.FacturaDigital"
-             x:Class="com.Goval.FacturaDigital.Pages.Product.ProductDetail">
+             x:Class="com.Goval.FacturaDigital.Pages.Product.ProductDetail"
+             Title="Modificar Producto">
     <ContentPage.Content>
-        <StackLayout Spacing="15">
-            <Label FontSize="Large" FontAttributes="Bold" Text="Modificar Producto" HorizontalOptions="CenterAndExpand" ></Label>
-            <TableView>
-                <TableView.Root>
-                    <TableSection>
-                        <EntryCell
-                           Label="Codigo"
-                           Text="{Binding Code, Mode=TwoWay}"
-                            Placeholder="Nuevo Codigo"
-                            IsEnabled="False"
-                          >
-                        </EntryCell>
-
-                        <EntryCell 
-                            x:Name="EntryDescription"
-                          Label="Descripcion"
-                          Text="{Binding Description, Mode=TwoWay}"
-                                   Placeholder="Nueva Descripcion"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          >
-                        </EntryCell>
-
-                        <EntryCell 
-                            x:Name="EntryPrice"
-                          Label="Precio"
-                          Text="{Binding Price, Mode=TwoWay}"
-                          Placeholder="Nuevo Precio"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          Keyboard="Numeric"
-                          >
-                        </EntryCell>
-                    </TableSection>
-                </TableView.Root>
-            </TableView>
-            <StackLayout Spacing="0">
-                <Label Text="Seleccione el Tipo de Presentación"/>
-                <Picker x:Name="UnityPicker" Title="Seleccione Tipo" IsEnabled="{x:Static local:App.AdminPrivilegies}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Unidad</x:String>
-                            <x:String>Docena</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+        <!--ScrollView -->
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                        IsEnabled="False"
+                               Text="{Binding Code, Mode=TwoWay}"
+                                Placeholder="Nuevo Código" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Descripción" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Description, Mode=TwoWay}"
+                                Placeholder="Nueva Descripción" BackgroundColor="White"
+                                IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Precio(colones)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Price, Mode=TwoWay}"
+                                Placeholder="Nuevo Precio" BackgroundColor="White"
+                                IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                                Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Seleccione el Tipo de Presentación" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="UnityPicker" BackgroundColor="White" Title="Seleccionar Tipo" HorizontalOptions="FillAndExpand" IsEnabled="{x:Static local:App.AdminPrivilegies}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Unitaria</x:String>
+                                <x:String>Docena</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
+                <Button x:Name="ButtonSave" Text="Guardar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+                <Button x:Name="ButtonDelete" Text="Eliminar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+            </StackLayout >
+                
             </StackLayout>
-            <Button x:Name="ButtonSave" Text="Guardar" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="false"/>
-            <Button x:Name="ButtonDelete" Text="Eliminar" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
-        </StackLayout>
+        <!--/ScrollView-->
+        
     </ContentPage.Content>
 </ContentPage>

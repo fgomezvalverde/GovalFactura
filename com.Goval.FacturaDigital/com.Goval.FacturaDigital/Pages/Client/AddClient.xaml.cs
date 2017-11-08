@@ -77,7 +77,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            ProductListView.SelectedItem = null;
+            //ProductListView.SelectedItem = null;
         }
 
 

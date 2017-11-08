@@ -60,7 +60,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
             {
                 if (_ProductList != null && _ProductList.Count != 0)
                     newId = _ProductList.Max(t => t.Id) + 1;
-                Navigation.PushModalAsync(
+                Navigation.PushAsync(
                     new AddProduct (new Model.Product { Id= newId})
                     );
             }
@@ -73,7 +73,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var detailProduct = e.SelectedItem as Model.Product;
-            Navigation.PushModalAsync(
+            Navigation.PushAsync(
                new ProductDetail(detailProduct)
                );
         }

@@ -47,7 +47,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         private void AddClient_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(
+            Navigation.PushAsync(
                 new AddClient()
                 );
         }
@@ -55,7 +55,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
         private void ClientListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var detailClient = e.SelectedItem as Model.Client;
-            Navigation.PushModalAsync(
+            Navigation.PushAsync(
                new ClientDetail(detailClient)
                );
         }

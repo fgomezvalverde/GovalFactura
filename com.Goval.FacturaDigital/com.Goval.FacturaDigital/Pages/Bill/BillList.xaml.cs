@@ -50,7 +50,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
         private void AddBill_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(
+            Navigation.PushAsync(
                 new BillClientSelection()
                 );
         }
@@ -58,7 +58,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         private void billListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var detailbill = e.SelectedItem as Model.Bill;
-            Navigation.PushModalAsync(
+            Navigation.PushAsync(
                new BillDetail(detailbill)
                );
         }

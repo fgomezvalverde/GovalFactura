@@ -1,92 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="com.Goval.FacturaDigital.Pages.Client.AddClient">
+             x:Class="com.Goval.FacturaDigital.Pages.Client.AddClient"
+             Title="Nuevo Cliente">
     <ContentPage.Content>
-        <StackLayout Spacing="15">
-            <Label FontSize="Large" FontAttributes="Bold" Text="Nuevo Cliente" HorizontalOptions="CenterAndExpand" ></Label>
-            <TableView>
-                <TableView.Root>
-                    <TableSection>
-                        <EntryCell
-                           Label="Código de Cliente"
-                           Text="{Binding ClientId, Mode=TwoWay}"
-                            Placeholder="Nuevo Codigo"
-                          >
-                        </EntryCell>
-
-                        <EntryCell 
-                          Label="Nombre"
-                          Text="{Binding Name, Mode=TwoWay}"
-                                   Placeholder="Nombre"
-                          />
-                        <EntryCell 
-                          Label="Plazo(dias)"
-                            Keyboard="Numeric"
-                          Text="{Binding Term, Mode=TwoWay}"
-                                   Placeholder="Dias"
-                          />
-                        <EntryCell 
-                          Label="Descuento(%)"
-                          Keyboard="Numeric"
-                          Text="{Binding DiscountPercentage, Mode=TwoWay}"
-                                   Placeholder="Porcentage"
-                          />
-
-                        <EntryCell 
-                          Label="Dirección"
-                          Text="{Binding Direction, Mode=TwoWay}"
-                                   Placeholder="Direccion"
-                          />
-
-                        <EntryCell 
-                          Label="Telefono"
-                            Keyboard="Telephone"
-                          Text="{Binding Telephone, Mode=TwoWay}"
-                                   Placeholder="Telefono"
-                          />
-
-                        <EntryCell 
-                          Label="Email"
-                            Keyboard="Email"
-                          Text="{Binding Email, Mode=TwoWay}"
-                                   Placeholder="Email"
-                          />
-
-                        <EntryCell 
-                          Label="Cedula Juridica/Fisica"
+        <ScrollView >
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de Cliente" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding ClientId, Mode=TwoWay}"
+                                Placeholder="Nuevo Codigo" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Name, Mode=TwoWay}"
+                                Placeholder="Nuevo Nombre" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Cedula Juridica/Fisica" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Email"
                           Text="{Binding LegalId, Mode=TwoWay}"
-                                   Placeholder="Cedula"
-                          />
-                    </TableSection>
-                </TableView.Root>
-            </TableView>
+                                   Placeholder="Cedula" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Plazo(dias)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Term, Mode=TwoWay}"
+                                Placeholder="Dias" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Descuento(%)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding DiscountPercentage, Mode=TwoWay}"
+                                Placeholder="Porcentage" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Dirección" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Direction, Mode=TwoWay}"
+                                Placeholder="Dirección detallada" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Teléfono" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Telephone"
+                          Text="{Binding Telephone, Mode=TwoWay}"
+                                   Placeholder="Telefono" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Correo electrónico" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Email"
+                          Text="{Binding Email, Mode=TwoWay}"
+                                   Placeholder="Email" BackgroundColor="White"
+                    />
+                </StackLayout>
 
-            <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
-            <ListView x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                <StackLayout BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="75" Orientation="Horizontal" Padding="10">
+                    <Label Text="Cambiar Productos Asociados" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                    <Image Source="ic_chevron_right.png" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
 
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Code}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
-                                <Switch Grid.Row="0" Grid.Column="2" IsToggled="{Binding IsUsed}" VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button Text="Agregar" Clicked="AddClient_Clicked" HorizontalOptions="FillAndExpand"/>
-        </StackLayout>
+                <Button  TextColor="White"  BackgroundColor="#90A4AE" Text="Agregar" Clicked="AddClient_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+        </ScrollView>
+        
+        
+        
     </ContentPage.Content>
 </ContentPage>

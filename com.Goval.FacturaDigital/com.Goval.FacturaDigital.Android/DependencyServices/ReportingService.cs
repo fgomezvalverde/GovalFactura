@@ -31,11 +31,10 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
 {
     public class ReportingService : IReportingService
     {
-        string fileName = "FacturaGoval.xlsx";
         string pdfResultName = "FacturaN{0}.pdf";
 
         #region Interface Implementation
-        public async Task<Stream> CreateAndRunReport(Dictionary<string,string> pBill,string pBillNumber)
+        public async Task<Stream> CreateAndRunReport(Dictionary<string,string> pBill,string pBillNumber,string pExcelFileName)
         {
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
@@ -43,12 +42,13 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
 
             application.DefaultVersion = ExcelVersion.Excel2013;
 
-            string resourcePath = "com.Goval.FacturaDigital.Droid.Reports."+ fileName;
+            string resourcePath = "com.Goval.FacturaDigital.Droid.Reports."+ pExcelFileName;
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream fileStream = assembly.GetManifestResourceStream(resourcePath);
 
             IWorkbook workbook = application.Workbooks.Open(fileStream);
-            IWorksheet sheet = workbook.Worksheets[0]; 
+            IWorksheet sheet = workbook.Worksheets[0];
+
             foreach (Syncfusion.XlsIO.Implementation.NameImpl namedVariable in workbook.Names)
             {
                 string value = "";
@@ -112,5 +112,75 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
             return null;
         }
         #endregion
+
+
+        #region Flexcel
+        public async Task<Stream> CreateAndRunReport1(Dictionary<string, string> pBill, string pBillNumber, string pExcelFileName)
+        {
+            XlsFile reportFile = new XlsFile(true);
+            using (var template = Android.App.Application.Context.Assets.Open(pExcelFileName))
+            {
+                using (var memTemplate = new MemoryStream())
+                {
+                    template.CopyTo(memTemplate);
+                    memTemplate.Position = 0;
+                    reportFile.Open(memTemplate);
+                }
+            }
+            var billObj = JObject.FromObject(pBill);
+            for (int namedVariableCount = 1; namedVariableCount <= reportFile.NamedRangeCount; namedVariableCount++)
+            {
+                var namedVariable = reportFile.GetNamedRange(namedVariableCount);
+                if(namedVariable != null)
+                {
+                    var property = billObj[namedVariable.Name];
+                    if (property != null)
+                    {
+                        switch (property.Type)
+                        {
+                            case JTokenType.Boolean:
+                                reportFile.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<Boolean>());
+                                break;
+                            case JTokenType.Float:
+                                reportFile.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<float>());
+                                break;
+                            case JTokenType.String:
+                                reportFile.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<string>());
+                                break;
+                            case JTokenType.Integer:
+                                reportFile.SetCellValue(namedVariable.Top, namedVariable.Left, property.Value<double>());
+                                break;
+                            case JTokenType.Date:
+                                var date = property.Value<DateTime>();
+                                reportFile.SetCellValue(namedVariable.Top, namedVariable.Left, date.ToString());
+                                break;
+                            default:
+                                reportFile.SetCellValue(namedVariable.Top, namedVariable.Left, property.ToString());
+                                break;
+                        }
+                    }
+                }
+            }
+            reportFile.Recalc();
+
+            string path = System.IO.Path.Combine(
+            Android.OS.Environment.ExternalStorageDirectory.Path, "result.pdf");
+            using (FlexCelPdfExport pdf = new FlexCelPdfExport(reportFile, true))
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Create))
+                {
+                    pdf.FontMapping = FlexCel.Pdf.TFontMapping.ReplaceAllFonts;
+                    pdf.Export(fs);
+                }
+            }
+            Java.IO.File file = new Java.IO.File(path);
+            Intent intent = new Intent(Intent.ActionView);
+            intent.SetDataAndType(Android.Net.Uri.FromFile(file), "application/pdf");
+            intent.SetFlags(ActivityFlags.NewTask);
+            Android.App.Application.Context.StartActivity(intent);
+            Stream stream = File.OpenRead(path);
+            return stream;
+        }
+#endregion
     }
 }

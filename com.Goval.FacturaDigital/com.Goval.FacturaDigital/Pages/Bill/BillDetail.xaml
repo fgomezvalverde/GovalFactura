@@ -2,9 +2,127 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="com.Goval.FacturaDigital.Pages.Bill.BillDetail"
-             xmlns:local="clr-namespace:com.Goval.FacturaDigital">
+             xmlns:local="clr-namespace:com.Goval.FacturaDigital"
+             Title="{Binding Id, StringFormat='Factura N°{0}'}"
+             xmlns:converter="clr-namespace:com.Goval.FacturaDigital.Converters">
+    <ContentPage.Resources>
+    <ResourceDictionary>
+        <converter:MoneyConverter x:Key="MoneyConverter" />
+    </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+
+        <ScrollView>
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Productos Asociados" HorizontalOptions="StartAndExpand" />
+                    <ListView BackgroundColor="White" x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding AssignClient.Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.20*" />
+                                            <ColumnDefinition Width="0.60*" />
+                                            <ColumnDefinition Width="0.20*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Entry Grid.Row="0" IsEnabled="False" Grid.Column="0" Text="{Binding Amount}" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="40"  />
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price, Converter={StaticResource MoneyConverter}}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Estado de Factura" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="StatusPicker" Title="Cambiar Estado" IsEnabled="{x:Static local:App.AdminPrivilegies}"/>
+                </StackLayout>
+
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Detalle de Venta" HorizontalOptions="StartAndExpand" />
+                    <Grid RowSpacing="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Padding="5"  Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand"  BackgroundColor="White" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="SubTotal" HorizontalOptions="StartAndExpand" VerticalOptions="Center"  />
+                            <Label Grid.Column="1" Text="{Binding subTotalProducts, Converter={StaticResource MoneyConverter}}"  HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  />
+                        </Grid>
+
+                        <Grid Padding="5"  Grid.Row="1" Grid.Column="0" HorizontalOptions="FillAndExpand"  BackgroundColor="White" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding AssignClient.DiscountPercentage, StringFormat='-Descuento({0:N}%)'}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"  />
+                            <Label Grid.Column="1" Text="{Binding discountAmount, Converter={StaticResource MoneyConverter}}"  HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  />
+                        </Grid>
+
+                        <Grid Padding="5"  Grid.Row="2" Grid.Column="0" HorizontalOptions="FillAndExpand"  BackgroundColor="White" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="SubTotal con descuento aplicado" HorizontalOptions="StartAndExpand" VerticalOptions="Center"  />
+                            <Label Grid.Column="1" Text="{Binding totalAfterDiscount, Converter={StaticResource MoneyConverter}}"  HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  />
+                        </Grid>
+
+
+
+                        <Grid Padding="5"  Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand"  BackgroundColor="White" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding AssignClient.TaxesPercentage, StringFormat='+Impuestos({0:N}%)'}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"  />
+                            <Label Grid.Column="1" Text="{Binding taxesToPay, Converter={StaticResource MoneyConverter}}"  HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  />
+                        </Grid>
+
+                        <Grid Padding="5"  Grid.Row="4" Grid.Column="0" HorizontalOptions="FillAndExpand"  BackgroundColor="White" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="TOTAL" TextColor="Black" HorizontalOptions="StartAndExpand" VerticalOptions="Center"  FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="{Binding TotalToPay, Converter={StaticResource MoneyConverter}}" TextColor="Black" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  FontAttributes="Bold" />
+                        </Grid>
+
+                    </Grid>
+                </StackLayout>
+
+
+                <Button TextColor="White" BackgroundColor="#90A4AE" Text="Ver Factura" Clicked="Button_SeeBill_Clicked" HorizontalOptions="FillAndExpand"/>
+                <!--Button x:Name="" Text="Guardar Borrador" Clicked="Save_Changes"  HorizontalOptions="FillAndExpand"/-->
+            </StackLayout>
+        </ScrollView>
+
+
+
+
+
+
+        <!--StackLayout>
             <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
             <ListView x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding AssignClient.Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
@@ -53,7 +171,6 @@
                 <Label  Text="{Binding taxesToPay, StringFormat='+Impuestos: {0:N}'}" HorizontalOptions="EndAndExpand" />
                 <Label  Text="{Binding TotalToPay, StringFormat='TOTAL: {0:N}'}" HorizontalOptions="EndAndExpand" FontAttributes="Bold" />
                 <Button Text="Ver Factura" Clicked="Button_SeeBill_Clicked" HorizontalOptions="FillAndExpand"/>
-            </StackLayout>
-        </StackLayout>
+            </StackLayout-->
     </ContentPage.Content>
 </ContentPage>
