@@ -43,6 +43,9 @@
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Converters\DatetimeConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
+    <Compile Include="Pages\Login\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Bill.cs" />
     <Compile Include="Model\BillStatus.cs" />
     <Compile Include="Model\Client.cs" />
@@ -69,8 +72,14 @@
     <Compile Include="Pages\Client\ClientList.xaml.cs">
       <DependentUpon>ClientList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ConfigurationPage.xaml.cs">
+    <Compile Include="Pages\Client\ClientProductSelection.xaml.cs">
+      <DependentUpon>ClientProductSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Configuracion\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Configuracion\EmailToSendBillPage.xaml.cs">
+      <DependentUpon>EmailToSendBillPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.cs" />
     <Compile Include="Pages\MasterDetail\MasterPage.xaml.cs">
@@ -94,6 +103,7 @@
     <Compile Include="Test\TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Toasts\ToastRunner.cs" />
     <Compile Include="Utils\ConfigurationConstants.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\BillSecurity.cs" />
@@ -147,6 +157,9 @@
     </Reference>
     <Reference Include="Splat, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Splat.2.0.0\lib\netstandard1.1\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="Toasts.Forms.Plugin.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Toasts.Forms.Plugin.2.0.3\lib\portable-net45+wp8+win8+wpa81+netcore451+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Toasts.Forms.Plugin.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Validation, Version=2.4.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Validation.2.4.15\lib\portable-net45+win8+wp8+wpa81\Validation.dll</HintPath>
@@ -234,7 +247,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\ConfigurationPage.xaml">
+    <EmbeddedResource Include="Pages\Configuracion\ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -259,6 +272,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Test\TestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Client\ClientProductSelection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Configuracion\EmailToSendBillPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

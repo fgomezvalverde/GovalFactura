@@ -36,27 +36,27 @@ namespace com.Goval.FacturaDigital.Pages.Product
                         ))
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha Guardado Satifactoriamente");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
-                            }
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
+                    }
                         
                     }
                     catch (Exception ex)
                     {
-                    App.ShowLoading(false);
-                    await DisplayAlert("Sistema",ex.Message , "ok");
+                        App.ShowLoading(false);
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
                     }
                     
                 }
                 else
                 {
-                App.ShowLoading(false);
-                await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
+                    App.ShowLoading(false);
+                    await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
                 }
             
         }

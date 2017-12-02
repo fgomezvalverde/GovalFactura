@@ -109,7 +109,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }
             catch (Exception ex)
             {
-                DisplayAlert("Sistema", ex.Message,"ok");
+                Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
                 pMonthlyIncomes = "0";
                 pMonthlyUnits = "0";
             }

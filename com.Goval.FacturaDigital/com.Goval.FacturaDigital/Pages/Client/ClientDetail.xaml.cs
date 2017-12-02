@@ -41,27 +41,27 @@ namespace com.Goval.FacturaDigital.Pages.Client
                     ))
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se han guardado los cambios");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
                     }
                     
                 }
                 catch (Exception ex)
                 {
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", ex.Message, "ok");
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
                 }
 
             }
             else
             {
                 App.ShowLoading(false);
-                await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
+                await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
             }
 
         }
@@ -78,16 +78,23 @@ namespace com.Goval.FacturaDigital.Pages.Client
                     ))
                 {
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", "Se ha eliminado el item", "ok");
+                    await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha eliminado el item");
                     this.SendBackButtonPressed();
                 }
                 else
                 {
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
                 }
                 
             }
+        }
+
+        public void ChangeProductsAssociated_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(
+               new ClientProductSelection(ActualClient.Products,false)
+               );
         }
 
 
@@ -107,7 +114,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
                     else
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "El item " + product.Description + " ha sido elimado, y ya era referencia a este cliente", "ok");
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "El item " + product.Description + " ha sido elimado, y ya era referencia a este cliente");
                     }
                 }
                 ActualClient.Products = productList;
@@ -115,17 +122,10 @@ namespace com.Goval.FacturaDigital.Pages.Client
             else
             {
                 App.ShowLoading(false);
-                await DisplayAlert("Sistema", "No se han podido traer los productos del server", "ok");
+                await Toasts.ToastRunner.ShowErrorToast("Sistema", "No se han podido traer los productos del server");
             }
             App.ShowLoading(false);
         }
 
-
-        
-
-        private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ProductListView.SelectedItem = null;
-        }
     }
 }

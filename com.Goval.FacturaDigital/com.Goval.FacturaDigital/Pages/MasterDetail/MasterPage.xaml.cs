@@ -1,5 +1,6 @@
 ﻿using com.Goval.FacturaDigital.Pages.Bill;
 using com.Goval.FacturaDigital.Pages.Client;
+using com.Goval.FacturaDigital.Pages.Configuracion;
 using com.Goval.FacturaDigital.Pages.Product;
 using System;
 using System.Collections.Generic;

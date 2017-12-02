@@ -63,27 +63,27 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                     ))
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se han guardado los cambios", "ok");
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se han guardado los cambios");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar al servicio");
                     }
 
                 }
                 catch (Exception ex)
                 {
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", ex.Message, "ok");
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
                 }
 
             }
             else
             {
                 App.ShowLoading(false);
-                await DisplayAlert("Sistema", "El status esta vacío", "ok");
+                await Toasts.ToastRunner.ShowInformativeToast("Sistema", "El status esta vacío");
             }
         }
 

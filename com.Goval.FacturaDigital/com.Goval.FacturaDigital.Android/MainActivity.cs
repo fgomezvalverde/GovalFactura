@@ -7,6 +7,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
+using Plugin.Toasts;
+using Xamarin.Forms;
 
 namespace com.Goval.FacturaDigital.Droid
 {
@@ -21,6 +23,8 @@ namespace com.Goval.FacturaDigital.Droid
             base.OnCreate(bundle);
 
             UserDialogs.Init(this);
+            DependencyService.Register<ToastNotificatorImplementation>();
+            ToastNotificatorImplementation.Init(this);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());

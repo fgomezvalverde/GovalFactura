@@ -23,24 +23,25 @@ namespace com.Goval.FacturaDigital
         public App()
         {
             InitializeComponent();
-#if DEBUG
+/*#if DEBUG
             AdminPrivilegies = true;
-#endif
+#endif*/
             CrossConnectivity.Current.ConnectivityChanged += ConnectivityChanged;
 
             RootPage = new Pages.MasterDetail.RootPage();
-            MainPage = RootPage;
+            //MainPage = RootPage;
+            MainPage = new Pages.Login.LoginPage();
         }
 
         private async void ConnectivityChanged(object sender, Plugin.Connectivity.Abstractions.ConnectivityChangedEventArgs e)
         {
             if (e.IsConnected)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Sistema", "Se ha recuperado la conexión", "Ok");
+                await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha recuperado la conexión");
             }
             else
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Sistema", "Se ha perdidio la conexión, es posible que el app no funcione bien","Ok");
+                await Toasts.ToastRunner.ShowWarningToast("Sistema", "Se ha perdidio la conexión, es posible que el app no funcione bien");
             }
         }
 
@@ -53,8 +54,7 @@ namespace com.Goval.FacturaDigital
             var configObj = await DynamoDBManager.GetInstance().GetItemsAsync<Model.SystemConfiguration>();
             if (configObj != null && configObj.Count != 0)
             {
-                Utils.ConfigurationConstants.EmailsToSendBill = configObj.FirstOrDefault().EmailsToSendBill;
-                Utils.ConfigurationConstants.SendBillToClientEmail = configObj.FirstOrDefault().SendBillToClientEmail;
+                Utils.ConfigurationConstants.ConfigurationObject = configObj.FirstOrDefault();
                 Utils.ConfigurationConstants.PDFGeneratorKey = configObj.FirstOrDefault().PdfGeneratorKey;
             }
             else

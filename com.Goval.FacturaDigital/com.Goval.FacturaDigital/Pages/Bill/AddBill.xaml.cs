@@ -120,7 +120,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                         streamResult.Dispose();
                     }
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
+                    await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha Guardado Satifactoriamente");
                     this.SendBackButtonPressed();
                     this.SendBackButtonPressed();
 
@@ -129,14 +129,13 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 else
                 {
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
-                    
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");                    
                 }
                 
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Sistema", ex.Message, "ok");
+                await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
             }
         }
 
@@ -148,10 +147,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             mailBody = mailBody.Replace("$NUMERO_FACTURA$", ActualBill.Id+"");
             mailBody = mailBody.Replace("$FECHA$", ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat,ConfigurationConstants.Culture));
             mailBody = mailBody.Replace("$MONTO_TOTAL$", Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + "");
-            var emailsToSend = new List<String>(ConfigurationConstants.EmailsToSendBill);
+            var emailsToSend = new List<String>(ConfigurationConstants.ConfigurationObject.EmailsToSendBill);
 
             // Add client email to send email
-            if (ConfigurationConstants.SendBillToClientEmail && !string.IsNullOrEmpty(ActualBill.AssignClient.Email))
+            if (ConfigurationConstants.ConfigurationObject.SendBillToClientEmail && !string.IsNullOrEmpty(ActualBill.AssignClient.Email))
             {
                 emailsToSend.Add(ActualBill.AssignClient.Email);
             }

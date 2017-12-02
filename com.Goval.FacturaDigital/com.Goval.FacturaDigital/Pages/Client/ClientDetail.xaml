@@ -2,114 +2,98 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:com.Goval.FacturaDigital" 
-             x:Class="com.Goval.FacturaDigital.Pages.Client.ClientDetail">
+             x:Class="com.Goval.FacturaDigital.Pages.Client.ClientDetail"
+             Title="Detalle de Cliente">
     <ContentPage.Content>
-        <StackLayout Spacing="15">
-            <Label FontSize="Large" FontAttributes="Bold" Text="Modificar Cliente" HorizontalOptions="CenterAndExpand" ></Label>
-            <TableView>
-                <TableView.Root>
-                    <TableSection>
-                        <EntryCell
-                           Label="Codigo de Cliente"
-                           Text="{Binding ClientId, Mode=TwoWay}"
-                            Placeholder="Nuevo Codigo"
-                            IsEnabled="False"
-                          />
-
-                        <EntryCell 
-                          Label="Nombre"
-                          x:Name="EntryName"
-                          Text="{Binding Name, Mode=TwoWay}"
-                                   Placeholder="Nombre"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
-
-
-
-                        <EntryCell 
-                            x:Name="EntryTerm"
-                          Label="Plazo(dias)"
-                            Keyboard="Numeric"
-                          Text="{Binding Term, Mode=TwoWay}"
-                                   Placeholder="Dias"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
-                        <EntryCell 
-                            x:Name="EntryDiscount"
-                          Label="Descuento(%)"
-                          Keyboard="Numeric"
-                          Text="{Binding DiscountPercentage, Mode=TwoWay}"
-                                   Placeholder="Porcentage"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
-                        
-                        <EntryCell 
-                            x:Name="EntryDirection"
-                          Label="Dirección"
-                          Text="{Binding Direction, Mode=TwoWay}"
-                                   Placeholder="Direccion"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
-
-                        <EntryCell 
-                          Label="Telefono"
-                            x:Name="EntryPhone"
-                            Keyboard="Telephone"
-                          Text="{Binding Telephone, Mode=TwoWay}"
-                                   Placeholder="Telefono"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
-
-                        <EntryCell 
-                          Label="Email"
-                            x:Name="EntryEmail"
-                            Keyboard="Email"
-                          Text="{Binding Email, Mode=TwoWay}"
-                                   Placeholder="Email"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
-
-                        <EntryCell 
-                            x:Name="EntryId"
-                          Label="Cedula Juridica/Fisica"
+        <ScrollView >
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de Cliente" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding ClientId, Mode=TwoWay}"
+                                Placeholder="Nuevo Codigo" BackgroundColor="White"
+                                IsEnabled="False"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Name, Mode=TwoWay}"
+                                Placeholder="Nuevo Nombre" BackgroundColor="White"
+                                IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Cedula Juridica/Fisica" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Email"
                           Text="{Binding LegalId, Mode=TwoWay}"
-                                   Placeholder="Cedula"
-                            IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                          />
+                                   Placeholder="Cedula" BackgroundColor="White"
+                        IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Plazo(dias)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Term, Mode=TwoWay}"
+                                Placeholder="Dias" BackgroundColor="White"
+                        Keyboard="Numeric"
+                        IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Descuento(%)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding DiscountPercentage, Mode=TwoWay}"
+                                Placeholder="Porcentage" BackgroundColor="White"
+                        Keyboard="Numeric"
+                        IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Dirección" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Direction, Mode=TwoWay}"
+                                Placeholder="Dirección detallada" BackgroundColor="White"
+                        IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Teléfono" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Telephone"
+                          Text="{Binding Telephone, Mode=TwoWay}"
+                                   Placeholder="Telefono" BackgroundColor="White"
+                        IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Correo electrónico" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Email"
+                          Text="{Binding Email, Mode=TwoWay}"
+                                   Placeholder="Email" BackgroundColor="White"
+                        IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                    />
+                </StackLayout>
 
-                    </TableSection>
-                </TableView.Root>
-            </TableView>
+                <StackLayout BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="75" Orientation="Horizontal" Padding="10">
+                    <Label Text="Cambiar Productos Asociados" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" FontSize="Large"/>
+                    <Image Source="ic_chevron_right.png" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Tapped="ChangeProductsAssociated_Clicked"
+                            NumberOfTapsRequired="1"
+                         />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
 
-            <Label FontSize="Large" Text="Productos Asociados" HorizontalOptions="CenterAndExpand" />
-            <ListView  x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected" HeightRequest="120" HorizontalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Code}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
-                                <Switch Grid.Row="0" Grid.Column="2" IsToggled="{Binding IsUsed}" VerticalOptions="Center"  HorizontalOptions="CenterAndExpand"
-                                        IsEnabled="{x:Static local:App.AdminPrivilegies}"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button x:Name="ButtonSave" Text="Guardar" Clicked="SaveClient_Clicked" HorizontalOptions="FillAndExpand" 
+                <Button TextColor="White"  BackgroundColor="#90A4AE"  Text="Guardar Cambios" Clicked="SaveClient_Clicked" HorizontalOptions="FillAndExpand" 
                             IsVisible="{x:Static local:App.AdminPrivilegies}"/>
-            <Button x:Name="ButtonDelete" Text="Eliminar" Clicked="DeleteClient_Clicked" HorizontalOptions="FillAndExpand"
+                <Button TextColor="White"  BackgroundColor="#90A4AE"  Text="Eliminar" Clicked="DeleteClient_Clicked" HorizontalOptions="FillAndExpand"
                             IsVisible="{x:Static local:App.AdminPrivilegies}"/>
-        </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

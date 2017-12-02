@@ -52,7 +52,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
             base.OnDisappearing();
         }
 
-        private void AddProduct_Clicked(object sender, EventArgs e)
+        private async void AddProduct_Clicked(object sender, EventArgs e)
         {
             int newId = 1;
 
@@ -60,13 +60,13 @@ namespace com.Goval.FacturaDigital.Pages.Product
             {
                 if (_ProductList != null && _ProductList.Count != 0)
                     newId = _ProductList.Max(t => t.Id) + 1;
-                Navigation.PushAsync(
+                await Navigation.PushAsync(
                     new AddProduct (new Model.Product { Id= newId})
                     );
             }
             else
             {
-                DisplayAlert("Sistema", "No hay internet", "Ok");
+                await Toasts.ToastRunner.ShowErrorToast("Sistema", "No hay internet, vuelva cuando tenga conexión");
             }
         }
 

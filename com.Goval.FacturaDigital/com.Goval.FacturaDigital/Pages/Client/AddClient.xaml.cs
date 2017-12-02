@@ -1,36 +1,41 @@
 ﻿using com.Goval.FacturaDigital.Amazon;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Client
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [AddINotifyPropertyChangedInterface]
     public partial class AddClient : ContentPage
     {
+        List<Model.Product> ActualProducts = null;
         public AddClient()
         {
             InitializeComponent();
-            
         }
 
 
         protected async override void OnAppearing()
         {
             App.ShowLoading(true);
-            var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
-            if (productList != null && productList.Count != 0)
+            if (ActualProducts == null)
             {
-                this.BindingContext = new Model.Client() {Products= productList};
-            }
-            else
-            {
-                this.BindingContext = new Model.Client() { };
+                ActualProducts = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
+                if (ActualProducts != null && ActualProducts.Count != 0)
+                {
+                    this.BindingContext = new Model.Client() { Products = ActualProducts };
+                }
+                else
+                {
+                    this.BindingContext = new Model.Client() { };
+                }
             }
             base.OnAppearing();
             App.ShowLoading(false);
@@ -50,36 +55,39 @@ namespace com.Goval.FacturaDigital.Pages.Client
                     ))
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se ha Guardado Satifactoriamente", "ok");
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha Guardado Satifactoriamente");
                         this.SendBackButtonPressed();
                     }
                     else
                     {
                         App.ShowLoading(false);
-                        await DisplayAlert("Sistema", "Se ha producido un error al contactar el servicio", "ok");
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
                     }
                     
                 }
                 catch (Exception ex)
                 {
                     App.ShowLoading(false);
-                    await DisplayAlert("Sistema", ex.Message, "ok");
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
                 }
 
             }
             else
             {
                 App.ShowLoading(false);
-                await DisplayAlert("Sistema", "Alguno de los datos falta por rellenar", "ok");
+                await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
             }
 
         }
 
-        private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            //ProductListView.SelectedItem = null;
-        }
 
+
+        public void ChangeProductsAssociated_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(
+               new ClientProductSelection(ActualProducts,true)
+               );
+        }
 
         private List<Model.Product> RemoveUnUsedProduct(List<Model.Product> pProductList)
         {

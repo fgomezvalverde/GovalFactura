@@ -13,4 +13,9 @@ namespace com.Goval.FacturaDigital.Model
         public List<String> EmailsToSendBill { get; set; }
         public Boolean SendBillToClientEmail { get; set; } = false;
     }
+
+    public class EmailContact
+    {
+        public string MyProperty { get; set; }
+    }
 }

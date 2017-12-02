@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="com.Goval.FacturaDigital.Pages.Client.AddClient"
-             Title="Nuevo Cliente">
+             Title="{Binding Name,StringFormat='Nuevo Cliente {0:N}'}">
     <ContentPage.Content>
         <ScrollView >
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
@@ -69,8 +69,14 @@
                 </StackLayout>
 
                 <StackLayout BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="75" Orientation="Horizontal" Padding="10">
-                    <Label Text="Cambiar Productos Asociados" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                    <Label Text="Cambiar Productos Asociados" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" FontSize="Large"/>
                     <Image Source="ic_chevron_right.png" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Tapped="ChangeProductsAssociated_Clicked"
+                            NumberOfTapsRequired="1"
+                         />
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
 
                 <Button  TextColor="White"  BackgroundColor="#90A4AE" Text="Agregar" Clicked="AddClient_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>

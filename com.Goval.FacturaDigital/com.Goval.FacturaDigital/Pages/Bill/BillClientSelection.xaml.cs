@@ -50,7 +50,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }
             else
             {
-                await DisplayAlert("Sistema", "Hubo un problema al conseguir el Numero de Factura", "Ok");
+                await Toasts.ToastRunner.ShowErrorToast("Sistema", "Hubo un problema al conseguir el Numero de Factura");
             }
             App.ShowLoading(false);
         }

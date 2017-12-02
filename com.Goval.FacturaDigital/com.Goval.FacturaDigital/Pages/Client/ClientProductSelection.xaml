@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="com.Goval.FacturaDigital.Pages.Client.ClientProductSelection"
+             xmlns:local="clr-namespace:com.Goval.FacturaDigital.Pages.Client"
+             Title="Seleccione los productos">
+    <ContentPage.Content>
+        <ScrollView >
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <ListView  x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding ., Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="9" BackgroundColor="#FFFFFF" RowSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.7*" />
+                                        <ColumnDefinition Width="0.3*" />
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Code,StringFormat='COD: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding Description}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+
+                                    <Switch Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" IsToggled="{Binding IsUsed}" VerticalOptions="CenterAndExpand"  HorizontalOptions="EndAndExpand"
+                                        IsEnabled="{x:Static local:ClientProductSelection.IsSwitchAvailable}"/>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
