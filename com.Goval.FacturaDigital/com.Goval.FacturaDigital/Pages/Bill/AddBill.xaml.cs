@@ -104,6 +104,8 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         {
             App.ShowLoading(true);
             ActualBill.BillDate = DateTime.Now;
+            ActualBill.CreatedBy = App.ActualUser.FullName;
+            ActualBill.UpdatedBy = App.ActualUser.FullName;
             try
             {
                 if (await DynamoDBManager.GetInstance().SaveAsync<Model.Bill>(

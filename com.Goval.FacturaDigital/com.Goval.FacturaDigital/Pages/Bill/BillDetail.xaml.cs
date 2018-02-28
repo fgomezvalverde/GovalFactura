@@ -58,6 +58,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 try
                 {
                     ActualBill.Status = StatusPicker.SelectedItem as string;
+                    ActualBill.UpdatedBy = App.ActualUser.FullName;
                     if (await DynamoDBManager.GetInstance().SaveAsync<Model.Bill>(
                      ActualBill
                     ))

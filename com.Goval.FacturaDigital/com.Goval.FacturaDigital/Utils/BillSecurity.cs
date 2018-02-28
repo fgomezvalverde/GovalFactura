@@ -14,9 +14,9 @@ namespace com.Goval.FacturaDigital.Utils
             var billList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Bill>();
             if (billList != null && billList.Count != 0)
             {
-                if (billList.Exists(bill => bill.Id == App.StarterBillNumber))
+                if (billList.Exists(bill => bill.Id == ConfigurationConstants.StarterBillNumber))
                 {
-                    var billResult = billList.Where(bill => bill.Id != App.StarterBillNumber);
+                    var billResult = billList.Where(bill => bill.Id != ConfigurationConstants.StarterBillNumber);
 
                     if (billResult != null)
                     {
@@ -29,7 +29,7 @@ namespace com.Goval.FacturaDigital.Utils
                 }
                 else
                 {
-                    throw new Exception("GetBillList.No estaba el Bill base con el Numbero:" + App.StarterBillNumber);
+                    throw new Exception("GetBillList.No estaba el Bill base con el Numbero:" + ConfigurationConstants.StarterBillNumber);
                 }
             }
             else
@@ -41,7 +41,7 @@ namespace com.Goval.FacturaDigital.Utils
         public async static Task SaveBaseBill()
         {
             await DynamoDBManager.GetInstance().SaveAsync<Model.Bill>(
-                new Model.Bill {Id = App.StarterBillNumber });
+                new Model.Bill {Id = ConfigurationConstants.StarterBillNumber });
 
         }
 
@@ -50,14 +50,14 @@ namespace com.Goval.FacturaDigital.Utils
             var billList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Bill>();
             if (billList != null && billList.Count != 0)
             {
-                if (billList.Exists(bill => bill.Id == App.StarterBillNumber))
+                if (billList.Exists(bill => bill.Id == ConfigurationConstants.StarterBillNumber))
                 {
                     var billResult = billList.OrderByDescending(bill => bill.Id);
                     return billResult.First().Id + 1;
                 }
                 else
                 {
-                    throw new Exception("GetNextBillNumber.No estaba el Bill base con el Numbero:" + App.StarterBillNumber);
+                    throw new Exception("GetNextBillNumber.No estaba el Bill base con el Numbero:" + ConfigurationConstants.StarterBillNumber);
                 }
             }
             else

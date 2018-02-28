@@ -1,4 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Abstraction.DependencyServices;
+using com.Goval.FacturaDigital.Amazon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,38 @@ namespace com.Goval.FacturaDigital.Test
             InitializeComponent();
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
-            DependencyService.Get<IMailService>().SendMail("Prueba", "Esto es una prueba",
-                new List<string>() { "fabiangomezvalverde@gmail.com" });
+            /*DependencyService.Get<IMailService>().SendMail("Prueba", "Esto es una prueba",
+                new List<string>() { "fabiangomezvalverde@gmail.com" });*/
+            App.ShowLoading(true);
+            try
+            {
+                var billList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Bill>();
+                foreach (var bill in billList)
+                {
+                    bill.UserId = 302680516;
+                    await DynamoDBManager.GetInstance().SaveAsync<Model.Bill>(bill);
+                }
+                var clientList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Client>();
+                foreach (var client in clientList)
+                {
+                    client.UserId = 302680516;
+                    await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(client);
+                }
+                var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
+                foreach (var product in productList)
+                {
+                    product.UserId = 302680516;
+                    await DynamoDBManager.GetInstance().SaveAsync<Model.Product>(product);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            App.ShowLoading(false);
         }
     }
 }

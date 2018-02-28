@@ -33,6 +33,8 @@ namespace com.Goval.FacturaDigital.Model
 
         public int Term { get; set; } = 0;
 
+        public int UserId { get; set; }
+
 
         public void RemoveOnUsedProducts()
         {

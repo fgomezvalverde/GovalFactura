@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.Goval.FacturaDigital.Android", "com.Goval.FacturaDigital\com.Goval.FacturaDigital.Android\com.Goval.FacturaDigital.Android.csproj", "{ED608F15-AC32-454B-B982-7FCF4F16DFA9}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.Goval.FacturaDigital.Abstraction", "com.Goval.FacturaDigital\com.Goval.FacturaDigital.Abstraction\com.Goval.FacturaDigital.Abstraction.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.Goval.FacturaDigital.Core", "com.Goval.FacturaDigital\com.Goval.FacturaDigital.Core\com.Goval.FacturaDigital.Core.csproj", "{21F150B8-D6A6-4E8B-9FC4-7A2E15F2B2EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{79EFBB23-E150-4C1F-B7E8-70AFE4F15507}"
+	ProjectSection(SolutionItems) = preProject
+		ToDo.txt = ToDo.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

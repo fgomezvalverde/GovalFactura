@@ -1,0 +1,8 @@
+
+
+TO DO:
+-Quitar el BaseBill y buscar otra manera de arrancar el proceso de creacion de las facturas en donde se usa el Number del BaseBill.
+-Hacer que el ID del Bill sea un string con "UserID-NumeroFactura"
+
+DOING:
+-Terminar y Probar el cambio de multiUsuario.

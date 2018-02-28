@@ -12,6 +12,9 @@ namespace com.Goval.FacturaDigital.Model
         public string PdfGeneratorKey { get; set; }
         public List<String> EmailsToSendBill { get; set; }
         public Boolean SendBillToClientEmail { get; set; } = false;
+
+        public int StartBillNumber { get; set; }
+        public int UserId { get; set; }
     }
 
     public class EmailContact

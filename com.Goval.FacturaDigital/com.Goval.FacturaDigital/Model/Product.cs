@@ -26,5 +26,6 @@ namespace com.Goval.FacturaDigital.Model
         public int Amount { get; set; } = 0;
 
         public double TotalCost { get; set; } = 0;
+        public int UserId { get; set; }
     }
 }

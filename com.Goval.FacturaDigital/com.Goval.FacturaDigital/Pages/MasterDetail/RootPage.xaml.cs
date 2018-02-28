@@ -1,4 +1,4 @@
-﻿using com.Goval.FacturaDigital.Pages.Bill;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,17 +24,50 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                 MasterBehavior = MasterBehavior.Popover;
             }
 
-            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(BillList)));
+            Detail = new NavigationPage(new Bill.BillList());
         }
 
-        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as MasterPageItem;
             if (item != null)
             {
-                Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
-                masterPage.ListView.SelectedItem = null;
-                IsPresented = false;
+                if (item.TargetType.Equals(PageType.Logout))
+                {
+                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().RemoveString(App.UserDefaultKey);
+                    await Navigation.PushModalAsync(new Login.LoginPage());
+                }
+                else
+                {
+                    Page newPage = null;
+
+                    switch (item.TargetType)
+                    {
+                        case PageType.BillList:
+                            newPage = new Bill.BillList();
+                            break;
+                        case PageType.ClientList:
+                            newPage = new Client.ClientList();
+                            break;
+                        case PageType.ProductList:
+                            newPage = new Product.ProductList();
+                            break;
+
+
+                        case PageType.Configuration:
+                            newPage = new Configuracion.ConfigurationPage();
+                            break;
+                        default:
+                            newPage = new Bill.BillList();
+                            break;
+                    }
+
+                    Detail = new NavigationPage(newPage);
+                    masterPage.ListView.SelectedItem = null;
+                    IsPresented = false;
+                }
+
+                
             }
         }
     }

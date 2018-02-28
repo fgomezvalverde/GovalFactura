@@ -12,6 +12,14 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
 
         public string IconSource { get; set; }
 
-        public Type TargetType { get; set; }
+        public PageType TargetType { get; set; }
+        
+
+    }
+
+
+    public enum PageType
+    {
+        BillList,ClientList,Configuration,ProductList,Logout
     }
 }

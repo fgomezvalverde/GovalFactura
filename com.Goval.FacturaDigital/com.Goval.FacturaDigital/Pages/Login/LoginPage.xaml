@@ -5,20 +5,21 @@
              BackgroundColor="#EEEEEE">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Orientation="Vertical"
-                     WidthRequest="450">
-            <Image Source="icon.png" WidthRequest="300" HeightRequest="300" >
+                     Padding="35"
+                     WidthRequest="350">
+            <Image Source="ic_logo.png" Aspect="AspectFill" WidthRequest="150" HeightRequest="150" HorizontalOptions="CenterAndExpand"  >
                 
             </Image>
-            <StackLayout BackgroundColor="White" Padding="10" Spacing="10">
-                <Entry HorizontalOptions="FillAndExpand" Placeholder="Usuario"/>
-                <Entry HorizontalOptions="FillAndExpand" Placeholder="Contraseña"/>
-                <Button HorizontalOptions="FillAndExpand" Text="Iniciar Sesión"/>
-                <StackLayout Orientation="Horizontal">
+            <StackLayout BackgroundColor="White" Padding="15,25,15,25" Spacing="10">
+                <Entry HorizontalOptions="FillAndExpand" Placeholder="Usuario" x:Name="Entry_Username"/>
+                <Entry HorizontalOptions="FillAndExpand" Placeholder="Contraseña" x:Name="Entry_Password" IsPassword="True"/>
+                <Button HorizontalOptions="FillAndExpand" TextColor="White"  BackgroundColor="#90A4AE" Text="Iniciar Sesión" Clicked="LoginButton_Clicked"/>
+                <!--StackLayout Orientation="Horizontal">
                     <Label HorizontalOptions="End" FontSize="Small" Text="Recordar Usuario"/>
-                    <Switch HorizontalOptions="End"/>
-                </StackLayout>
+                    <Switch HorizontalOptions="End" IsToggled="False"/>
+                </-->
             </StackLayout>
-            <Label Text="Creado por Goval | Version 1.0"/>
+            <Label HorizontalOptions="CenterAndExpand" Text="Creado por Goval | Versión 1.0"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

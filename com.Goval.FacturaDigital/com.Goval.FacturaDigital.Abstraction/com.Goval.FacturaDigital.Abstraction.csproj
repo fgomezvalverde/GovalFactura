@@ -38,6 +38,7 @@
     <Compile Include="DependencyServices\IFileManagement.cs" />
     <Compile Include="DependencyServices\IMailService.cs" />
     <Compile Include="DependencyServices\IReportingService.cs" />
+    <Compile Include="DependencyServices\ISharedPreferences.cs" />
     <Compile Include="GroupingListView\Grouping.cs" />
     <Compile Include="Mail\AttachmentMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

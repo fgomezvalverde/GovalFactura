@@ -43,6 +43,7 @@
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Converters\DatetimeConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Pages\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
