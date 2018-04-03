@@ -23,6 +23,7 @@ namespace com.Goval.FacturaDigital.Utils
         public static string BillExcelCopyFormat = "FacturaGovalFormatoCopia.xlsx";
         public static string BillExcelCanceledFormat = "FacturaGovalFormatoAnulado.xlsx";
 
+
         public static int StarterBillNumber = 1;
     }
 }

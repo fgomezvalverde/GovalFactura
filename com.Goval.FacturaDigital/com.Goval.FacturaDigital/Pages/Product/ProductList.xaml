@@ -27,7 +27,7 @@
                                 </Grid.ColumnDefinitions>
 
 
-                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Code,StringFormat='COD: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Name,StringFormat='COD: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
                                 <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding Description}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
 
                                 <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Price, Converter={StaticResource MoneyConverter}}" FontAttributes="Bold" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End"/>

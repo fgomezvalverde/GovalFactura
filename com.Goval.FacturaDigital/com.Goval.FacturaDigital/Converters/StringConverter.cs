@@ -15,7 +15,7 @@ namespace com.Goval.FacturaDigital.Converters
            
             try
             {
-                double money = (double)value;
+                decimal money = (decimal)value;
                 var parsedMoney = Utils.Utils.FormatNumericToString(money);
                 return "₡" + parsedMoney;
             }

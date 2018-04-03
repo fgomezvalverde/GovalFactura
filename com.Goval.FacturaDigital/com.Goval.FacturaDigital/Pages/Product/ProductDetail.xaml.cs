@@ -13,17 +13,17 @@ namespace com.Goval.FacturaDigital.Pages.Product
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductDetail : ContentPage
     {
-        public ProductDetail(Model.Product pProduct)
+        public ProductDetail(DataContracts.Model.Product pProduct)
         {
             InitializeComponent();
             this.BindingContext = pProduct;
-            UnityPicker.SelectedItem = pProduct.UnityType;
+            //UnityPicker.SelectedItem = pProduct.UnityType;
         }
 
         private async void SaveProduct_Clicked(object sender, EventArgs e)
         {
-            App.ShowLoading(true);
-            var NewProduct = this.BindingContext as Model.Product;
+            /*App.ShowLoading(true);
+            var NewProduct = this.BindingContext as DataContracts.Model.Product;
             if (NewProduct != null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
                 NewProduct.Price != 0 && UnityPicker.SelectedItem != null && !string.IsNullOrEmpty(Convert.ToString(UnityPicker.SelectedItem)))
             {
@@ -55,13 +55,13 @@ namespace com.Goval.FacturaDigital.Pages.Product
             {
                 App.ShowLoading(false);
                 await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
-            }
+            }*/
 
         }
 
         private async void DeleteProduct_Clicked(object sender, EventArgs e)
         {
-            App.ShowLoading(true);
+            /*App.ShowLoading(true);
             var deleteProduct = this.BindingContext as Model.Product;
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
             if (deleteProduct != null && answer)
@@ -79,7 +79,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
                     await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
                 }
                 
-            }
+            }*/
         }
     }
 }

@@ -23,7 +23,7 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
             InitializeComponent();
 
             var masterPageItems = new List<MasterPageItem>();
-            masterPageItems.Add(new MasterPageItem
+            /*masterPageItems.Add(new MasterPageItem
             {
                 Title = "Facturas",
                 IconSource = "contacts.png",
@@ -46,7 +46,7 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                 Title = "Configuración",
                 IconSource = "reminders.png",
                 TargetType = PageType.Configuration
-            });
+            });*/
 
             masterPageItems.Add(new MasterPageItem
             {

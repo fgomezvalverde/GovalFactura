@@ -24,7 +24,7 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                 MasterBehavior = MasterBehavior.Popover;
             }
 
-            Detail = new NavigationPage(new Bill.BillList());
+            Detail = new NavigationPage(new Product.ProductList());
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -34,7 +34,8 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
             {
                 if (item.TargetType.Equals(PageType.Logout))
                 {
-                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().RemoveString(App.UserDefaultKey);
+                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().RemoveString(App.ActualUserDBKey);
+                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().RemoveString(App.ActualUserConfigurationDBKey);
                     await Navigation.PushModalAsync(new Login.LoginPage());
                 }
                 else

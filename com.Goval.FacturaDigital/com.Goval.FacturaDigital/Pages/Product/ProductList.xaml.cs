@@ -14,7 +14,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductList : ContentPage
     {
-        List<Model.Product> _ProductList;
+        List<DataContracts.Model.Product> _ProductList;
         public ProductList()
         {
             InitializeComponent();
@@ -22,9 +22,15 @@ namespace com.Goval.FacturaDigital.Pages.Product
         }
         protected async override void OnAppearing()
         {
-            App.ShowLoading(true);
             base.OnAppearing();
 
+
+            ProductListView.ItemsSource = new List<DataContracts.Model.Product>()
+            {
+                new DataContracts.Model.Product{ Name="TESTPRODUCT1Name",Description="DescriptionTEST",Price=9999}
+            };
+
+            //App.ShowLoading(true);
             if (App.AdminPrivilegies && this.ToolbarItems.Count ==0)
             {
                 ToolbarItem item = new ToolbarItem
@@ -38,13 +44,23 @@ namespace com.Goval.FacturaDigital.Pages.Product
                 item.Clicked += AddProduct_Clicked;
                 this.ToolbarItems.Add(item);
             }
-
-            _ProductList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
+            /*if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
+            {
+                var vGetUserProductsClient = new BusinessProxy.Product.GetUserProducts();
+                var vProductResponse = await vGetUserProductsClient.GetDataAsync(
+                    new BusinessProxy.Models.ProductRequest
+                    {
+                        SSOT = App.SSOT,
+                        UserId = App.ActualUser.UserId
+                    });
+                _ProductList = vProductResponse.UserProducts;
+            }
+            
             if (_ProductList != null && _ProductList.Count != 0)
             {
                  ProductListView.ItemsSource = _ProductList;
             }
-            App.ShowLoading(false);
+            App.ShowLoading(false);*/
         }
 
         protected override void OnDisappearing()
@@ -54,15 +70,11 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void AddProduct_Clicked(object sender, EventArgs e)
         {
-            int newId = 1;
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (_ProductList != null && _ProductList.Count != 0)
-                    newId = _ProductList.Max(t => t.Id) + 1;
-                await Navigation.PushAsync(
-                    new AddProduct (new Model.Product { Id= newId})
-                    );
+
+                await Navigation.PushAsync(new AddProduct ());
             }
             else
             {
@@ -72,10 +84,8 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var detailProduct = e.SelectedItem as Model.Product;
-            Navigation.PushAsync(
-               new ProductDetail(detailProduct)
-               );
+            var detailProduct = e.SelectedItem as DataContracts.Model.Product;
+            Navigation.PushAsync(new ProductDetail(detailProduct));
         }
     }
 }

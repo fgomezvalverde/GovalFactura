@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C2E61C4D-6ED0-4C83-9F24-B7EA845E0473}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>com.Goval.FacturaDigital.BusinessProxy2</RootNamespace>
+    <AssemblyName>com.Goval.FacturaDigital.BusinessProxy2</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication\ValidateUserClient.cs" />
+    <Compile Include="Client\AddUserClient.cs" />
+    <Compile Include="Client\DeleteUserClient.cs" />
+    <Compile Include="Client\GetUserClients.cs" />
+    <Compile Include="Client\SetUserClient.cs" />
+    <Compile Include="Models\ClientRequest.cs" />
+    <Compile Include="Models\ClientResponse.cs" />
+    <Compile Include="Models\LoginRequest.cs" />
+    <Compile Include="Models\LoginResponse.cs" />
+    <Compile Include="Models\ProductRequest.cs" />
+    <Compile Include="Models\ProductResponse.cs" />
+    <Compile Include="Product\AddUserProduct.cs" />
+    <Compile Include="Product\DeleteUserProduct.cs" />
+    <Compile Include="Product\GetUserProducts.cs" />
+    <Compile Include="Product\SetUserProduct.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\com.Goval.FacturaDigital.DataContracts\com.Goval.FacturaDigital.DataContracts.csproj">
+      <Project>{2b623513-072f-4d3c-9bf2-d9852bc05a1c}</Project>
+      <Name>com.Goval.FacturaDigital.DataContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\com.Goval.FacturaDigital\com.Goval.FacturaDigital.Abstraction\com.Goval.FacturaDigital.Abstraction.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Name>com.Goval.FacturaDigital.Abstraction</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+</Project>

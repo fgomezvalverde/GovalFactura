@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.Goval.FacturaDigital.Model;
+using com.Goval.FacturaDigital.DataContracts.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using com.Goval.FacturaDigital.Amazon;
@@ -14,17 +14,17 @@ namespace com.Goval.FacturaDigital.Pages.Product
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddProduct : ContentPage
     {
-        public AddProduct(Model.Product pNewProduct)
+        public AddProduct()
         {
             InitializeComponent();
-            this.BindingContext = pNewProduct;
+            this.BindingContext = new DataContracts.Model.Product() ;
         }
 
 
         private async void AddProduct_Clicked(object sender, EventArgs e)
         {
-            App.ShowLoading(true);
-            var NewProduct = this.BindingContext as Model.Product;
+            /*App.ShowLoading(true);
+            var NewProduct = this.BindingContext as DataContracts.Model.Product;
                 if (NewProduct!= null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
                     NewProduct.Price != 0 && UnityPicker.SelectedItem != null && !string.IsNullOrEmpty(Convert.ToString(UnityPicker.SelectedItem)))
                 {
@@ -57,7 +57,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
                 {
                     App.ShowLoading(false);
                     await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
-                }
+                }*/
             
         }
     }

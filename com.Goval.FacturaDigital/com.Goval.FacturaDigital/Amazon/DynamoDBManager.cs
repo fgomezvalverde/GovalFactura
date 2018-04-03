@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Amazon.CognitoIdentity;
-using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.DataModel;
+
 using System.Diagnostics;
 
 namespace com.Goval.FacturaDigital.Amazon
@@ -13,15 +11,15 @@ namespace com.Goval.FacturaDigital.Amazon
     public class DynamoDBManager
     {
         private static DynamoDBManager INSTANCE = new DynamoDBManager();
-        private static CognitoAWSCredentials CREDENTIALS;
+        /*private static CognitoAWSCredentials CREDENTIALS;
         private static AmazonDynamoDBClient DYNAMO_DB_CLIENT;
-        private static DynamoDBContext DDB_CONTEXT;
+        private static DynamoDBContext DDB_CONTEXT;*/
         private DynamoDBManager()
         {
-            CREDENTIALS = new CognitoAWSCredentials(AmazonConstants.COGNITO_IDENTITY_POOL_ID,
+            /*CREDENTIALS = new CognitoAWSCredentials(AmazonConstants.COGNITO_IDENTITY_POOL_ID,
                 AmazonConstants.COGNITO_REGION);
             DYNAMO_DB_CLIENT = new AmazonDynamoDBClient(CREDENTIALS, AmazonConstants.DYNAMODB_REGION);
-            DDB_CONTEXT = new DynamoDBContext(DYNAMO_DB_CLIENT);
+            DDB_CONTEXT = new DynamoDBContext(DYNAMO_DB_CLIENT);*/
         }
 
         public static DynamoDBManager GetInstance()
@@ -37,7 +35,7 @@ namespace com.Goval.FacturaDigital.Amazon
         {
             try
             {
-                await DDB_CONTEXT.SaveAsync<T>(pNewObject);
+                
                 return true;
             }
             catch (Exception ex)
@@ -53,7 +51,7 @@ namespace com.Goval.FacturaDigital.Amazon
         {
             try
             {
-                await DDB_CONTEXT.DeleteAsync<T>(pDeleteObject);
+                
                 return true;
             }
             catch (Exception ex)
@@ -68,9 +66,7 @@ namespace com.Goval.FacturaDigital.Amazon
         {
             try
             {
-                List<ScanCondition> conditions = new List<ScanCondition>();
-                var search = DDB_CONTEXT.ScanAsync<T>(conditions);
-                return await search.GetNextSetAsync();
+                return null;
             }
             catch (Exception ex)
             {

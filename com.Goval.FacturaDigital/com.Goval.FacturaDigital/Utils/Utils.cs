@@ -180,6 +180,13 @@ namespace com.Goval.FacturaDigital.Utils
 
         #endregion
 
+        public static string FormatNumericToString(decimal pNumber)
+        {
+            string result = pNumber.ToString("0,0.00", CultureInfo.InvariantCulture);
+
+
+            return result;
+        }
         public static string FormatNumericToString(double pNumber)
         {
             string result = pNumber.ToString("0,0.00", CultureInfo.InvariantCulture);
@@ -187,6 +194,6 @@ namespace com.Goval.FacturaDigital.Utils
 
             return result;
         }
-        
+
     }
 }

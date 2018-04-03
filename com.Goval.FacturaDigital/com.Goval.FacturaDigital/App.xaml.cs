@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using com.Goval.FacturaDigital.Abstraction.DependencyServices;
 using com.Goval.FacturaDigital.Amazon;
+using com.Goval.FacturaDigital.DataContracts.Model;
 using com.Goval.FacturaDigital.Test;
 using com.Goval.FacturaDigital.Utils;
 using Newtonsoft.Json;
@@ -18,12 +19,18 @@ namespace com.Goval.FacturaDigital
     {
         
         public static Page RootPage;
-        public static Boolean AdminPrivilegies = false;
+        public static Boolean AdminPrivilegies = true;
         public static int StarterBillNumber = 2500;
 
 
-        public static Model.User ActualUser = null;
-        public static string UserDefaultKey = "SavedUser";
+        public static User ActualUser = null;
+        public static AppConfiguration ActualUserConfiguration = null;
+        public static string SSOT = string.Empty;
+
+        public static string ActualUserDBKey = "ActualUserDBKey";
+        public static string ActualSSOTDBKey = "ActualSSOTDBKey";
+        public static string ActualUserConfigurationDBKey = "ActualUserConfigurationDBKey";
+        
 
         public App()
         {
@@ -36,7 +43,7 @@ namespace com.Goval.FacturaDigital
 
 
             RootPage = new Pages.MasterDetail.RootPage();
-            MainPage = new TestPage();
+            MainPage = RootPage;
             
         }
 
@@ -54,43 +61,11 @@ namespace com.Goval.FacturaDigital
 
         protected async override void OnStart()
         {
-            /*var users = new List<Model.User>()
-            {
-                new Model.User{
-                    Id= "1",
-                    FullName ="Fabián Gómez Valverde",
-                    UserName = "admin",
-                    UserPassword = "gomezvalverde5",
-                    HasAdminPrivilegies = true
-                },
-                new Model.User{
-                    Id= "2",
-                    FullName ="Ivan Gómez Valverde",
-                    UserName = "ivan.gomez",
-                    UserPassword = "ivangomez2017",
-                    HasAdminPrivilegies = false
-                },
-                new Model.User{
-                    Id= "3",
-                    FullName ="Ivan Gómez Monge",
-                    UserName = "ivan1505",
-                    UserPassword = "ivan.gomez1505",
-                    HasAdminPrivilegies = true
-                },
-
-            };
-            foreach (var user in users)
-            {
-                await DynamoDBManager.GetInstance().SaveAsync<Model.User>(user);
-            }*/
-            
-
-
             // Handle when your app starts
             
 
             //Get the ConfigurationFile
-            var configObj = await DynamoDBManager.GetInstance().GetItemsAsync<Model.SystemConfiguration>();
+            /*var configObj = await DynamoDBManager.GetInstance().GetItemsAsync<Model.SystemConfiguration>();
             if (configObj != null && configObj.Count != 0)
             {
                 Utils.ConfigurationConstants.ConfigurationObject = configObj.FirstOrDefault();
@@ -101,19 +76,15 @@ namespace com.Goval.FacturaDigital
             {
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Sistema", "No se ha podido cargar el archivo de configuración, vuelva a iniciar el APP", "Ok");
                 throw new Exception();
-            }
-            await BillSecurity.SaveBaseBill();
+            }*/
+            //await BillSecurity.SaveBaseBill();
 
-            if (App.ActualUser == null)
+            /*if (App.ActualUser == null)
             {
                 await MainPage.Navigation.PushModalAsync(
                new Pages.Login.LoginPage()
                );
-            }
-            else
-            {
-                App.AdminPrivilegies = App.ActualUser.HasAdminPrivilegies;
-            }
+            }*/
         }
 
         protected override void OnSleep()
@@ -142,10 +113,15 @@ namespace com.Goval.FacturaDigital
         {
             try
             {
-                if (DependencyService.Get<ISharedPreferences>().Contains(App.UserDefaultKey))
+                if (DependencyService.Get<ISharedPreferences>().Contains(App.ActualUserDBKey) && DependencyService.Get<ISharedPreferences>().Contains(App.ActualUserConfigurationDBKey) &&
+                    DependencyService.Get<ISharedPreferences>().Contains(App.ActualSSOTDBKey))
                 {
-                    string jsonUser = DependencyService.Get<ISharedPreferences>().GetString(App.UserDefaultKey);
-                    App.ActualUser = JsonConvert.DeserializeObject<Model.User>(jsonUser);
+                    string jsonUser = DependencyService.Get<ISharedPreferences>().GetString(App.ActualUserDBKey);
+                    string jsonUserConfiguration = DependencyService.Get<ISharedPreferences>().GetString(App.ActualUserConfigurationDBKey);
+                    App.SSOT = DependencyService.Get<ISharedPreferences>().GetString(App.ActualSSOTDBKey);
+                    App.ActualUser = JsonConvert.DeserializeObject<User>(jsonUser);
+                    App.ActualUserConfiguration = JsonConvert.DeserializeObject<AppConfiguration>(jsonUserConfiguration);
+                    
                 }
             }
             catch (Exception)

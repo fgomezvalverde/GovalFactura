@@ -1,4 +1,6 @@
 ﻿using com.Goval.FacturaDigital.Amazon;
+using com.Goval.FacturaDigital.BusinessProxy.Authentication;
+using com.Goval.FacturaDigital.BusinessProxy.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,42 +27,35 @@ namespace com.Goval.FacturaDigital.Pages.Login
 
             if (!string.IsNullOrEmpty(Entry_Username.Text) && !string.IsNullOrEmpty(Entry_Password.Text))
             {
-                var userList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.User>();
+                ValidateUserClient client = new ValidateUserClient();
+                var request = new LoginRequest { UserName = Entry_Username.Text, Password = Entry_Password.Text };
 
-                if (userList != null && userList.Count > 0)
+                var vLoginResult = await client.GetDataAsync(request);
+                if (vLoginResult.IsSuccessful)
                 {
-                    Boolean noValidUser = false;
-
-                    foreach (var user in userList)
-                    {
-                        if (Entry_Username.Text.Equals(user.UserName) &&
-                            Entry_Password.Text.Equals(user.UserPassword))
-                        {
-                            noValidUser = true;
-                            App.AdminPrivilegies = user.HasAdminPrivilegies;
-                            string jsonUser = JsonConvert.SerializeObject(user);
-                            DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().SaveString(App.UserDefaultKey, jsonUser);
-                            App.ActualUser = user;
-                            await Navigation.PopModalAsync();
-                            App.ShowLoading(false);
-                            return;
-                        }
-                    }
-
-                    if (!noValidUser)
-                    {
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Usuario o/y Contraseña Inválida");
-                    }
-
+                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().SaveString(App.ActualUserDBKey,
+                        JsonConvert.SerializeObject(vLoginResult.UserInformation));
+                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().SaveString(App.ActualUserConfigurationDBKey,
+                        JsonConvert.SerializeObject(vLoginResult.UserConfiguration));
+                    DependencyService.Get<Abstraction.DependencyServices.ISharedPreferences>().SaveString(App.ActualSSOTDBKey,
+                        JsonConvert.SerializeObject(vLoginResult.SSOT));
+                    App.ActualUser = vLoginResult.UserInformation;
+                    App.ActualUserConfiguration = vLoginResult.UserConfiguration;
+                    App.SSOT = vLoginResult.SSOT;
+                    await Navigation.PopModalAsync();
+                    App.ShowLoading(false);
+                    return;
                 }
                 else
                 {
-                    await Toasts.ToastRunner.ShowErrorToast("Sistema", "Hubo un problema al contactar al servidor");
+                    await DisplayAlert("", vLoginResult.UserMessage, "Ok");
                 }
+                
 
             }
             else
             {
+                App.ShowLoading(false);
                 await Toasts.ToastRunner.ShowErrorToast("Sistema", "Debe llenar los campos vacíos");
             }
 
