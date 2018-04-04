@@ -17,7 +17,7 @@ namespace com.Goval.FacturaDigital.DataContracts
             }
                 
         }
-        public static Dictionary<string, string> CountryType
+        public static Dictionary<string, string> ProvinciaType
         {
             get
             {
@@ -26,9 +26,38 @@ namespace com.Goval.FacturaDigital.DataContracts
                     {"1","San José"},{"2","Alajuela" }
                 };
             }
-
         }
 
+        public static Dictionary<string, string> CantonType
+        {
+            get
+            {
+                return new Dictionary<string, string>()
+                {
+                    {"1,1","San José"},{"1,2","Escazú" }
+                };
+            }
+        }
+        public static Dictionary<string, string> DistritoType
+        {
+            get
+            {
+                return new Dictionary<string, string>()
+                {
+                    {"1,1,1","CARMEN"},{"1,1,2","MERCED" }
+                };
+            }
+        }
+        public static Dictionary<string, string> BarrioType
+        {
+            get
+            {
+                return new Dictionary<string, string>()
+                {
+                    {"1,1,1,1","Amón"},{"1,1,1,1","Aranjuez" }
+                };
+            }
+        }
         public static Dictionary<string, string> CodeProductOrServiceType
         {
             get
