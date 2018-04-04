@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="BaseModel\BaseRequest.cs" />
     <Compile Include="BaseModel\BaseResponse.cs" />
+    <Compile Include="CatalogsDataSource.cs" />
     <Compile Include="Model\AppConfiguration.cs" />
     <Compile Include="Model\Bill.cs" />
     <Compile Include="Model\Client.cs" />

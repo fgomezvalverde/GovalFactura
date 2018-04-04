@@ -15,16 +15,26 @@ namespace com.Goval.FacturaDigital.Views
         #region Fields
 
         //Bindable property for the items source
-        public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create<BindablePicker, IEnumerable>(p => p.ItemsSource, null, propertyChanged: OnItemsSourcePropertyChanged);
+        public static readonly BindableProperty ItemsDictionarySourceProperty =
+            BindableProperty.Create<BindablePicker, Dictionary<String,string>>(p => p.ItemsDictionarySource, null, propertyChanged: OnItemsDictionarySourcePropertyChanged);
 
         //Bindable property for the selected item
         public static readonly BindableProperty SelectedItemProperty =
-            BindableProperty.Create<BindablePicker, object>(p => p.SelectedItem, null, BindingMode.TwoWay, propertyChanged: OnSelectedItemPropertyChanged);
+            BindableProperty.Create<BindablePicker, string>(p => p.SelectedItem, null, BindingMode.TwoWay, propertyChanged: OnSelectedItemPropertyChanged);
+
+
+        public static readonly BindableProperty FatherItemCodeProperty =
+            BindableProperty.Create<BindablePicker, string>(p => p.FatherItemCode, null, BindingMode.TwoWay, propertyChanged: OnFatherItemCodePropertyChanged);
 
         #endregion
 
         #region Properties
+
+        public string FatherItemCode
+        {
+            get { return (string)GetValue(FatherItemCodeProperty); }
+            set { SetValue(FatherItemCodeProperty, value); }
+        }
 
         /// <summary>
         /// Gets or sets the items source.
@@ -32,10 +42,10 @@ namespace com.Goval.FacturaDigital.Views
         /// <value>
         /// The items source.
         /// </value>
-        public IEnumerable ItemsSource
+        public Dictionary<string,string> ItemsDictionarySource
         {
-            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get { return (Dictionary<string, string>)GetValue(ItemsDictionarySourceProperty); }
+            set { SetValue(ItemsDictionarySourceProperty, value); }
         }
 
         /// <summary>
@@ -44,9 +54,9 @@ namespace com.Goval.FacturaDigital.Views
         /// <value>
         /// The selected item.
         /// </value>
-        public object SelectedItem
+        public string SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
+            get { return (string)GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
@@ -60,10 +70,15 @@ namespace com.Goval.FacturaDigital.Views
         /// <param name="bindable">The bindable.</param>
         /// <param name="value">The value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void OnItemsSourcePropertyChanged(BindableObject bindable, IEnumerable value, IEnumerable newValue)
+        private static void OnItemsDictionarySourcePropertyChanged(BindableObject bindable, Dictionary<string, string> value, Dictionary<string, string> newValue)
         {
             var picker = (BindablePicker)bindable;
-            var notifyCollection = newValue as INotifyCollectionChanged;
+            if (newValue == null)
+                return;
+            picker.Items.Clear();
+            foreach (var item in newValue.Values)
+                picker.Items.Add((item ?? "").ToString());
+            /*var notifyCollection = newValue as INotifyCollectionChanged;
             if (notifyCollection != null)
             {
                 notifyCollection.CollectionChanged += (sender, args) =>
@@ -91,7 +106,7 @@ namespace com.Goval.FacturaDigital.Views
             picker.Items.Clear();
 
             foreach (var item in newValue)
-                picker.Items.Add((item ?? "").ToString());
+                picker.Items.Add((item ?? "").ToString());*/
         }
 
         /// <summary>
@@ -100,21 +115,29 @@ namespace com.Goval.FacturaDigital.Views
         /// <param name="bindable">The bindable.</param>
         /// <param name="value">The value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void OnSelectedItemPropertyChanged(BindableObject bindable, object value, object newValue)
+        private static void OnSelectedItemPropertyChanged(BindableObject bindable, string value, string newValue)
         {
             var picker = (BindablePicker)bindable;
             if (picker.ItemsSource != null)
                 picker.SelectedIndex = IndexOf(picker.ItemsSource,picker.SelectedItem);
         }
 
+        private static void OnFatherItemCodePropertyChanged(BindableObject bindable, string value, string newValue)
+        {
+            var picker = (BindablePicker)bindable;
+            if (picker.ItemsSource != null)
+                picker.SelectedIndex = IndexOf(picker.ItemsSource, picker.SelectedItem);
+        }
+        
+
 
         /// <summary>
-        /// Returns the index of the specified object in the collection.
+        /// Returns the index of the specified string in the collection.
         /// </summary>
         /// <param name="self">The self.</param>
-        /// <param name="obj">The object.</param>
+        /// <param name="obj">The string.</param>
         /// <returns>If found returns index otherwise -1</returns>
-        private static int IndexOf(IEnumerable self, object obj)
+        private static int IndexOf(IEnumerable self, string obj)
         {
             int index = -1;
 

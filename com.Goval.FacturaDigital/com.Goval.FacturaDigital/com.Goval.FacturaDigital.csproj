@@ -109,6 +109,7 @@
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\BillSecurity.cs" />
     <Compile Include="Views\BindablePicker.cs" />
+    <Compile Include="Views\EnumFatherPickerType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
