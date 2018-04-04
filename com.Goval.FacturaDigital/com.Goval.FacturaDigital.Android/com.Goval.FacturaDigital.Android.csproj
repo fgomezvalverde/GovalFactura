@@ -109,14 +109,14 @@
     <Reference Include="Splat, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Splat.2.0.0\lib\MonoAndroid403\Splat.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Compression.Portable, Version=15.3451.0.26, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.Pdf.15.3.0.26\lib\MonoAndroid10\Syncfusion.Compression.Portable.dll</HintPath>
+    <Reference Include="Syncfusion.Compression.Portable, Version=15.4451.0.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.Compression.15.4.0.17\lib\MonoAndroid10\Syncfusion.Compression.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Pdf.Portable, Version=15.3451.0.26, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.Pdf.15.3.0.26\lib\MonoAndroid10\Syncfusion.Pdf.Portable.dll</HintPath>
+    <Reference Include="Syncfusion.Pdf.Portable, Version=15.4451.0.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.Pdf.15.4.0.17\lib\MonoAndroid10\Syncfusion.Pdf.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.XlsIO.Portable, Version=15.3451.0.26, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Syncfusion.Xamarin.XlsIO.15.3.0.26\lib\portable-win+net45+wp80+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Syncfusion.XlsIO.Portable.dll</HintPath>
+    <Reference Include="Syncfusion.XlsIO.Portable, Version=15.4451.0.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Syncfusion.Xamarin.XlsIO.15.4.0.17\lib\MonoAndroid10\Syncfusion.XlsIO.Portable.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

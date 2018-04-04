@@ -5,51 +5,98 @@
              x:Class="com.Goval.FacturaDigital.Pages.Product.ProductDetail"
              Title="Modificar Producto">
     <ContentPage.Content>
-        <!--ScrollView -->
+        <ScrollView >
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Código" HorizontalOptions="StartAndExpand" />
+                    <Label FontAttributes="Bold" Text="Tipo de Producto" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="ProductType" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Servicio</x:String>
+                                <x:String>Producto</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código del producto" HorizontalOptions="StartAndExpand" />
                     <Entry
-                        IsEnabled="False"
-                               Text="{Binding Code, Mode=TwoWay}"
-                                Placeholder="Nuevo Código" BackgroundColor="White"
+                                Text="{Binding ProductCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el código" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de barras" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding BarCode, Mode=TwoWay}"
+                                Placeholder="Código de Barras" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Name, Mode=TwoWay}"
+                                Placeholder="Nombre del producto" BackgroundColor="White"
                     />
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Descripción" HorizontalOptions="StartAndExpand" />
                     <Entry
                                 Text="{Binding Description, Mode=TwoWay}"
-                                Placeholder="Nueva Descripción" BackgroundColor="White"
-                                IsEnabled="{x:Static local:App.AdminPrivilegies}"
+                                Placeholder="Descripción del producto" BackgroundColor="White"
                     />
                 </StackLayout>
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Precio(colones)" HorizontalOptions="StartAndExpand" />
+                    <Label FontAttributes="Bold" Text="Cantidad de Productos" HorizontalOptions="StartAndExpand" />
                     <Entry
-                                Text="{Binding Price, Mode=TwoWay}"
-                                Placeholder="Nuevo Precio" BackgroundColor="White"
-                                IsEnabled="{x:Static local:App.AdminPrivilegies}"
-                                Keyboard="Numeric"
+                               Text="{Binding ProductQuantity, Mode=TwoWay}"
+                                Placeholder="Cantidad de Productos" BackgroundColor="White"
+                        Keyboard="Numeric"
                     />
                 </StackLayout>
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Seleccione el Tipo de Presentación" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="UnityPicker" BackgroundColor="White" Title="Seleccionar Tipo" HorizontalOptions="FillAndExpand" IsEnabled="{x:Static local:App.AdminPrivilegies}">
+                    <Label FontAttributes="Bold" Text="Unidad de medida" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="MeasurementUnit" BackgroundColor="White" Title="Seleccione la unidad" HorizontalOptions="FillAndExpand">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
-                                <x:String>Unitaria</x:String>
-                                <x:String>Docena</x:String>
+                                <x:String>Metros</x:String>
+                                <x:String>Kilos</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <StackLayout>
+                        <Label FontAttributes="Bold" Text="Unidad de medida comercial" HorizontalOptions="StartAndExpand" />
+                        <Entry
+                                Text="{Binding MeasurementUnitType, Mode=TwoWay}"
+                                Placeholder="Ingrese la medida" BackgroundColor="White"
+                    />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Precio" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding Price, Mode=TwoWay}"
+                                Placeholder="Nuevo Precio" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Tipo de moneda" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="CurrencyType" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Colones</x:String>
+                                <x:String>Dólares</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
                 </StackLayout>
-            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
-                <Button x:Name="ButtonSave" Text="Guardar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
-                <Button x:Name="ButtonDelete" Text="Eliminar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
-            </StackLayout >
-                
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
+                    <Button x:Name="ButtonSave" Text="Guardar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+                    <Button x:Name="ButtonDelete" Text="Eliminar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="DeleteProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>
+                </StackLayout >
             </StackLayout>
-        <!--/ScrollView-->
-        
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

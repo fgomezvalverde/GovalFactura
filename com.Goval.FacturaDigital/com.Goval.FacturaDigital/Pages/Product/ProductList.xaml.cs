@@ -27,7 +27,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
             ProductListView.ItemsSource = new List<DataContracts.Model.Product>()
             {
-                new DataContracts.Model.Product{ Name="TESTPRODUCT1Name",Description="DescriptionTEST",Price=9999}
+                new DataContracts.Model.Product{ Name="TESTPRODUCT1Name",Description="DescriptionTEST",Price=9999,BarCode="pruebaCode"}
             };
 
             //App.ShowLoading(true);
