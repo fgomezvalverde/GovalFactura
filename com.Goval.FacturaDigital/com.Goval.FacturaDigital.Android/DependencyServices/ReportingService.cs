@@ -14,7 +14,6 @@ using com.Goval.FacturaDigital.Droid.DependencyServices;
 using FlexCel.XlsAdapter;
 using System.IO;
 using FlexCel.Render;
-using com.Goval.FacturaDigital.Model;
 using Newtonsoft.Json.Linq;
 using Syncfusion.XlsIO;
 using System.Reflection;
@@ -69,7 +68,7 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
             var data = stream.ToArray();
             var stringData = Convert.ToBase64String(data);
             JObject obj = new JObject();
-            obj["api_key"] = com.Goval.FacturaDigital.Utils.ConfigurationConstants.PDFGeneratorKey;
+            //obj["api_key"] = com.Goval.FacturaDigital.Utils.ConfigurationConstants.PDFGeneratorKey;
             obj["document"] = stringData;
             try
             {
