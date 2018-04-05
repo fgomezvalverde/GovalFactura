@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="com.Goval.FacturaDigital.Pages.Product.AddProduct"
+             xmlns:DataContracts="clr-namespace:com.Goval.FacturaDigital.DataContracts.Catalogs;assembly=com.Goval.FacturaDigital.DataContracts" 
+             xmlns:LocalPicker="clr-namespace:com.Goval.FacturaDigital.Views" 
              Title="Nuevo Producto">
     <ContentPage.Content>
         <ScrollView >
@@ -81,14 +83,8 @@
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Tipo de moneda" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="CurrencyType" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Colones</x:String>
-                                <x:String>Dólares</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                    <LocalPicker:BindablePicker x:Name="CurrencyType" ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.CurrencyType}" SelectedItem="{Binding CurrencyType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
                 </StackLayout>
                 <Button  TextColor="White"  BackgroundColor="#90A4AE" Text="Agregar Producto" Clicked="AddProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>

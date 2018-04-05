@@ -23,6 +23,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void AddProduct_Clicked(object sender, EventArgs e)
         {
+            var prueba = this.BindingContext;
             /*App.ShowLoading(true);
             var NewProduct = this.BindingContext as DataContracts.Model.Product;
                 if (NewProduct!= null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
@@ -58,7 +59,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
                     App.ShowLoading(false);
                     await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
                 }*/
-            
+
         }
     }
 }

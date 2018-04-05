@@ -22,6 +22,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void SaveProduct_Clicked(object sender, EventArgs e)
         {
+            var prueba = this.BindingContext;
             /*App.ShowLoading(true);
             var NewProduct = this.BindingContext as DataContracts.Model.Product;
             if (NewProduct != null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&

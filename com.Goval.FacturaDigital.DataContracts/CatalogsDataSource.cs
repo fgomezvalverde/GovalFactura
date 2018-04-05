@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.Goval.FacturaDigital.DataContracts
+namespace com.Goval.FacturaDigital.DataContracts.Catalogs
 {
     public static class CatalogsDataSource
     {

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:com.Goval.FacturaDigital"
+             xmlns:DataContracts="clr-namespace:com.Goval.FacturaDigital.DataContracts.Catalogs;assembly=com.Goval.FacturaDigital.DataContracts" 
+             xmlns:LocalPicker="clr-namespace:com.Goval.FacturaDigital.Views" 
              x:Class="com.Goval.FacturaDigital.Pages.Product.ProductDetail"
              Title="Modificar Producto">
     <ContentPage.Content>
@@ -83,14 +85,8 @@
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Tipo de moneda" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="CurrencyType" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Colones</x:String>
-                                <x:String>Dólares</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                    <LocalPicker:BindablePicker x:Name="CurrencyType" ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.CurrencyType}" SelectedItem="{Binding CurrencyType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
                     <Button x:Name="ButtonSave" Text="Guardar" TextColor="White"  BackgroundColor="#90A4AE" Clicked="SaveProduct_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" IsVisible="{x:Static local:App.AdminPrivilegies}"/>

@@ -12,6 +12,27 @@ namespace com.Goval.FacturaDigital.Views
 {
     public class BindablePicker : Picker
     {
+        public BindablePicker()
+        {
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                this.Unfocused += OnUnfocused;
+            }
+            else
+            {
+                this.SelectedIndexChanged += OnSelectedIndexChanged; ;
+            }
+        }
+
+        private void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedItem = new List<string>(this.ItemsDictionarySource.Keys)[this.SelectedIndex];
+        }
+
+        private void OnUnfocused(object sender, FocusEventArgs e)
+        {
+            OnSelectedIndexChanged(sender, e);
+        }
         #region Fields
 
         //Bindable property for the items source
@@ -76,8 +97,7 @@ namespace com.Goval.FacturaDigital.Views
             if (newValue == null)
                 return;
             picker.Items.Clear();
-            foreach (var item in newValue.Values)
-                picker.Items.Add((item ?? "").ToString());
+            picker.ItemsSource = new List<string>(newValue.Values);
             /*var notifyCollection = newValue as INotifyCollectionChanged;
             if (notifyCollection != null)
             {
@@ -118,15 +138,24 @@ namespace com.Goval.FacturaDigital.Views
         private static void OnSelectedItemPropertyChanged(BindableObject bindable, string value, string newValue)
         {
             var picker = (BindablePicker)bindable;
-            if (picker.ItemsSource != null)
-                picker.SelectedIndex = IndexOf(picker.ItemsSource,picker.SelectedItem);
+            if (picker.SelectedIndex == -1)
+            {
+                if (!string.IsNullOrEmpty(picker.SelectedItem) && picker.ItemsSource != null)
+                {
+                    var vValue = picker.ItemsDictionarySource[picker.SelectedItem];
+                    picker.SelectedIndex = IndexOf(picker.ItemsSource, vValue);
+                }
+            }
+                
         }
+
+        
 
         private static void OnFatherItemCodePropertyChanged(BindableObject bindable, string value, string newValue)
         {
-            var picker = (BindablePicker)bindable;
+            /*var picker = (BindablePicker)bindable;
             if (picker.ItemsSource != null)
-                picker.SelectedIndex = IndexOf(picker.ItemsSource, picker.SelectedItem);
+                picker.SelectedIndex = IndexOf(picker.ItemsSource, picker.SelectedItem);*/
         }
         
 
