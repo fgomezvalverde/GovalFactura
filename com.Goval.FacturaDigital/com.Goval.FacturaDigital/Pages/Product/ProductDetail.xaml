@@ -9,18 +9,11 @@
     <ContentPage.Content>
         <ScrollView >
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
-                
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Tipo de Producto" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="ProductType" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Servicio</x:String>
-                                <x:String>Producto</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                </StackLayout>
+                    <LocalPicker:BindablePicker x:Name="ProductType" ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.ProductType}" SelectedItem="{Binding ProductType}" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
+                </StackLayout> 
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Código del producto" HorizontalOptions="StartAndExpand" />
                     <Entry
@@ -58,15 +51,10 @@
                     />
                 </StackLayout>
                 <StackLayout>
+
                     <Label FontAttributes="Bold" Text="Unidad de medida" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="MeasurementUnit" BackgroundColor="White" Title="Seleccione la unidad" HorizontalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Metros</x:String>
-                                <x:String>Kilos</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                    <LocalPicker:BindablePicker x:Name="MeasurementUnit" ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.MeasurementUnit}" SelectedItem="{Binding MeasurementUnit}" BackgroundColor="White" Title="Seleccione la unidad" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
                     <StackLayout>
                         <Label FontAttributes="Bold" Text="Unidad de medida comercial" HorizontalOptions="StartAndExpand" />
                         <Entry
