@@ -7,41 +7,161 @@
         <ScrollView >
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Código de Cliente" HorizontalOptions="StartAndExpand" />
-                    <Entry
-                               Text="{Binding ClientId, Mode=TwoWay}"
-                                Placeholder="Nuevo Codigo" BackgroundColor="White"
-                    />
-                </StackLayout>
-                <StackLayout>
                     <Label FontAttributes="Bold" Text="Nombre" HorizontalOptions="StartAndExpand" />
                     <Entry
                                 Text="{Binding Name, Mode=TwoWay}"
-                                Placeholder="Nuevo Nombre" BackgroundColor="White"
+                                Placeholder="Ingrese el nombre" BackgroundColor="White"
                     />
                 </StackLayout>
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Cedula Juridica/Fisica" HorizontalOptions="StartAndExpand" />
+                    <Label FontAttributes="Bold" Text="Tipo de Identificación" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="IdentificationType" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Cédula Física</x:String>
+                                <x:String>Cédula Jurídica</x:String>
+                                <x:String>NITE</x:String>
+                                <x:String>DIMEX</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Número de identicación" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                
+                                Text="{Binding ClientLegalNumber, Mode=TwoWay}"
+                                Placeholder="Ingrese la identificación" BackgroundColor="White"
+                        Keyboard="Email"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Identicación extranjera" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                
+                                Text="{Binding ForeingIdentification, Mode=TwoWay}"
+                                Placeholder="Ingrese la identificación" BackgroundColor="White"
+                        Keyboard="Email"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre Comercial" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding ComercialName, Mode=TwoWay}"
+                                Placeholder="Ingrese el nombre" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Provincia" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="ProvinciaCode" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>San José</x:String>
+                                <x:String>Alajuela</x:String>
+                                <x:String>Cartago</x:String>
+                                <x:String>Heredia</x:String>
+                                <x:String>Guanacaste</x:String>
+                                <x:String>Puntarenas</x:String>
+                                <x:String>Limón</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Cantón" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="CantónCode" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>San José</x:String>
+                                <x:String>Escazú</x:String>
+                                <x:String>Desamparados</x:String>
+                                <x:String>Puriscal</x:String>
+                                <x:String>Tarrazú</x:String>
+                                <x:String>Aserrí</x:String>
+                                <x:String>Mora</x:String>
+                                <x:String>Goicoechea</x:String>
+                                <x:String>Santa Ana</x:String>
+                                <x:String>Alajuelita</x:String>
+                                <x:String>Vázques de Coronado</x:String>
+                                <x:String>Acosta</x:String>
+                                <x:String>Tibás</x:String>
+                                <x:String>Moravia</x:String>
+                                <x:String>Montes de Oca</x:String>
+                                <x:String>Turrubares</x:String>
+                                <x:String>Dota</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Distrito" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="DistritoCode" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Pejivalle</x:String>
+                                <x:String>Daniel Flores</x:String>
+                                <x:String>El General</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Barrio" HorizontalOptions="StartAndExpand" />
+                    <Picker x:Name="BarrioCode" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Linda</x:String>
+                                <x:String>Linda Arriba</x:String>
+                                <x:String>Hermosa</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Otras Señas" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding LocationDescription, Mode=TwoWay}"
+                                Placeholder="Ingrese la descripción" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de País" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding PhoneNumberCountryCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el código" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Teléfono" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding PhoneNumber, Mode=TwoWay}"
+                                Placeholder="Ingrese el Teléfono" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de País" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding FaxCountryCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el código" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Fax" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Fax, Mode=TwoWay}"
+                                Placeholder="Ingrese el fax" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Correo electrónico" HorizontalOptions="StartAndExpand" />
                     <Entry
                                 Keyboard="Email"
-                          Text="{Binding LegalId, Mode=TwoWay}"
-                                   Placeholder="Cedula" BackgroundColor="White"
-                    />
-                </StackLayout>
-                <StackLayout>
-                    <Label FontAttributes="Bold" Text="Plazo(dias)" HorizontalOptions="StartAndExpand" />
-                    <Entry
-                                Text="{Binding Term, Mode=TwoWay}"
-                                Placeholder="Dias" BackgroundColor="White"
-                        Keyboard="Numeric"
-                    />
-                </StackLayout>
-                <StackLayout>
-                    <Label FontAttributes="Bold" Text="Descuento(%)" HorizontalOptions="StartAndExpand" />
-                    <Entry
-                                Text="{Binding DiscountPercentage, Mode=TwoWay}"
-                                Placeholder="Porcentage" BackgroundColor="White"
-                        Keyboard="Numeric"
+                          Text="{Binding Email, Mode=TwoWay}"
+                                   Placeholder="Email" BackgroundColor="White"
                     />
                 </StackLayout>
                 <StackLayout>
@@ -52,19 +172,27 @@
                     />
                 </StackLayout>
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Teléfono" HorizontalOptions="StartAndExpand" />
+                    <Label FontAttributes="Bold" Text="Días plazo" HorizontalOptions="StartAndExpand" />
                     <Entry
-                                Keyboard="Telephone"
-                          Text="{Binding Telephone, Mode=TwoWay}"
-                                   Placeholder="Telefono" BackgroundColor="White"
+                          Text="{Binding DefaultPaymentTerm, Mode=TwoWay}"
+                          Placeholder="Días plazo" BackgroundColor="White"
+                        Keyboard="Numeric"
                     />
                 </StackLayout>
                 <StackLayout>
-                    <Label FontAttributes="Bold" Text="Correo electrónico" HorizontalOptions="StartAndExpand" />
+                    <Label FontAttributes="Bold" Text="Descuento" HorizontalOptions="StartAndExpand" />
                     <Entry
-                                Keyboard="Email"
-                          Text="{Binding Email, Mode=TwoWay}"
-                                   Placeholder="Email" BackgroundColor="White"
+                          Text="{Binding DefaultDiscountPercentage, Mode=TwoWay}"
+                          Placeholder="Descuento Fijo" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Impuesto" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                          Text="{Binding DefaultTaxesPercentage, Mode=TwoWay}"
+                          Placeholder="Impuesto Fijo" BackgroundColor="White"
+                        Keyboard="Numeric"
                     />
                 </StackLayout>
 
