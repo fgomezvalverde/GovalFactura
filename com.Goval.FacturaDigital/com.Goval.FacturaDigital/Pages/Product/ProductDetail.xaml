@@ -9,17 +9,11 @@
     <ContentPage.Content>
         <ScrollView >
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
-                
+
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Tipo de Producto" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="ProductType" BackgroundColor="White" Title="Seleccione el tipo" HorizontalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Servicio</x:String>
-                                <x:String>Producto</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.CodeProductOrServiceType}" SelectedItem="{Binding ProductType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Código del producto" HorizontalOptions="StartAndExpand" />
@@ -59,18 +53,15 @@
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Unidad de medida" HorizontalOptions="StartAndExpand" />
-                    <Picker x:Name="MeasurementUnit" BackgroundColor="White" Title="Seleccione la unidad" HorizontalOptions="FillAndExpand">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Metros</x:String>
-                                <x:String>Kilos</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                    <Entry
+                               Text="{Binding MeasurementUnitType, Mode=TwoWay}"
+                                Placeholder="ESTO ES UN PICKER" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
                     <StackLayout>
                         <Label FontAttributes="Bold" Text="Unidad de medida comercial" HorizontalOptions="StartAndExpand" />
                         <Entry
-                                Text="{Binding MeasurementUnitType, Mode=TwoWay}"
+                                Text="{Binding MeasurementUnit, Mode=TwoWay}"
                                 Placeholder="Ingrese la medida" BackgroundColor="White"
                     />
                     </StackLayout>

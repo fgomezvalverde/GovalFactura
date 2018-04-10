@@ -25,12 +25,12 @@ namespace com.Goval.FacturaDigital.Pages.Product
             base.OnAppearing();
 
 
-            ProductListView.ItemsSource = new List<DataContracts.Model.Product>()
+            /*ProductListView.ItemsSource = new List<DataContracts.Model.Product>()
             {
                 new DataContracts.Model.Product{ Name="TESTPRODUCT1Name",Description="DescriptionTEST",Price=9999,BarCode="pruebaCode",CurrencyType="CRC"}
-            };
+            };*/
 
-            //App.ShowLoading(true);
+            App.ShowLoading(true);
             if (App.AdminPrivilegies && this.ToolbarItems.Count ==0)
             {
                 ToolbarItem item = new ToolbarItem
@@ -44,7 +44,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
                 item.Clicked += AddProduct_Clicked;
                 this.ToolbarItems.Add(item);
             }
-            /*if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
+            if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
             {
                 var vGetUserProductsClient = new BusinessProxy.Product.GetUserProducts();
                 var vProductResponse = await vGetUserProductsClient.GetDataAsync(
@@ -54,13 +54,13 @@ namespace com.Goval.FacturaDigital.Pages.Product
                         UserId = App.ActualUser.UserId
                     });
                 _ProductList = vProductResponse.UserProducts;
+                ProductListView.ItemsSource = _ProductList;
             }
-            
-            if (_ProductList != null && _ProductList.Count != 0)
-            {
-                 ProductListView.ItemsSource = _ProductList;
+
+            else {
+                ProductListView.ItemsSource = null;
             }
-            App.ShowLoading(false);*/
+            App.ShowLoading(false);
         }
 
         protected override void OnDisappearing()

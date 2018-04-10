@@ -61,30 +61,13 @@ namespace com.Goval.FacturaDigital
 
         protected async override void OnStart()
         {
-            // Handle when your app starts
-            
 
-            //Get the ConfigurationFile
-            /*var configObj = await DynamoDBManager.GetInstance().GetItemsAsync<Model.SystemConfiguration>();
-            if (configObj != null && configObj.Count != 0)
-            {
-                Utils.ConfigurationConstants.ConfigurationObject = configObj.FirstOrDefault();
-                Utils.ConfigurationConstants.PDFGeneratorKey = configObj.FirstOrDefault().PdfGeneratorKey;
-                Utils.ConfigurationConstants.StarterBillNumber = configObj.FirstOrDefault().StartBillNumber;
-            }
-            else
-            {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Sistema", "No se ha podido cargar el archivo de configuración, vuelva a iniciar el APP", "Ok");
-                throw new Exception();
-            }*/
-            //await BillSecurity.SaveBaseBill();
-
-            /*if (App.ActualUser == null)
+            if (App.ActualUser == null)
             {
                 await MainPage.Navigation.PushModalAsync(
                new Pages.Login.LoginPage()
                );
-            }*/
+            }
         }
 
         protected override void OnSleep()

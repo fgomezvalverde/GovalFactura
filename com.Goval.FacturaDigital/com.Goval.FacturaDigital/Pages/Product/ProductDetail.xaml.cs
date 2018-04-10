@@ -22,7 +22,36 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void SaveProduct_Clicked(object sender, EventArgs e)
         {
-            var prueba = this.BindingContext;
+            try
+            {
+                var vNewProduct = this.BindingContext as DataContracts.Model.Product;
+                //HACER VALIDACION AQUI **********************
+                var vClient = new BusinessProxy.Product.SetUserProduct();
+                var vSetProductRequest = new BusinessProxy.Models.ProductRequest()
+                {
+                    SSOT = App.SSOT,
+                    UserId = App.ActualUser.UserId,
+                    UserProduct = vNewProduct
+                };
+                var vResponse = await vClient.GetDataAsync(vSetProductRequest);
+                if (vResponse != null && vResponse.IsSuccessful)
+                {
+                    App.ShowLoading(false);
+                    await Navigation.PopAsync();
+                    await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha modificado Satisfactoriamente");
+                }
+                else
+                {
+                    App.ShowLoading(false);
+                    await DisplayAlert("", vResponse.TechnicalMessage, "Ok");
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", vResponse.UserMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.ShowLoading(false);
+                await DisplayAlert("", ex.ToString(), "Ok");
+            }
             /*App.ShowLoading(true);
             var NewProduct = this.BindingContext as DataContracts.Model.Product;
             if (NewProduct != null && !string.IsNullOrEmpty(NewProduct.Code) && !string.IsNullOrEmpty(NewProduct.Description) &&
@@ -62,6 +91,38 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
         private async void DeleteProduct_Clicked(object sender, EventArgs e)
         {
+
+            try
+            {
+                var vProduct = this.BindingContext as DataContracts.Model.Product;
+                //HACER VALIDACION AQUI **********************
+                var vClient = new BusinessProxy.Product.DeleteUserProduct();
+                var vDeteleProductRequest = new BusinessProxy.Models.ProductRequest()
+                {
+                    SSOT = App.SSOT,
+                    UserId = App.ActualUser.UserId,
+                    UserProduct = vProduct
+                };
+                var vResponse = await vClient.GetDataAsync(vDeteleProductRequest);
+                if (vResponse != null && vResponse.IsSuccessful)
+                {
+                    App.ShowLoading(false);
+                    await Navigation.PopAsync();
+                    await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha eliminado Satisfactoriamente");
+                    
+                }
+                else
+                {
+                    App.ShowLoading(false);
+                    await DisplayAlert("", vResponse.TechnicalMessage, "Ok");
+                    await Toasts.ToastRunner.ShowErrorToast("Sistema", vResponse.UserMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.ShowLoading(false);
+                await DisplayAlert("", ex.ToString(), "Ok");
+            }
             /*App.ShowLoading(true);
             var deleteProduct = this.BindingContext as Model.Product;
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
