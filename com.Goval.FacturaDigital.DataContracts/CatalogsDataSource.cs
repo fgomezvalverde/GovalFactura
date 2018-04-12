@@ -125,57 +125,62 @@ namespace com.Goval.FacturaDigital.DataContracts.Catalogs
                 return new Dictionary<string, string>()
                 {
                     {"CRC","Colón costarricense"},
-                    {"USD","Dólar Americano"}
-
-
-                    /*{"AFN ","Afghani"},
+                    {"USD","Dólar Americano"}/*,
+                    {"AFN ","Afghani"},
                     {"ALL ","Lek"},
                     {"EUR ","Euro"},
-                    {"DZD ","Dinar argelino"}
-                    {"AOA ","Colón costarricense"},
-                    {"XCD","Dólar Americano"}
-                    {"SAR","Colón costarricense"},
-                    {"ARS","Dólar Americano"}
-                    {"CRC","Colón costarricense"},
-                    {"USD","Dólar Americano"}
-                    {"CRC","Colón costarricense"},
-                    {"USD","Dólar Americano"}
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"CRC","Colón costarricense"},
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}
-                    {"USD","Dólar Americano"}*/
+                    {"DZD ","Dinar argelino"},
+                    {"AOA ","Kwanza"},
+                    {"XCD","Dólar del Caribe Oriental"},
+                    {"SAR","Riyal saudí"},
+                    {"ARS","Peso Argentino"},
+                    {"AMD","Dram armenio"},
+                    {"AWG ","Florín arubeño"},
+                    {"AUD","Dólar australiano"},
+                    {"AZN ","Manat azerbaiyano"},
+                    {"BSD","Dólar de las Bahamas"},
+                    {"BHD ","Dinar de Bahrein"},
+                    {"BDT","Taka"},
+                    {"BBD","Dólar de Barbados"},
+                    {"BZD","Dólar de Belice"},
+                    {"XOF","Franco CFA BCEAO"},
+                    {"BMD","Dólar de Bermudas"},
+                    {"BYR","Rublo bielorruso"},
+                    {"BOB","Boliviano"},
+                    {"BOV","Mvdol"},
+                    {"BAM","Marco bosnioherzegovino"},
+                    {"BWP","Pula"},
+                    {"BRL","Real Brasileño"},
+                    {"BND","Dólar de Brunei"},
+                    {"BGN ","Lev búlgaro"},
+                    {"BIF","Franco Burundi"},
+                    {"BTN","Ngultrum"},
+                    {"INR","Rupia india"},
+                    {"CVE","Cabo Verde Escudo"},
+                    {"KHR","Riel"},
+                    {"XAF","Franco CFA BEAC"},
+                    {"CAD","Dólar canadiense"},
+                    {"CLF","Unidad de Fomento"},
+                    {"CLP","Peso chileno"},
+                    {"CNY","Yuan"},
+                    {"COP","Peso Colombiano"},
+                    {"COU","Unidad de Valor Real"},
+                    {"KMF","Franco Comoro"},
+                    {"CDF","Franco congoleño"},
+                    {"KRW","Won"},
+                    {"KPW","Won norcoreano"},
+                    {"XOF","Franco CFA BCEAO"},
+                    {"HRK","Kuna"},
+                    {"CUC","Peso Convertible"},
+                    {"CUP","Peso Cubano"},
+                    {"ANG","Florín antillano neerlandés"},
+                    {"DKK","Corona danesa"},
+                    {"DJF","Franco de Djibouti"},
+                    {"XCD","Dólar del Caribe Oriental"},
+                    {"EGP","Libra egipcia"},
+                    {"SVC","Colón"},
+                    {"AED","Dírham de los Emiratos Árabes Unidos"},
+                    {"ERN","Nakfa"}*/
                 };
             }
                 
@@ -186,7 +191,13 @@ namespace com.Goval.FacturaDigital.DataContracts.Catalogs
             {
                 return new Dictionary<string, string>()
                 {
-                    {"1","San José"},{"2","Alajuela" }
+                    {"1","San José"},
+                    {"2","Alajuela"},
+                    {"3","Cartago"},
+                    {"4","Heredia"},
+                    {"5","Guanacaste"},
+                    {"6","Puntarenas"},
+                    {"7","Limón"}
                 };
             }
         }
