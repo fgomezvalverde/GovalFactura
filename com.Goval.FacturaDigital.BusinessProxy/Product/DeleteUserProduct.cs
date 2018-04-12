@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace com.Goval.FacturaDigital.BusinessProxy.Product
 {
-    class DeleteUserProduct : Abstraction.BaseProxy.BaseProxy<ProductRequest, ProductResponse>
+    public class DeleteUserProduct : Abstraction.BaseProxy.BaseProxy<ProductRequest, ProductResponse>
     {
         public override string OperationoAddress { get => "/BusinessService.svc/json/DeleteUserProduct"; }
     }

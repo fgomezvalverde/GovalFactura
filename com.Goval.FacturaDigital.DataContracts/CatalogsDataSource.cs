@@ -230,8 +230,9 @@ namespace com.Goval.FacturaDigital.DataContracts.Catalogs
                 return new Dictionary<string, string>()
                 {
                     {"01","Código del producto del vendedor"},{"02","Código del producto del comprador" },
-                    { "03","Código del producto asignado por la industria " }
-                };
+                    { "03","Código del producto asignado por la industria" }, {"04","Código uso interno" },
+                 { "99","Otros" }
+    };
             }
 
         }
