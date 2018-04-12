@@ -22,7 +22,7 @@
                                     </Grid.ColumnDefinitions>
 
 
-                                    <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Code,StringFormat='COD: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding Name,StringFormat='{0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
                                     <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding Description}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
 
                                     <Switch Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" IsToggled="{Binding IsUsed}" VerticalOptions="CenterAndExpand"  HorizontalOptions="EndAndExpand"

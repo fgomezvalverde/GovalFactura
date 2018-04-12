@@ -28,7 +28,7 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                 Title = "Facturas",
                 IconSource = "contacts.png",
                 TargetType = PageType.BillList
-            });
+            });*/
             masterPageItems.Add(new MasterPageItem
             {
                 Title = "Clientes",
@@ -41,7 +41,7 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                 IconSource = "reminders.png",
                 TargetType = PageType.ProductList
             });
-            masterPageItems.Add(new MasterPageItem
+           /* masterPageItems.Add(new MasterPageItem
             {
                 Title = "Configuración",
                 IconSource = "reminders.png",

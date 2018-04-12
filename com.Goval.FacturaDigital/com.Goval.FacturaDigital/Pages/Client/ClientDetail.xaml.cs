@@ -13,8 +13,9 @@ namespace com.Goval.FacturaDigital.Pages.Client
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClientDetail : ContentPage
     {
-        Model.Client ActualClient;
-        public ClientDetail(Model.Client pClient)
+        DataContracts.Model.Client ActualClient;
+        Boolean FirstLoading = true;
+        public ClientDetail(DataContracts.Model.Client pClient)
         {
             InitializeComponent();
             ActualClient = pClient;
@@ -23,77 +24,101 @@ namespace com.Goval.FacturaDigital.Pages.Client
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await SetProducts();
+            if (FirstLoading)
+            {
+                await SetProducts();
+                FirstLoading = false;
+            }
+            
             this.BindingContext = ActualClient;
         }
 
         private async void SaveClient_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
-            var NewClient = this.BindingContext as Model.Client;
-            if (NewClient != null && !string.IsNullOrEmpty(NewClient.ClientId) && !string.IsNullOrEmpty(NewClient.Name))
+            var vSetClientObj = this.BindingContext as DataContracts.Model.Client;
+            try
             {
-                try
+                vSetClientObj.RemoveOnUsedProducts();
+                var vSetClient = new BusinessProxy.Client.SetUserClient();
+                var vSetedResponse = await vSetClient.GetDataAsync(
+                    new BusinessProxy.Models.ClientRequest
+                    {
+                        SSOT = App.SSOT,
+                        UserId = App.ActualUser.UserId,
+                        UserClient = vSetClientObj
+                    });
+                if (vSetedResponse != null)
                 {
-                    NewClient.RemoveOnUsedProducts();
-                    if (await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(
-                     NewClient
-                    ))
+                    if (vSetedResponse.IsSuccessful)
                     {
                         App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se han guardado los cambios");
-                        this.SendBackButtonPressed();
+                        await Navigation.PopAsync();
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha modificado el item");
                     }
                     else
                     {
                         App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", vSetedResponse.UserMessage);
+                        await DisplayAlert("", vSetedResponse.TechnicalMessage, "Ok");
                     }
-                    
                 }
-                catch (Exception ex)
+                else
                 {
                     App.ShowLoading(false);
-                    await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
+                    await DisplayAlert("", "Respuesta Null", "Ok");
                 }
-
             }
-            else
+            catch (Exception ex)
             {
                 App.ShowLoading(false);
-                await Toasts.ToastRunner.ShowInformativeToast("Sistema", "Alguno de los datos falta por rellenar");
+                await DisplayAlert("", ex.Message, "Ok");
             }
-
         }
 
         private async void DeleteClient_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
-            var deleteClient = this.BindingContext as Model.Client;
+            var vDeleteClientObj = this.BindingContext as DataContracts.Model.Client;
             var answer = await DisplayAlert("Sistema", "Estas seguro que deseas eliminar el item", "Si", "No");
-            if (deleteClient != null && answer)
+            if (vDeleteClientObj != null && answer)
             {
-                if (await DynamoDBManager.GetInstance().Delete<Model.Client>(
-                     deleteClient
-                    ))
+                var vDeleteClient = new BusinessProxy.Client.DeleteUserClient();
+                var vDeletedResponse = await vDeleteClient.GetDataAsync(
+                    new BusinessProxy.Models.ClientRequest
+                    {
+                        SSOT = App.SSOT,
+                        UserId = App.ActualUser.UserId,
+                        UserClient = vDeleteClientObj
+                    });
+                if (vDeletedResponse != null)
                 {
-                    App.ShowLoading(false);
-                    await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha eliminado el item");
-                    this.SendBackButtonPressed();
+                    if (vDeletedResponse.IsSuccessful)
+                    {
+                        App.ShowLoading(false);
+                        await Navigation.PopAsync();
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha eliminado el item");
+                    }
+                    else
+                    {
+                        App.ShowLoading(false);
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", vDeletedResponse.UserMessage);
+                        await DisplayAlert("", vDeletedResponse.TechnicalMessage, "Ok");
+                    }
                 }
                 else
                 {
                     App.ShowLoading(false);
-                    await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
+                    await DisplayAlert("", "Respuesta Null", "Ok");
                 }
-                
+
             }
         }
 
-        public void ChangeProductsAssociated_Clicked(object sender, EventArgs e)
+        public async void ChangeProductsAssociated_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(
-               new ClientProductSelection(ActualClient.Products,false)
+            await Navigation.PushAsync(
+               new ClientProductSelection(ActualClient.ClientProducts,false)
                );
         }
 
@@ -101,30 +126,41 @@ namespace com.Goval.FacturaDigital.Pages.Client
         private async Task SetProducts()
         {
             App.ShowLoading(true);
-            var productList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
-            if (productList != null || productList.Count != 0)
-            {
-                foreach (var product in ActualClient.Products)
+            var vGetUserProductsClient = new BusinessProxy.Product.GetUserProducts();
+            var vProductResponse = await vGetUserProductsClient.GetDataAsync(
+                new BusinessProxy.Models.ProductRequest
                 {
-                    var findedProduct = productList.First(d => d.Code == product.Code);
-                    if (findedProduct != null)
+                    SSOT = App.SSOT,
+                    UserId = App.ActualUser.UserId
+                });
+
+            if (vProductResponse != null)
+            {
+                if (vProductResponse.IsSuccessful)
+                {
+                    foreach (var vProduct in ActualClient.ClientProducts)
                     {
-                        findedProduct.IsUsed = product.IsUsed;
+                        var vFindedProduct = vProductResponse.UserProducts.First(d => d.ProductId.Equals( vProduct.ProductId));
+                        if (vFindedProduct != null)
+                        {
+                            vFindedProduct.IsUsed = true;
+                        }
                     }
-                    else
-                    {
-                        App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "El item " + product.Description + " ha sido elimado, y ya era referencia a este cliente");
-                    }
+                    ActualClient.ClientProducts = vProductResponse.UserProducts;
+                    App.ShowLoading(false);
                 }
-                ActualClient.Products = productList;
+                else
+                {
+                    App.ShowLoading(false);
+                    await DisplayAlert("", vProductResponse.TechnicalMessage, "Ok");
+                }
             }
             else
             {
                 App.ShowLoading(false);
-                await Toasts.ToastRunner.ShowErrorToast("Sistema", "No se han podido traer los productos del server");
+                await DisplayAlert("", "Respuesta Null de los Productos", "Ok");
             }
-            App.ShowLoading(false);
+            
         }
 
     }

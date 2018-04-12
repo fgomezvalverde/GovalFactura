@@ -14,7 +14,6 @@ namespace com.Goval.FacturaDigital.Pages.Product
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductList : ContentPage
     {
-        List<DataContracts.Model.Product> _ProductList;
         public ProductList()
         {
             InitializeComponent();
@@ -53,12 +52,29 @@ namespace com.Goval.FacturaDigital.Pages.Product
                         SSOT = App.SSOT,
                         UserId = App.ActualUser.UserId
                     });
-                _ProductList = vProductResponse.UserProducts;
-                ProductListView.ItemsSource = _ProductList;
+
+                if (vProductResponse != null)
+                {
+                    if (vProductResponse.IsSuccessful)
+                    {
+                        ProductListView.ItemsSource = vProductResponse.UserProducts;
+                    }
+                    else
+                    {
+                        ProductListView.ItemsSource = null;
+                        await DisplayAlert("", vProductResponse.TechnicalMessage, "Ok");
+                    }
+                }
+                else
+                {
+                    ProductListView.ItemsSource = null;
+                    await DisplayAlert("", "Respuesta Null", "Ok");
+                }
             }
 
             else {
                 ProductListView.ItemsSource = null;
+                await DisplayAlert("", "SSOT null o User null", "Ok");
             }
             App.ShowLoading(false);
         }

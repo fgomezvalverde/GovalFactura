@@ -1,4 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Amazon;
+using Newtonsoft.Json;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
     [AddINotifyPropertyChangedInterface]
     public partial class AddClient : ContentPage
     {
-        List<Model.Product> ActualProducts = null;
+        List<DataContracts.Model.Product> ActualProducts = null;
         public AddClient()
         {
             InitializeComponent();
@@ -24,46 +25,81 @@ namespace com.Goval.FacturaDigital.Pages.Client
 
         protected async override void OnAppearing()
         {
+            base.OnAppearing();
             App.ShowLoading(true);
             if (ActualProducts == null)
             {
-                ActualProducts = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Product>();
-                if (ActualProducts != null && ActualProducts.Count != 0)
+                var vGetUserProductsClient = new BusinessProxy.Product.GetUserProducts();
+                var vProductResponse = await vGetUserProductsClient.GetDataAsync(
+                new BusinessProxy.Models.ProductRequest
                 {
-                    this.BindingContext = new Model.Client() { Products = ActualProducts };
+                    SSOT = App.SSOT,
+                    UserId = App.ActualUser.UserId
+                });
+
+                if (vProductResponse != null)
+                {
+                    if (vProductResponse.IsSuccessful)
+                    {
+                        ActualProducts = vProductResponse.UserProducts;
+                        this.BindingContext = new DataContracts.Model.Client() { ClientProducts = ActualProducts };
+                        App.ShowLoading(false);
+                    }
+                    else
+                    {
+                        App.ShowLoading(false);
+                        await DisplayAlert("", vProductResponse.TechnicalMessage, "Ok");
+                    }
                 }
                 else
                 {
-                    this.BindingContext = new Model.Client() { };
+                    App.ShowLoading(false);
+                    await DisplayAlert("", "Respuesta Null de los Productos", "Ok");
                 }
             }
-            base.OnAppearing();
+            
             App.ShowLoading(false);
         }
 
         private async void AddClient_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
-            var NewClient = this.BindingContext as Model.Client;
-            if (NewClient != null && !string.IsNullOrEmpty(NewClient.ClientId) && !string.IsNullOrEmpty(NewClient.Name))
+            var NewClient = this.BindingContext as DataContracts.Model.Client;
+            var test = JsonConvert.SerializeObject(NewClient);
+            if (NewClient != null && !string.IsNullOrEmpty(NewClient.Name))
             {
                 try
                 {
-                    NewClient.Products = RemoveUnUsedProduct(NewClient.Products);
-                    if (await DynamoDBManager.GetInstance().SaveAsync<Model.Client>(
-                     NewClient
-                    ))
+                    NewClient.RemoveOnUsedProducts();
+                    var vAddClient = new BusinessProxy.Client.AddUserClient();
+                    var vAddResponse = await vAddClient.GetDataAsync(
+                        new BusinessProxy.Models.ClientRequest
+                        {
+                            SSOT = App.SSOT,
+                            UserId = App.ActualUser.UserId,
+                            UserClient = NewClient
+                        });
+                    if (vAddResponse != null)
                     {
-                        App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha Guardado Satifactoriamente");
-                        this.SendBackButtonPressed();
+                        if (vAddResponse.IsSuccessful)
+                        {
+                            App.ShowLoading(false);
+                            await Navigation.PopAsync();
+                            await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha Agregado el item");
+                        }
+                        else
+                        {
+                            App.ShowLoading(false);
+                            await Toasts.ToastRunner.ShowSuccessToast("Sistema", vAddResponse.UserMessage);
+                            await DisplayAlert("", vAddResponse.TechnicalMessage, "Ok");
+                        }
                     }
                     else
                     {
                         App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");
+                        await DisplayAlert("", "Respuesta Null", "Ok");
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -89,21 +125,6 @@ namespace com.Goval.FacturaDigital.Pages.Client
                );
         }
 
-        private List<Model.Product> RemoveUnUsedProduct(List<Model.Product> pProductList)
-        {
-            List<Model.Product> resultList = new List<Model.Product>();
-            if (pProductList != null)
-            {
-                foreach (var product in pProductList)
-                {
-                    if (product.IsUsed)
-                    {
-                        resultList.Add(product);
-                    }
-                }
-            }
-
-            return resultList;
-        }
+        
     }
 }

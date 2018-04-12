@@ -30,7 +30,15 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         public string MeasurementUnitType { get; set; }
         
         public long ProductByClientId { get; set; }
-        
+
+
+
+
+
+
+        // INTERNAL LOGIC
         public int ProductQuantity { get; set; }
+        public Boolean IsUsed { get; set; } = false;
+
     }
 }

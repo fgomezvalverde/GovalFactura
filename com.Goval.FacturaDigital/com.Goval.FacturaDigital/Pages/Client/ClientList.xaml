@@ -18,7 +18,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding ClientId,StringFormat='Código de Cliente: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="{Binding ClientLegalNumber,StringFormat='Identificación: {0:N}'}" TextColor="#BDBDBD" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
                                 <Label Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
                             </Grid>
                         </ViewCell>
