@@ -47,6 +47,27 @@
                               />
                 </StackLayout>
 
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Condiciones de Venta" HorizontalOptions="StartAndExpand" />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.SellConditions}" SelectedItem="{Binding SellConditions}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
+                </StackLayout>
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Plazo del Crédito" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding CreditTerm, Mode=TwoWay}"
+                                Placeholder="Ingrese el plazo del crédito" BackgroundColor="White"
+                              />
+                </StackLayout>
+
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Método de pago" HorizontalOptions="StartAndExpand" />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.PayMethod}" SelectedItem="{Binding PayMethod}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
+                </StackLayout>
+
+
 
                 <StackLayout >
                     <Label FontAttributes="Bold" Text="Detalle de Venta" HorizontalOptions="StartAndExpand" />
