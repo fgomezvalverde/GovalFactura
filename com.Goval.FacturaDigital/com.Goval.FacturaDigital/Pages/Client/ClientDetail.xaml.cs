@@ -118,7 +118,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
         public async void ChangeProductsAssociated_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(
-               new ClientProductSelection(ActualClient.ClientProducts,false)
+               new ClientProductSelection(ActualClient.ClientProducts,true)
                );
         }
 

@@ -24,16 +24,16 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackLayout VerticalOptions="Center" Spacing="0" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" HorizontalOptions="Start">
+                <StackLayout VerticalOptions="Center" Spacing="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" HorizontalOptions="Start">
                     <Label  Text="Ingresos del Mes" TextColor="#E0E0E0"/>
                     <Label x:Name="monthlyIncomesLabel" Text="₡0 k" TextColor="White" FontSize="30"/>
                 </StackLayout>
-                <StackLayout VerticalOptions="Center" Spacing="0" Grid.Row="0" Grid.Column="1" BackgroundColor="Transparent" HorizontalOptions="End">
+                <!--StackLayout VerticalOptions="Center" Spacing="0" Grid.Row="0" Grid.Column="1" BackgroundColor="Transparent" HorizontalOptions="End">
                     <!--Label Text="Ventas del Mes" TextColor="#E0E0E0" HorizontalTextAlignment="End"/-->
-                    <!--Label x:Name="monthlyUnitsLabel" Text="0 unis." TextColor="White" HorizontalTextAlignment="End" FontSize="30"/-->
+                    <!--Label x:Name="monthlyUnitsLabel" Text="0 unis." TextColor="White" HorizontalTextAlignment="End" FontSize="30"/>
                     <Label Text="Ventas del Mes" TextColor="Transparent" HorizontalTextAlignment="End"/>
                     <Label x:Name="monthlyUnitsLabel" Text="0 unis." TextColor="Transparent" HorizontalTextAlignment="End" FontSize="30"/>
-                </StackLayout>
+                </-->
             </Grid>
             <ListView x:Name="BillListView" ItemSelected="billListView_ItemSelected"
                         IsGroupingEnabled="True"

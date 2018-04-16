@@ -13,12 +13,13 @@ namespace com.Goval.FacturaDigital.Pages.Client
     public partial class ClientProductSelection : ContentPage
     {
         public static Boolean IsSwitchAvailable = true;
-        public ClientProductSelection(List<DataContracts.Model.Product> pProducts,Boolean pNewClient)
+        public ClientProductSelection(List<DataContracts.Model.Product> pProducts,Boolean pAbleToChangeProducts
+            )
         {
             IsSwitchAvailable = true;
             BindingContext = pProducts;
             InitializeComponent();
-            if (!App.AdminPrivilegies)
+            if (!App.AdminPrivilegies && pAbleToChangeProducts)
             {
                 IsSwitchAvailable = false;
             }

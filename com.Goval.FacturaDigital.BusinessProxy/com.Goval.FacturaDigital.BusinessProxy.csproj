@@ -38,10 +38,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\ValidateUserClient.cs" />
+    <Compile Include="Bill\CreateBill.cs" />
     <Compile Include="Client\AddUserClient.cs" />
     <Compile Include="Client\DeleteUserClient.cs" />
     <Compile Include="Client\GetUserClients.cs" />
     <Compile Include="Client\SetUserClient.cs" />
+    <Compile Include="Models\BillRequest.cs" />
+    <Compile Include="Models\BillResponse.cs" />
     <Compile Include="Models\ClientRequest.cs" />
     <Compile Include="Models\ClientResponse.cs" />
     <Compile Include="Models\LoginRequest.cs" />

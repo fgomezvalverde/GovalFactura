@@ -46,6 +46,9 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         public string CreditTerm { get; set; }
         
         public string PaymentMethod { get; set; }
+
+
+
         
         public string DiscountNature { get; set; }
         

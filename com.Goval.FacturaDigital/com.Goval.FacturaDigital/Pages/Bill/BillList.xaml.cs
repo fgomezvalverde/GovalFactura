@@ -18,7 +18,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
     {
 
         string MonthlySoldUnitsFormat = "{0} unis.";
-        string MonthlyIncomeFormat = "₡{0} k";
+        string MonthlyIncomeFormat = "₡{0}";
         public BillList()
         {
             InitializeComponent();
@@ -28,7 +28,41 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         {
             base.OnAppearing();
             App.ShowLoading(true);
-            var billList = await BillSecurity.GetBillList();
+            if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
+            {
+                var vGetUserBills = new BusinessProxy.Bill.CreateBill();
+                var vBillsResponse = await vGetUserBills.GetDataAsync(
+                    new BusinessProxy.Models.BillRequest
+                    {
+                        SSOT = App.SSOT,
+                        UserId = App.ActualUser.UserId
+                    });
+                if (vClientsResponse != null)
+                {
+                    if (vClientsResponse.IsSuccessful)
+                    {
+                        ClientListView.ItemsSource = vClientsResponse.UserClients;
+                    }
+                    else
+                    {
+                        ClientListView.ItemsSource = null;
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vClientsResponse.UserMessage);
+                        await DisplayAlert("", vClientsResponse.TechnicalMessage, "Ok");
+                    }
+                }
+                else
+                {
+                    ClientListView.ItemsSource = null;
+                    await DisplayAlert("", "Respuesta Null", "Ok");
+                }
+
+            }
+
+            else
+            {
+                ClientListView.ItemsSource = null;
+                await DisplayAlert("", "SSOT null o User null", "Ok");
+            }
             if (billList != null && billList.Count != 0)
             {
                 var sorted = from bill in billList
@@ -95,7 +129,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 var splited = totalString.Split('.');
                 if (splited[0].Length > 4)
                 {
-                    totalString = splited[0].Substring(0, splited[0].Length - 4);
+                    //totalString = splited[0].Substring(0, splited[0].Length - 4); // Se puso todo el largo
                 }
                 else
                 {
