@@ -7,9 +7,162 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
-                
-                
-                
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Name, Mode=TwoWay}"
+                                Placeholder="Ingrese el nombre" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre Comercial" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding ComercialName, Mode=TwoWay}"
+                                Placeholder="Ingrese el nombre" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Tipo de Identificación" HorizontalOptions="StartAndExpand" />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.IdentificationType}" SelectedItem="{Binding IdentificationType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Número de identificación
+                           
+                           " HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding UserLegalNumber, Mode=TwoWay}"
+                                Placeholder="Ingrese la identificación" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Correo electrónico" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Keyboard="Email"
+                          Text="{Binding Email, Mode=TwoWay}"
+                                   Placeholder="Email" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Contraseña"
+                           
+                           " HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Password, Mode=TwoWay}"
+                                Placeholder="Ingrese la Contraseña" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Provincia" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding ProvinciaCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el Provincia" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Cantón" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding CantonCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el Canton" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Distrito" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding DistritoCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el Distrito" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Barrio" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding BarrioCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el Barrio" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Otras Señas" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding LocationDescription, Mode=TwoWay}"
+                                Placeholder="Ingrese la descripción" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de País" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding PhoneNumberCountryCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el código" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Teléfono" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding PhoneNumber, Mode=TwoWay}"
+                                Placeholder="Ingrese el Teléfono" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Código de País" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding FaxCountryCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el código" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Fax" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding Fax, Mode=TwoWay}"
+                                Placeholder="Ingrese el fax" BackgroundColor="White"
+                        Keyboard="Telephone"
+                    />
+                </StackLayout>
+
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre usuario de Hacienda"
+                           
+                           " HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding HaciendaUsername, Mode=TwoWay}"
+                                Placeholder="Ingrese el nombre" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Contraseña de Hacienda"
+                           
+                           " HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding HaciendaPassword, Mode=TwoWay}"
+                                Placeholder="Ingrese la contraseña" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="PIN Criptográfico"
+                           
+                           " HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding HaciendaCryptographicPIN, Mode=TwoWay}"
+                                Placeholder="Ingrese el PIN Criptográfico" BackgroundColor="White"
+                    />
+                </StackLayout>
+
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Número de inicial de factura"
+                           
+                           " HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding StartBillNumber, Mode=TwoWay}"
+                                Placeholder="Ingrese el número" BackgroundColor="White"
+                        Keyboard="Numeric"
+                    />
+                </StackLayout>
+                    
+
+
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -26,7 +26,7 @@
                                 
                                 Text="{Binding ClientLegalNumber, Mode=TwoWay}"
                                 Placeholder="Ingrese la identificación" BackgroundColor="White"
-                        Keyboard="Email"
+                        Keyboard="Numeric"
                     />
                 </StackLayout>
                 <StackLayout>
