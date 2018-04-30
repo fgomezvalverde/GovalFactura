@@ -38,6 +38,7 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
 
         // INTERNAL LOGIC
         public int ProductQuantity { get; set; }
+        public decimal TotalCost { get; set; }
         public Boolean IsUsed { get; set; } = false;
 
     }

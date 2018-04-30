@@ -21,6 +21,12 @@ namespace com.Goval.FacturaDigital.Pages.Login
             InitializeComponent();
         }
 
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            
+        }
+
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
@@ -42,6 +48,7 @@ namespace com.Goval.FacturaDigital.Pages.Login
                     App.ActualUser = vLoginResult.UserInformation;
                     App.ActualUserConfiguration = vLoginResult.UserConfiguration;
                     App.SSOT = vLoginResult.SSOT;
+                    await App.RootPage.ChangePage(new MasterDetail.MasterPageItem { TargetType = MasterDetail.PageType.BillList });
                     await Navigation.PopModalAsync();
                     App.ShowLoading(false);
                     return;
@@ -67,6 +74,11 @@ namespace com.Goval.FacturaDigital.Pages.Login
         protected override bool OnBackButtonPressed()
         {
             return false;
+        }
+
+        private async void CreateUser_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new User.CreateNewUser());
         }
     }
 }

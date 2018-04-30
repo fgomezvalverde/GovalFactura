@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="com.Goval.FacturaDigital.Pages.User.HaciendaRegistration">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Nombre usuario de Hacienda"
+                           
+                           HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding HaciendaUsername, Mode=TwoWay}"
+                                Placeholder="Ingrese el usuario" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Contraseña de Hacienda"
+                           
+                           HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding HaciendaPassword, Mode=TwoWay}"
+                                Placeholder="Ingrese la contraseña" BackgroundColor="White"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="PIN de llave Criptográfica"
+                           
+                            HorizontalOptions="StartAndExpand" />
+                    <Entry
+                                Text="{Binding HaciendaCryptographicPIN, Mode=TwoWay}"
+                                Placeholder="Ingrese el PIN" BackgroundColor="White" Keyboard="Numeric"
+                    />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Cargar la llave Criptográfica"
+                           
+                            HorizontalOptions="StartAndExpand" />
+                    <Button  TextColor="White"  BackgroundColor="#37474F" Text="Buscar archivo..." Clicked="LoadFile_Clicked" HorizontalOptions="Start" VerticalOptions="EndAndExpand"/>
+
+                </StackLayout>
+
+                <Button  TextColor="White"  BackgroundColor="#90A4AE" Text="Validar Usuario" Clicked="ValidateUser_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+                <Button  TextColor="Black"  BackgroundColor="#CFD8DC" Text="Omitir por el momento" Clicked="Dismiss_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

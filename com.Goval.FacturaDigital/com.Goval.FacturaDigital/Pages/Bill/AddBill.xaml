@@ -4,7 +4,7 @@
              x:Class="com.Goval.FacturaDigital.Pages.Bill.AddBill"
              xmlns:DataContracts="clr-namespace:com.Goval.FacturaDigital.DataContracts.Catalogs;assembly=com.Goval.FacturaDigital.DataContracts" 
              xmlns:LocalPicker="clr-namespace:com.Goval.FacturaDigital.Views" 
-             Title="{Binding Id, StringFormat='Nueva Factura N°{0}'}"
+             Title="Nueva Factura"
              xmlns:converter="clr-namespace:com.Goval.FacturaDigital.Converters">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -16,7 +16,7 @@
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Productos Asociados" HorizontalOptions="StartAndExpand" />
-                    <ListView BackgroundColor="White" x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding AssignClient.Products, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                    <ListView BackgroundColor="White" x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding SoldProductsJSON.ClientProducts, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -30,8 +30,8 @@
                                             <ColumnDefinition Width="0.20*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Entry Grid.Row="0" TextChanged="EntryAmount_TextChanged" Grid.Column="0" Text="{Binding Amount, Mode=TwoWay}" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="40"  />
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                        <Entry Grid.Row="0" TextChanged="EntryAmount_TextChanged" Grid.Column="0" Text="{Binding ProductQuantity, Mode=TwoWay}" VerticalOptions="CenterAndExpand" Keyboard="Numeric" HorizontalOptions="StartAndExpand" WidthRequest="40"  />
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
                                         <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price, Converter={StaticResource MoneyConverter}}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>   
                                     </Grid>
                                 </ViewCell>
@@ -44,28 +44,28 @@
                 <StackLayout >
                     <Label FontAttributes="Bold" Text="Orden de Compra(opcional)" HorizontalOptions="StartAndExpand" />
                     <Entry
-                               Text="{Binding PurchaseOrder, Mode=TwoWay}"
+                               Text="{Binding PurchaseOrderCode, Mode=TwoWay}"
                                 Placeholder="Codigo" BackgroundColor="White"
                               />
                 </StackLayout>
 
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Condiciones de Venta" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.SellConditions}" SelectedItem="{Binding SellConditions}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.SellConditions}" SelectedItem="{Binding SellCondition}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
                     </LocalPicker:BindablePicker>
                 </StackLayout>
 
                 <StackLayout >
                     <Label FontAttributes="Bold" Text="Plazo del Crédito" HorizontalOptions="StartAndExpand" />
                     <Entry
-                               Text="{Binding CreditTerm, Mode=TwoWay}"
+                               Text="{Binding CreditTerm, Mode=TwoWay}" Keyboard="Numeric"
                                 Placeholder="Ingrese el plazo del crédito" BackgroundColor="White"
                               />
                 </StackLayout>
 
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Método de pago" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.PayMethod}" SelectedItem="{Binding PayMethod}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.PayMethod}" SelectedItem="{Binding PaymentMethod}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
                     </LocalPicker:BindablePicker>
                 </StackLayout>
 

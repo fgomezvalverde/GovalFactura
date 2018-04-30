@@ -94,7 +94,7 @@ namespace com.Goval.FacturaDigital.Pages.Client
             else
             {
                 ClientListView.ItemsSource = null;
-                await DisplayAlert("", "SSOT null o User null", "Ok");
+                //await DisplayAlert("", "SSOT null o User null", "Ok");
             }
             App.ShowLoading(false);
         }

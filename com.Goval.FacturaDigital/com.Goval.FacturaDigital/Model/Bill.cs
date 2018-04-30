@@ -25,7 +25,7 @@ namespace com.Goval.FacturaDigital.Model
         public double totalAfterDiscount { get; set; } = 0;
         public double TotalToPay { get; set; } = 0;
 
-        public string Status { get; set; }= Enum.GetName(BillStatus.Aprobada.GetType(), BillStatus.Aprobada);
+        public string Status { get; set; }= Enum.GetName(BillStatus.Done.GetType(), BillStatus.Done);
 
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

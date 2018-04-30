@@ -20,6 +20,6 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
 
     public enum PageType
     {
-        BillList,ClientList,Configuration,ProductList,Logout
+        BillList,ClientList,Configuration,ProductList,Logout,ValidateHaciendaUser
     }
 }

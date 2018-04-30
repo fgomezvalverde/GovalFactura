@@ -27,19 +27,19 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         
         public string XMLReceivedFromHacienda { get; set; }
         
-        public string SoldProductsJSON { get; set; }
+        public Client SoldProductsJSON { get; set; }
         
         public long BillId { get; set; }
         
         public int HaciendaFailCounter { get; set; }
         
-        public System.DateTime LastSendDate { get; set; }
+        public System.DateTime? LastSendDate { get; set; }
         
-        public System.DateTime EmissionDate { get; set; }
+        public System.DateTime? EmissionDate { get; set; }
         
         public string DocumentKey { get; set; }
         
-        public string ConsecutiveNumber { get; set; }
+        public long ConsecutiveNumber { get; set; }
         
         public string SellCondition { get; set; }
         

@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,12 +16,16 @@ namespace com.Goval.FacturaDigital.Pages.Bill
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddBill : ContentPage
     {
-        Model.Bill ActualBill;
-        public AddBill(Model.Bill pClient)
+        DataContracts.Model.Bill ActualBill;
+        public AddBill(DataContracts.Model.Bill pClient)
         {
             InitializeComponent();
             this.BindingContext = pClient;
-            ProductListView.HeightRequest = pClient.AssignClient.Products.Count * 60;
+            if (pClient.SoldProductsJSON != null && pClient.SoldProductsJSON.ClientProducts != null && pClient.SoldProductsJSON.ClientProducts.Any())
+            {
+                ProductListView.HeightRequest = pClient.SoldProductsJSON.ClientProducts.Count * 60;
+            }
+            
         }
 
         private void ProductListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -39,58 +42,58 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
         private void ExecuteBalance()
         {
-            ActualBill = this.BindingContext as Model.Bill;
-            ActualBill.discountAmount = 0;
-            ActualBill.taxesToPay = 0;
-            ActualBill.totalAfterDiscount = 0;
+            ActualBill = this.BindingContext as DataContracts.Model.Bill;
+            ActualBill.DiscountAmount = 0;
+            ActualBill.TaxesToPay = 0;
+            ActualBill.TotalAfterDiscount = 0;
             ActualBill.TotalToPay = 0;
-            ActualBill.subTotalProducts = 0;
+            ActualBill.SubTotalProducts = 0;
 
-            foreach (var parsedProduct in ActualBill.AssignClient.Products)
+            foreach (var parsedProduct in ActualBill.SoldProductsJSON.ClientProducts)
             {
-                if (parsedProduct == null || parsedProduct.Amount == 0)
+                if (parsedProduct == null || parsedProduct.ProductQuantity == 0)
                 {
 
                 }
                 else
                 {
-                    parsedProduct.TotalCost = (double)parsedProduct.Amount * parsedProduct.Price;
-                    ActualBill.subTotalProducts += parsedProduct.TotalCost;
+                    parsedProduct.TotalCost = parsedProduct.ProductQuantity * parsedProduct.Price;
+                    ActualBill.SubTotalProducts += parsedProduct.TotalCost;
                 }
                 
             }
             //We need to apply a discount
-            if (ActualBill.AssignClient.DiscountPercentage != 0)
+            if (ActualBill.SoldProductsJSON.DefaultDiscountPercentage != 0)
             {
-                ActualBill.discountAmount = (ActualBill.subTotalProducts / 100) * ActualBill.AssignClient.DiscountPercentage;
+                ActualBill.DiscountAmount = (ActualBill.SubTotalProducts / 100) * ActualBill.SoldProductsJSON.DefaultDiscountPercentage;
             }
 
-            ActualBill.totalAfterDiscount = ActualBill.subTotalProducts - ActualBill.discountAmount;
+            ActualBill.TotalAfterDiscount = ActualBill.SubTotalProducts - ActualBill.DiscountAmount;
 
-            if (ActualBill.AssignClient.TaxesPercentage != 0)
+            if (ActualBill.SoldProductsJSON.DefaultTaxesPercentage != 0)
             {
-                ActualBill.taxesToPay = (ActualBill.totalAfterDiscount / 100) * ActualBill.AssignClient.TaxesPercentage;
+                ActualBill.TaxesToPay = (ActualBill.TotalAfterDiscount / 100) * ActualBill.SoldProductsJSON.DefaultTaxesPercentage;
             }
-            ActualBill.TotalToPay = ActualBill.taxesToPay + ActualBill.totalAfterDiscount;
+            ActualBill.TotalToPay = ActualBill.TaxesToPay + ActualBill.TotalAfterDiscount;
 
             //Setting Amounts
 
-            TotalProducts.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.subTotalProducts);
+            TotalProducts.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.SubTotalProducts);
 
 
-            DescountAmountLabel.Text = string.Format("-Descuento({0}%)", ActualBill.AssignClient.DiscountPercentage);
-            DescountAmount.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.discountAmount);
+            DescountAmountLabel.Text = string.Format("-Descuento({0}%)", ActualBill.SoldProductsJSON.DefaultDiscountPercentage);
+            DescountAmount.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.DiscountAmount);
 
-            TotalAfterDescount.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.totalAfterDiscount);
+            TotalAfterDescount.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.TotalAfterDiscount);
 
 
-            TaxesAmountLabel.Text = string.Format("+Impuestos({0}%)", ActualBill.AssignClient.TaxesPercentage);
-            TaxesAmount.Text = "₡"+Utils.Utils.FormatNumericToString(ActualBill.taxesToPay);
+            TaxesAmountLabel.Text = string.Format("+Impuestos({0}%)", ActualBill.SoldProductsJSON.DefaultTaxesPercentage);
+            TaxesAmount.Text = "₡"+Utils.Utils.FormatNumericToString(ActualBill.TaxesToPay);
 
             Total.Text = "₡" + Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + " cols";
 
 
-            if (ActualBill.subTotalProducts != 0)
+            if (ActualBill.SubTotalProducts != 0)
             {
                 Button_CreateBill.IsVisible = true;
             }
@@ -103,37 +106,46 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         private async void Generate_Bill(object sender, EventArgs e)
         {
             App.ShowLoading(true);
-            ActualBill.BillDate = DateTime.Now;
-            //ActualBill.CreatedBy = App.ActualUser.FullName;
-            //ActualBill.UpdatedBy = App.ActualUser.FullName;
+            ActualBill = this.BindingContext as DataContracts.Model.Bill;
+            ActualBill.EmissionDate = null;
+            ActualBill.LastSendDate = null;
+            ActualBill.ClientId = ActualBill.SoldProductsJSON.ClientId;
             try
             {
-                if (await DynamoDBManager.GetInstance().SaveAsync<Model.Bill>(
-                 ActualBill
-                ))
+                var vCreateUserBills = new BusinessProxy.Bill.CreateBill();
+                var vBillRequest = new BusinessProxy.Models.BillRequest
                 {
-                    
-                    Dictionary<string, string> values = await Utils.BillSecurity.BillToDictionary(ActualBill);
-                    var streamResult = await DependencyService.Get<IReportingService>().CreateAndRunReport(values, ActualBill.Id+"", Utils.ConfigurationConstants.BillExcelOriginalFormat);
+                    SSOT = App.SSOT,
+                    UserId = App.ActualUser.UserId,
+                    ClientBill = ActualBill,
+                };
+                var vCreateBillsResponse = await vCreateUserBills.GetDataAsync(vBillRequest);
 
-                    if (streamResult != null)
+
+                var jsonTEST = Newtonsoft.Json.JsonConvert.SerializeObject(vBillRequest);
+                if (vCreateBillsResponse != null)
+                {
+                    if (vCreateBillsResponse.IsSuccessful)
                     {
-                        SendMailReport(streamResult);
-                        streamResult.Dispose();
-                    }
-                    App.ShowLoading(false);
-                    await Toasts.ToastRunner.ShowSuccessToast("Sistema", "Se ha Guardado Satifactoriamente");
-                    this.SendBackButtonPressed();
-                    this.SendBackButtonPressed();
 
-                    
+                        // SE ENSEÑA EL PDF
+                        await Navigation.PopToRootAsync();
+                        await Toasts.ToastRunner.ShowSuccessToast("Sistema", 
+                            string.IsNullOrEmpty(vCreateBillsResponse.UserMessage)?"Se procesará la solicitud": vCreateBillsResponse.UserMessage
+                            );
+                        
+                    }
+                    else
+                    {
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vCreateBillsResponse.UserMessage);
+                        await DisplayAlert("", vCreateBillsResponse.TechnicalMessage, "Ok");
+                    }
                 }
                 else
                 {
-                    App.ShowLoading(false);
-                    await Toasts.ToastRunner.ShowErrorToast("Sistema", "Se ha producido un error al contactar el servicio");                    
+                    await DisplayAlert("", "Respuesta Null", "Ok");
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -141,7 +153,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }
         }
 
-        private void SendMailReport(Stream pReportData)
+        /*private void SendMailReport(Stream pReportData)
         {
 
             string mailBody = DependencyService.Get<IFileManagement>().OpenPlainTextFile("MailTemplate.html");
@@ -168,7 +180,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                                 }
                             },
                             true);
-        }
+        }*/
 
         private void Save_Changes(object sender, EventArgs e)
         {

@@ -23,35 +23,55 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         {
             base.OnAppearing();
             App.ShowLoading(true);
-            var clientList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Client>();
-            if (clientList != null && clientList.Count != 0)
+            if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
             {
-                ClientListView.ItemsSource = clientList;
+                var vGetUserClient = new BusinessProxy.Client.GetUserClients();
+                var vClientsResponse = await vGetUserClient.GetDataAsync(
+                    new BusinessProxy.Models.ClientRequest
+                    {
+                        SSOT = App.SSOT,
+                        UserId = App.ActualUser.UserId
+                    });
+                if (vClientsResponse != null)
+                {
+                    if (vClientsResponse.IsSuccessful)
+                    {
+                        ClientListView.ItemsSource = vClientsResponse.UserClients;
+                    }
+                    else
+                    {
+                        ClientListView.ItemsSource = null;
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vClientsResponse.UserMessage);
+                        await DisplayAlert("", vClientsResponse.TechnicalMessage, "Ok");
+                    }
+                }
+                else
+                {
+                    ClientListView.ItemsSource = null;
+                    await DisplayAlert("", "Respuesta Null", "Ok");
+                }
+
+            }
+
+            else
+            {
+                ClientListView.ItemsSource = null;
+                //await DisplayAlert("", "SSOT null o User null", "Ok");
             }
             App.ShowLoading(false);
         }
 
         private async void ClientListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var detailClient = e.SelectedItem as Model.Client;
-            int nextBillNumber = 0;
+            var detailClient = e.SelectedItem as DataContracts.Model.Client;
             App.ShowLoading(true);
-            nextBillNumber = await BillSecurity.GetNextBillNumber();
-            if (nextBillNumber != 0)
-            {
-               await Navigation.PushAsync(
-               new AddBill(new Model.Bill
+            await Navigation.PushAsync(new AddBill(new DataContracts.Model.Bill
                {
-                   Id = nextBillNumber,
-                   AssignClient = detailClient,
-                   BillDate = DateTime.Now
+                   SoldProductsJSON = detailClient
                })
-               );
-            }
-            else
-            {
-                await Toasts.ToastRunner.ShowErrorToast("Sistema", "Hubo un problema al conseguir el Numero de Factura");
-            }
+            );
+            
+
             App.ShowLoading(false);
         }
     }

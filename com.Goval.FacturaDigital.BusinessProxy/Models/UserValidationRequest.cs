@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace com.Goval.FacturaDigital.BusinessProxy.Models
 {
-    public class BillResponse : DataContracts.BaseModel.BaseResponse
+    public class UserValidationRequest : DataContracts.BaseModel.BaseRequest
     {
-        public byte[] PdfInvoice { get; set; }
-        public List<DataContracts.Model.Bill> UserBills { get; set; }
+        public DataContracts.Model.User User { get; set; } = new DataContracts.Model.User();
     }
 }

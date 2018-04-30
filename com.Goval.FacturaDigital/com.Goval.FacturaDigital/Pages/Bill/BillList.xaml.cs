@@ -30,29 +30,45 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             App.ShowLoading(true);
             if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
             {
-                var vGetUserBills = new BusinessProxy.Bill.CreateBill();
+                var vGetUserBills = new BusinessProxy.Bill.GetUserBills();
                 var vBillsResponse = await vGetUserBills.GetDataAsync(
                     new BusinessProxy.Models.BillRequest
                     {
                         SSOT = App.SSOT,
                         UserId = App.ActualUser.UserId
                     });
-                if (vClientsResponse != null)
+                if (vBillsResponse != null)
                 {
-                    if (vClientsResponse.IsSuccessful)
+                    if (vBillsResponse.IsSuccessful)
                     {
-                        ClientListView.ItemsSource = vClientsResponse.UserClients;
+                        if (vBillsResponse != null && vBillsResponse.UserBills.Any())
+                        {
+                            var sorted = from bill in vBillsResponse.UserBills
+                                         orderby bill.EmissionDate descending
+                                         group bill by bill.EmissionDate into billGroup
+                                         select new Grouping<DateTime?, DataContracts.Model.Bill>(billGroup.Key, billGroup);
+
+                            //create a new collection of groups
+                            var billsGrouped = new ObservableCollection<Grouping<DateTime?, DataContracts.Model.Bill>>(sorted);
+                            BillListView.ItemsSource = billsGrouped;
+
+                            string incomesText, unitsText;
+                            GetMonthlyIncomesAndSoldUnits(vBillsResponse.UserBills, out incomesText, out unitsText);
+                            monthlyIncomesLabel.Text = incomesText;
+                            //monthlyUnitsLabel.Text = unitsText;
+                        }
+
                     }
                     else
                     {
-                        ClientListView.ItemsSource = null;
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vClientsResponse.UserMessage);
-                        await DisplayAlert("", vClientsResponse.TechnicalMessage, "Ok");
+                        BillListView.ItemsSource = null;
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vBillsResponse.UserMessage);
+                        await DisplayAlert("", vBillsResponse.TechnicalMessage, "Ok");
                     }
                 }
                 else
                 {
-                    ClientListView.ItemsSource = null;
+                    BillListView.ItemsSource = null;
                     await DisplayAlert("", "Respuesta Null", "Ok");
                 }
 
@@ -60,25 +76,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
             else
             {
-                ClientListView.ItemsSource = null;
-                await DisplayAlert("", "SSOT null o User null", "Ok");
+                BillListView.ItemsSource = null;
+                //await DisplayAlert("", "SSOT null o User null", "Ok");
             }
-            if (billList != null && billList.Count != 0)
-            {
-                var sorted = from bill in billList
-                             orderby bill.BillDate.Date descending
-                             group bill by bill.BillDate.Date into billGroup
-                             select new Grouping<DateTime, Model.Bill>(billGroup.Key, billGroup);
-
-                //create a new collection of groups
-                var billsGrouped = new ObservableCollection<Grouping<DateTime, Model.Bill>>(sorted);
-                BillListView.ItemsSource = billsGrouped;
-
-                string incomesText, unitsText;
-                GetMonthlyIncomesAndSoldUnits(billList, out incomesText, out unitsText);
-                monthlyIncomesLabel.Text = incomesText;
-                monthlyUnitsLabel.Text = unitsText;
-            }
+            
             App.ShowLoading(false);
         }
 
@@ -91,26 +92,26 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
         private void billListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var detailbill = e.SelectedItem as Model.Bill;
+            var detailbill = e.SelectedItem as DataContracts.Model.Bill;
             Navigation.PushAsync(
                new BillDetail(detailbill)
                );
         }
 
-        private void GetMonthlyIncomesAndSoldUnits(List<Model.Bill> pList,out string pMonthlyIncomes,out string pMonthlyUnits)
+        private void GetMonthlyIncomesAndSoldUnits(List<DataContracts.Model.Bill> pList,out string pMonthlyIncomes,out string pMonthlyUnits)
         {
             try
             {
                 double total = 0;
                 int units = 0;
                 var ListFilter = pList.Where(x =>
-                x.Status.Equals(Enum.GetName(Model.BillStatus.Aprobada.GetType(), Model.BillStatus.Aprobada)) &&
-                x.BillDate.Month == DateTime.Now.Month);
+                x.Status.Equals(Enum.GetName(Model.BillStatus.Done.GetType(), Model.BillStatus.Done)) &&
+                x.EmissionDate.Value.Month == DateTime.Now.Month);
                 foreach (var bill in ListFilter)
                 {
 
                     int unitsPerProduct = 0;
-                    foreach (var product in bill.AssignClient.Products)
+                    /*foreach (var product in bill.SoldProductsJSON.ClientProducts)
                     {
                         if (product.UnityType.Equals("Unitaria"))
                         {
@@ -120,8 +121,8 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                         {
                             unitsPerProduct = product.Amount * 12;
                         }
-                    }
-                    total += bill.TotalToPay;
+                    }*/
+                    total += (double)bill.TotalToPay ;
                     units += unitsPerProduct;
                 }
                 // 123,456.23    3,465.11  456.11

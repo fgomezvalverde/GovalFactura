@@ -37,8 +37,11 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\RegisterUser.cs" />
     <Compile Include="Authentication\ValidateUserClient.cs" />
+    <Compile Include="Authentication\ValidateUserWithHacienda.cs" />
     <Compile Include="Bill\CreateBill.cs" />
+    <Compile Include="Bill\GetUserBills.cs" />
     <Compile Include="Client\AddUserClient.cs" />
     <Compile Include="Client\DeleteUserClient.cs" />
     <Compile Include="Client\GetUserClients.cs" />
@@ -51,6 +54,8 @@
     <Compile Include="Models\LoginResponse.cs" />
     <Compile Include="Models\ProductRequest.cs" />
     <Compile Include="Models\ProductResponse.cs" />
+    <Compile Include="Models\SignupRequest.cs" />
+    <Compile Include="Models\UserValidationRequest.cs" />
     <Compile Include="Product\AddUserProduct.cs" />
     <Compile Include="Product\DeleteUserProduct.cs" />
     <Compile Include="Product\GetUserProducts.cs" />

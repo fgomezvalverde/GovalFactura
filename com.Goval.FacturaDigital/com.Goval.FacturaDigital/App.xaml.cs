@@ -2,6 +2,7 @@
 using com.Goval.FacturaDigital.Abstraction.DependencyServices;
 using com.Goval.FacturaDigital.Amazon;
 using com.Goval.FacturaDigital.DataContracts.Model;
+using com.Goval.FacturaDigital.Pages.MasterDetail;
 using com.Goval.FacturaDigital.Test;
 using com.Goval.FacturaDigital.Utils;
 using Newtonsoft.Json;
@@ -18,7 +19,7 @@ namespace com.Goval.FacturaDigital
     public partial class App : Application
     {
         
-        public static Page RootPage;
+        public static RootPage RootPage;
         public static Boolean AdminPrivilegies = true;
         public static int StarterBillNumber = 2500;
 
@@ -42,7 +43,7 @@ namespace com.Goval.FacturaDigital
             CrossConnectivity.Current.ConnectivityChanged += ConnectivityChanged;
 
 
-            RootPage = new Pages.MasterDetail.RootPage();
+            RootPage = new RootPage();
             MainPage = RootPage;
             
         }

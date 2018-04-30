@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace com.Goval.FacturaDigital.Utils
 {
@@ -195,7 +196,6 @@ namespace com.Goval.FacturaDigital.Utils
 
             return result;
         }
-
 
         
     }

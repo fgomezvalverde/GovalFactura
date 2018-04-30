@@ -14,9 +14,9 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         public string Base64Logotype { get; set; }
         
         public string EmailScheme { get; set; }
-        
-        public bool IsPremiumAccount { get; set; }
-        
-        public decimal Credits { get; set; }
+
+        public bool IsPremiumAccount { get; set; } = false;
+
+        public decimal Credits { get; set; } = 0;
     }
 }

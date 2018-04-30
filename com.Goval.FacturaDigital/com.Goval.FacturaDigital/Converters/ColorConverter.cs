@@ -16,11 +16,11 @@ namespace com.Goval.FacturaDigital.Converters
 
             switch (Enum.Parse(typeof(Model.BillStatus), stringStatus))
             {
-                case Model.BillStatus.Aprobada:
+                case Model.BillStatus.Done:
                     return Color.FromHex("#64a338");
-                case Model.BillStatus.Anulada:
+                case Model.BillStatus.Error:
                     return Color.FromHex("#e03b24");
-                case Model.BillStatus.BaseNoValida:
+                case Model.BillStatus.Processing:
                     return Color.FromHex("#ffcc00");
                 default:
                     return Color.FromHex("#87a2c7");

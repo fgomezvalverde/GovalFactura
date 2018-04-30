@@ -13,9 +13,9 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         
         public string Name { get; set; }
         
-        public int DefaultDiscountPercentage { get; set; }
+        public decimal DefaultDiscountPercentage { get; set; }
         
-        public int DefaultTaxesPercentage { get; set; }
+        public decimal DefaultTaxesPercentage { get; set; }
         
         public string PhoneNumber { get; set; }
         

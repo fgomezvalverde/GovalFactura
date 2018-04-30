@@ -74,7 +74,7 @@ namespace com.Goval.FacturaDigital.Pages.Product
 
             else {
                 ProductListView.ItemsSource = null;
-                await DisplayAlert("", "SSOT null o User null", "Ok");
+                //await DisplayAlert("", "SSOT null o User null", "Ok");
             }
             App.ShowLoading(false);
         }

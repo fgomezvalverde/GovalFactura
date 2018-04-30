@@ -23,12 +23,12 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
             InitializeComponent();
 
             var masterPageItems = new List<MasterPageItem>();
-            /*masterPageItems.Add(new MasterPageItem
+            masterPageItems.Add(new MasterPageItem
             {
                 Title = "Facturas",
                 IconSource = "contacts.png",
                 TargetType = PageType.BillList
-            });*/
+            });
             masterPageItems.Add(new MasterPageItem
             {
                 Title = "Clientes",
@@ -53,6 +53,12 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                 Title = "Logout",
                 IconSource = "reminders.png",
                 TargetType = PageType.Logout
+            });
+            masterPageItems.Add(new MasterPageItem
+            {
+                Title = "Validar Usuario de Hacienda",
+                IconSource = "reminders.png",
+                TargetType = PageType.ValidateHaciendaUser
             });
 
             listView.ItemsSource = masterPageItems;

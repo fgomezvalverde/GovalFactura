@@ -28,17 +28,17 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         
         public string HaciendaPassword { get; set; }
         
-        public int HaciendaCryptographicPIN { get; set; }
+        public string HaciendaCryptographicPIN { get; set; }
         
-        public string HaciendaCryptographicFile { get; set; }
+        public byte[] HaciendaCryptographicFile { get; set; }
         
         public string HaciendaCryptographicFileName { get; set; }
         
         public string Password { get; set; }
         
         public string PhoneNumber { get; set; }
-        
-        public Boolean IsIndependentPerson { get; set; }
+
+        public Boolean HaciendaUserValidation { get; set; } = false;
         
         public string IdentificationType { get; set; }
         
@@ -53,10 +53,10 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         public string BarrioCode { get; set; }
         
         public string LocationDescription { get; set; }
-        
-        public string PhoneNumberCountryCode { get; set; }
-        
-        public string FaxCountryCode { get; set; }
+
+        public string PhoneNumberCountryCode { get; set; } = "506";
+
+        public string FaxCountryCode { get; set; } = "506";
         
         public string Fax { get; set; }
     }

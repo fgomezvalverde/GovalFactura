@@ -8,7 +8,9 @@ namespace com.Goval.FacturaDigital.Model
 {
     public enum BillStatus
     {
-        Aprobada,Anulada,BaseNoValida
+        Processing, Error, Done
+
+
     }
 
     

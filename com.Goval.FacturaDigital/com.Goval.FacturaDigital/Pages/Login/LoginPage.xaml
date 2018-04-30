@@ -11,7 +11,7 @@
                 
             </Image>
             <StackLayout BackgroundColor="White" Padding="15,25,15,25" Spacing="10">
-                <Entry HorizontalOptions="FillAndExpand" Placeholder="Usuario" x:Name="Entry_Username"/>
+                <Entry HorizontalOptions="FillAndExpand" Placeholder="Usuario (correo asociado)" x:Name="Entry_Username"/>
                 <Entry HorizontalOptions="FillAndExpand" Placeholder="Contraseña" x:Name="Entry_Password" IsPassword="True"/>
                 <Button HorizontalOptions="FillAndExpand" TextColor="White"  BackgroundColor="#90A4AE" Text="Iniciar Sesión" Clicked="LoginButton_Clicked"/>
                 <!--StackLayout Orientation="Horizontal">
@@ -19,6 +19,7 @@
                     <Switch HorizontalOptions="End" IsToggled="False"/>
                 </-->
             </StackLayout>
+            <Button Text="Crear Usuario" TextColor="White"  BackgroundColor="#455A64" HorizontalOptions="Center" Clicked="CreateUser_Clicked" />
             <Label HorizontalOptions="CenterAndExpand" Text="Creado por Goval | Versión 1.0"/>
         </StackLayout>
     </ContentPage.Content>
