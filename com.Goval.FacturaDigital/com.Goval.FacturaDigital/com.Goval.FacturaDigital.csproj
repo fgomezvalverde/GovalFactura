@@ -40,7 +40,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Behaviors\EntryLengthValidatorBehavior.cs" />
+    <Compile Include="Behaviors\EntryCharValidatorBehavior.cs" />
+    <Compile Include="Behaviors\EntryValidatorBehavior.cs" />
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Converters\DatetimeConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\BillSecurity.cs" />
+    <Compile Include="Views\BindableLocationPicker.cs" />
     <Compile Include="Views\BindablePicker.cs" />
     <Compile Include="Views\EnumFatherPickerType.cs" />
   </ItemGroup>

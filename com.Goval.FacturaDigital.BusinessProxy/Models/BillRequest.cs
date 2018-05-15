@@ -11,6 +11,6 @@ namespace com.Goval.FacturaDigital.BusinessProxy.Models
 
         public DataContracts.Model.Bill ClientBill { get; set; }
 
-        public long UserId { get; set; }
+        public DataContracts.Model.User User { get; set; }
     }
 }

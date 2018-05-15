@@ -22,11 +22,23 @@ namespace com.Goval.FacturaDigital.Pages.Bill
         public BillList()
         {
             InitializeComponent();
+            BillListView.IsPullToRefreshEnabled = true;
+            BillListView.RefreshCommand = new Command (async ()=> {
+
+                await RefreshBillList();
+                BillListView.IsRefreshing = false;
+            });
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            await RefreshBillList();
+        }
+
+
+        private async Task RefreshBillList()
+        {
             App.ShowLoading(true);
             if (!string.IsNullOrEmpty(App.SSOT) && App.ActualUser != null)
             {
@@ -35,7 +47,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                     new BusinessProxy.Models.BillRequest
                     {
                         SSOT = App.SSOT,
-                        UserId = App.ActualUser.UserId
+                        User = App.ActualUser
                     });
                 if (vBillsResponse != null)
                 {
@@ -79,7 +91,6 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 BillListView.ItemsSource = null;
                 //await DisplayAlert("", "SSOT null o User null", "Ok");
             }
-            
             App.ShowLoading(false);
         }
 

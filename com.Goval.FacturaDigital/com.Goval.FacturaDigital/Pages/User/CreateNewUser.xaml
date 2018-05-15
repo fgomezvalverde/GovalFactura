@@ -53,17 +53,13 @@
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Provincia" HorizontalOptions="StartAndExpand" />
-                    <Entry
-                                Text="{Binding User.ProvinciaCode, Mode=TwoWay}"
-                                Placeholder="Ingrese el Provincia" BackgroundColor="White"
-                    />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.ProvinciaType}" SelectedItem="{Binding User.ProvinciaCode}" BackgroundColor="White" Title="Seleccionar la Provincia" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Cantón" HorizontalOptions="StartAndExpand" />
-                    <Entry
-                                Text="{Binding User.CantonCode, Mode=TwoWay}"
-                                Placeholder="Ingrese el Canton" BackgroundColor="White"
-                    />
+                    <LocalPicker:BindablePicker  SelectedItem="{Binding User.ProvinciaCode}" BackgroundColor="White" Title="Seleccionar la Provincia" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Distrito" HorizontalOptions="StartAndExpand" />

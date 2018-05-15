@@ -113,10 +113,12 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             try
             {
                 var vCreateUserBills = new BusinessProxy.Bill.CreateBill();
+                //FOR TEST
+                //string json = Newtonsoft.Json.JsonConvert.SerializeObject(ActualBill);
                 var vBillRequest = new BusinessProxy.Models.BillRequest
                 {
                     SSOT = App.SSOT,
-                    UserId = App.ActualUser.UserId,
+                    User = App.ActualUser,
                     ClientBill = ActualBill,
                 };
                 var vCreateBillsResponse = await vCreateUserBills.GetDataAsync(vBillRequest);
@@ -127,22 +129,29 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 {
                     if (vCreateBillsResponse.IsSuccessful)
                     {
-
-                        // SE ENSEÑA EL PDF
+                        App.ShowLoading(false);
+                        if (vCreateBillsResponse.PdfInvoice != null)
+                        {
+                            DependencyService.Get<IReportingService>().SaveAndOpenFile("Factura"+ vCreateBillsResponse.BillNumber + ".pdf",
+                            vCreateBillsResponse.PdfInvoice);
+                        }
+                        
                         await Navigation.PopToRootAsync();
                         await Toasts.ToastRunner.ShowSuccessToast("Sistema", 
-                            string.IsNullOrEmpty(vCreateBillsResponse.UserMessage)?"Se procesará la solicitud": vCreateBillsResponse.UserMessage
+                            string.IsNullOrEmpty(vCreateBillsResponse.UserMessage)?"Se procesará la solicitud de la factura N°"+ vCreateBillsResponse .BillNumber: vCreateBillsResponse.UserMessage
                             );
                         
                     }
                     else
                     {
+                        App.ShowLoading(false);
                         await Toasts.ToastRunner.ShowErrorToast("Sistema", vCreateBillsResponse.UserMessage);
                         await DisplayAlert("", vCreateBillsResponse.TechnicalMessage, "Ok");
                     }
                 }
                 else
                 {
+                    App.ShowLoading(false);
                     await DisplayAlert("", "Respuesta Null", "Ok");
                 }
 
@@ -153,38 +162,11 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }
         }
 
-        /*private void SendMailReport(Stream pReportData)
+        
+
+        private void DiscountOrTaxEntry_TextChanged(object sender, EventArgs e)
         {
-
-            string mailBody = DependencyService.Get<IFileManagement>().OpenPlainTextFile("MailTemplate.html");
-            string subject = string.Format(ConfigurationConstants.MailBillSubject, ActualBill.Id + "");
-            mailBody = mailBody.Replace("$NUMERO_FACTURA$", ActualBill.Id+"");
-            mailBody = mailBody.Replace("$FECHA$", ActualBill.BillDate.ToString(ConfigurationConstants.DateTimeFormat,ConfigurationConstants.Culture));
-            mailBody = mailBody.Replace("$MONTO_TOTAL$", Utils.Utils.FormatNumericToString(ActualBill.TotalToPay) + "");
-            var emailsToSend = new List<String>(ConfigurationConstants.ConfigurationObject.EmailsToSendBill);
-
-            // Add client email to send email
-            if (ConfigurationConstants.ConfigurationObject.SendBillToClientEmail && !string.IsNullOrEmpty(ActualBill.AssignClient.Email))
-            {
-                emailsToSend.Add(ActualBill.AssignClient.Email);
-            }
-
-
-            DependencyService.Get<IMailService>().SendMail(subject, mailBody,
-                            emailsToSend,
-                            new List<Abstraction.Mail.AttachmentMail>() {
-                                new Abstraction.Mail.AttachmentMail
-                                {
-                                    FileData = pReportData,
-                                    FileName = string.Format(ConfigurationConstants.BillNameFile,ActualBill.Id)
-                                }
-                            },
-                            true);
-        }*/
-
-        private void Save_Changes(object sender, EventArgs e)
-        {
-
+            ExecuteBalance();
         }
     }
 }

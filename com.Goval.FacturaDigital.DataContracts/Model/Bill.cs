@@ -47,9 +47,9 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         
         public string PaymentMethod { get; set; }
 
+        public string Observation { get; set; }
 
 
-        
         public string DiscountNature { get; set; }
         
         public string TaxCode { get; set; }

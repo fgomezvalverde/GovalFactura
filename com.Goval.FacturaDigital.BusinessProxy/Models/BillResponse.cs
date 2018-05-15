@@ -10,5 +10,6 @@ namespace com.Goval.FacturaDigital.BusinessProxy.Models
     {
         public byte[] PdfInvoice { get; set; }
         public List<DataContracts.Model.Bill> UserBills { get; set; }
+        public long BillNumber { get; set; }
     }
 }

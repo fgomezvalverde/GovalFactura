@@ -47,6 +47,10 @@ namespace com.Goval.FacturaDigital.Views
         public static readonly BindableProperty FatherItemCodeProperty =
             BindableProperty.Create<BindablePicker, string>(p => p.FatherItemCode, null, BindingMode.TwoWay, propertyChanged: OnFatherItemCodePropertyChanged);
 
+
+        public static readonly BindableProperty FatherTypeCodeProperty =
+            BindableProperty.Create<BindablePicker, string>(p => p.FatherTypeCode, null, BindingMode.TwoWay);
+
         #endregion
 
         #region Properties
@@ -55,6 +59,11 @@ namespace com.Goval.FacturaDigital.Views
         {
             get { return (string)GetValue(FatherItemCodeProperty); }
             set { SetValue(FatherItemCodeProperty, value); }
+        }
+        public string FatherTypeCode
+        {
+            get { return (string)GetValue(FatherTypeCodeProperty); }
+            set { SetValue(FatherTypeCodeProperty, value); }
         }
 
         /// <summary>
@@ -153,9 +162,7 @@ namespace com.Goval.FacturaDigital.Views
 
         private static void OnFatherItemCodePropertyChanged(BindableObject bindable, string value, string newValue)
         {
-            /*var picker = (BindablePicker)bindable;
-            if (picker.ItemsSource != null)
-                picker.SelectedIndex = IndexOf(picker.ItemsSource, picker.SelectedItem);*/
+            
         }
         
 

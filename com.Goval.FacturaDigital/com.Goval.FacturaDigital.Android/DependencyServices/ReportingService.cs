@@ -180,6 +180,20 @@ namespace com.Goval.FacturaDigital.Droid.DependencyServices
             Stream stream = File.OpenRead(path);
             return stream;
         }
-#endregion
+
+        public void SaveAndOpenFile(string pFileName, byte[] pData)
+        {
+            SaveAndroid androidSave = new SaveAndroid();
+            using (MemoryStream vStream = new MemoryStream(pData))
+            {
+                if (pFileName.Contains(".pdf"))
+                {
+                    androidSave.Save(pFileName, "application/pdf", vStream);
+                }
+                
+            }
+                
+        }
+        #endregion
     }
 }

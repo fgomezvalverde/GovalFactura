@@ -69,7 +69,42 @@
                     </LocalPicker:BindablePicker>
                 </StackLayout>
 
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Porcentaje de Descuento (%)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding SoldProductsJSON.DefaultDiscountPercentage, Mode=TwoWay}" Keyboard="Numeric"
+                                Placeholder="Ingrese el descuento aplicar" BackgroundColor="White" TextChanged="DiscountOrTaxEntry_TextChanged"
+                              />
+                </StackLayout>
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Naturaleza de Descuento" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding DiscountNature, Mode=TwoWay}"
+                                Placeholder="Ingrese la razón del descuento" BackgroundColor="White"
+                              />
+                </StackLayout>
 
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Porcentaje de Impuesto (%)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding SoldProductsJSON.DefaultTaxesPercentage, Mode=TwoWay}" Keyboard="Numeric"
+                                Placeholder="Ingrese el portentaje del Impuesto" BackgroundColor="White" TextChanged="DiscountOrTaxEntry_TextChanged"
+                              />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Tipo de Impuesto" HorizontalOptions="StartAndExpand" />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.TaxType}" SelectedItem="{Binding TaxCode}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
+                </StackLayout>
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Observaciones" HorizontalOptions="StartAndExpand" />
+                    <Editor
+                               Text="{Binding Observation, Mode=TwoWay}"
+                                 BackgroundColor="White"
+                        HeightRequest="80"
+                              />
+                </StackLayout>
 
                 <StackLayout >
                     <Label FontAttributes="Bold" Text="Detalle de Venta" HorizontalOptions="StartAndExpand" />

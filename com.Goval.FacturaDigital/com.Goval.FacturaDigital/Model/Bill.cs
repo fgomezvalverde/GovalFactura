@@ -30,5 +30,7 @@ namespace com.Goval.FacturaDigital.Model
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public int UserId { get; set; }
+
+        public string TaxCode { get; set; }
     }
 }

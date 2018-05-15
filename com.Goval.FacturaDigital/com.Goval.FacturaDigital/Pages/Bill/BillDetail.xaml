@@ -46,13 +46,13 @@
                     <Label FontAttributes="Bold" Text="Orden de Compra(opcional)" HorizontalOptions="StartAndExpand" />
                     <Entry
                                Text="{Binding PurchaseOrderCode, Mode=TwoWay}"
-                                Placeholder="Codigo" BackgroundColor="White"
+                                Placeholder="Codigo" BackgroundColor="White" IsEnabled="False"
                               />
                 </StackLayout>
 
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Condiciones de Venta" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.SellConditions}" SelectedItem="{Binding SellCondition}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.SellConditions}" SelectedItem="{Binding SellCondition}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand" IsEnabled="False">
                     </LocalPicker:BindablePicker>
                 </StackLayout>
 
@@ -60,14 +60,51 @@
                     <Label FontAttributes="Bold" Text="Plazo del Crédito" HorizontalOptions="StartAndExpand" />
                     <Entry
                                Text="{Binding CreditTerm, Mode=TwoWay}" Keyboard="Numeric"
-                                Placeholder="Ingrese el plazo del crédito" BackgroundColor="White"
+                                Placeholder="Ingrese el plazo del crédito" BackgroundColor="White" IsEnabled="False"
                               />
                 </StackLayout>
 
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Método de pago" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.PayMethod}" SelectedItem="{Binding PaymentMethod}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.PayMethod}" SelectedItem="{Binding PaymentMethod}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand" IsEnabled="False">
                     </LocalPicker:BindablePicker>
+                </StackLayout>
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Porcentaje de Descuento (%)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding SoldProductsJSON.DefaultDiscountPercentage, Mode=TwoWay}" Keyboard="Numeric"
+                                Placeholder="Ingrese el descuento aplicar" BackgroundColor="White" IsEnabled="False"
+                              />
+                </StackLayout>
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Naturaleza de Descuento" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding DiscountNature, Mode=TwoWay}"
+                                Placeholder="Ingrese la razón del descuento" BackgroundColor="White" IsEnabled="False"
+                              />
+                </StackLayout>
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Porcentaje de Impuesto (%)" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding SoldProductsJSON.DefaultTaxesPercentage, Mode=TwoWay}" Keyboard="Numeric"
+                                Placeholder="Ingrese el portentaje del Impuesto" BackgroundColor="White" IsEnabled="False"
+                              />
+                </StackLayout>
+                <StackLayout>
+                    <Label FontAttributes="Bold" Text="Tipo de Impuesto" HorizontalOptions="StartAndExpand" />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.TaxType}" SelectedItem="{Binding TaxCode}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand" IsEnabled="False">
+                    </LocalPicker:BindablePicker>
+                </StackLayout>
+
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Observaciones" HorizontalOptions="StartAndExpand" />
+                    <Editor
+                               Text="{Binding Observation, Mode=TwoWay}"
+                                BackgroundColor="White" IsEnabled="False"
+                        HeightRequest="80"
+                              />
                 </StackLayout>
 
                 <StackLayout >

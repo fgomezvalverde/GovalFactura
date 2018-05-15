@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:com.Goval.FacturaDigital.Behaviors" 
              x:Class="com.Goval.FacturaDigital.Pages.User.HaciendaRegistration">
     <ContentPage.Content>
         <ScrollView>
@@ -29,8 +30,11 @@
                             HorizontalOptions="StartAndExpand" />
                     <Entry
                                 Text="{Binding HaciendaCryptographicPIN, Mode=TwoWay}"
-                                Placeholder="Ingrese el PIN" BackgroundColor="White" Keyboard="Numeric"
-                    />
+                                Placeholder="Ingrese el PIN" BackgroundColor="White" Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <behaviors:EntryValidatorBehavior MaxLength="4" ValidChars="0123456789" />
+                         </Entry.Behaviors>
+                    </Entry>
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Cargar la llave Criptográfica"

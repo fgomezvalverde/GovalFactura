@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace com.Goval.FacturaDigital.Behaviors
 {
-    public class EntryLengthValidatorBehavior : Behavior<Entry>
+    public class EntryCharValidatorBehavior : Behavior<Entry>
     {
-        public int MaxLength { get; set; }
+        public string ValidChars { get; set; }
 
         protected override void OnAttachedTo(Entry bindable)
         {
@@ -28,9 +28,8 @@ namespace com.Goval.FacturaDigital.Behaviors
             var entry = (Entry)sender;
 
             // if Entry text is longer then valid length
-            if (entry.Text.Length > this.MaxLength)
+            if (entry != null && !string.IsNullOrEmpty(entry.Text) && ValidChars.Contains(entry.Text.Substring(entry.Text.Length - 1, 1)))
             {
-                string entryText = entry.Text;
                 entry.TextChanged -= OnEntryTextChanged;
                 entry.Text = e.OldTextValue;
                 entry.TextChanged += OnEntryTextChanged;
