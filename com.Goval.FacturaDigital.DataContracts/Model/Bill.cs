@@ -26,7 +26,8 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         public long ClientId { get; set; }
         
         public string XMLReceivedFromHacienda { get; set; }
-        
+        public string XMLSendedToHacienda { get; set; }
+
         public Client SoldProductsJSON { get; set; }
         
         public long BillId { get; set; }
@@ -48,6 +49,8 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         public string PaymentMethod { get; set; }
 
         public string Observation { get; set; }
+
+        public string SystemMesagges { get; set; }
 
 
         public string DiscountNature { get; set; }

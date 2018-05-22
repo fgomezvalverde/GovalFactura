@@ -15,7 +15,7 @@ namespace com.Goval.FacturaDigital.Abstraction.BaseProxy
         const string MethodType = "POST";
         const string ContentType = @"application/json; charset=utf-8";
         const string BaseDomainURL = "http://facturagovalservices.azurewebsites.net/";
-        //const string BaseDomainURL = "http://192.168.1.100:8081/";
+        //const string BaseDomainURL = "http://192.168.1.103:8081/";
 
         public abstract string OperationoAddress
         { get; }
@@ -48,6 +48,12 @@ namespace com.Goval.FacturaDigital.Abstraction.BaseProxy
                     string pStringResult = reader.ReadToEnd();
                     return JsonConvert.DeserializeObject<Response>(pStringResult);
                 }
+            }
+            catch (WebException ex)
+            {
+                var resp = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                return default(Response);
+
             }
             catch (Exception ex)
             {
