@@ -112,9 +112,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             ActualBill.ClientId = ActualBill.SoldProductsJSON.ClientId;
             try
             {
+                // Remove Unused Products
+                ActualBill.SoldProductsJSON.RemoveProductsWithoutQuantity();
+
                 var vCreateUserBills = new BusinessProxy.Bill.CreateBill();
-                //FOR TEST
-                //string json = Newtonsoft.Json.JsonConvert.SerializeObject(ActualBill);
                 var vBillRequest = new BusinessProxy.Models.BillRequest
                 {
                     SSOT = App.SSOT,
@@ -123,7 +124,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 };
                 var vCreateBillsResponse = await vCreateUserBills.GetDataAsync(vBillRequest);
 
-
+                // For testing
                 var jsonTEST = Newtonsoft.Json.JsonConvert.SerializeObject(vBillRequest);
                 if (vCreateBillsResponse != null)
                 {

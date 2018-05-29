@@ -60,5 +60,10 @@ namespace com.Goval.FacturaDigital.DataContracts.Model
         {
             ClientProducts.RemoveAll(product => product.IsUsed == false);
         }
+
+        public void RemoveProductsWithoutQuantity()
+        {
+            ClientProducts.RemoveAll(product => product.ProductQuantity ==0);
+        }
     }
 }
