@@ -44,13 +44,13 @@
                 <StackLayout>
                     
                     <Label FontAttributes="Bold" Text="Unidad de medida" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.MeasurementUnit}" SelectedItem="{Binding MeasurementUnitType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.MeasurementUnit}" SelectedItem="{Binding MeasurementUnit}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
                     </LocalPicker:BindablePicker>
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Unidad de medida comercial" HorizontalOptions="StartAndExpand" />
                     <Entry
-                                Text="{Binding MeasurementUnit, Mode=TwoWay}"
+                                Text="{Binding MeasurementUnitType, Mode=TwoWay}"
                                 Placeholder="Ingrese la medida" BackgroundColor="White"
                     />
                 </StackLayout>
