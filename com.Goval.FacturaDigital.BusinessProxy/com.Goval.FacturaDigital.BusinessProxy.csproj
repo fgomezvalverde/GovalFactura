@@ -55,12 +55,17 @@
     <Compile Include="Models\ProductRequest.cs" />
     <Compile Include="Models\ProductResponse.cs" />
     <Compile Include="Models\SignupRequest.cs" />
+    <Compile Include="Models\UbicationRequest.cs" />
+    <Compile Include="Models\UbicationResponse.cs" />
     <Compile Include="Models\UserValidationRequest.cs" />
     <Compile Include="Product\AddUserProduct.cs" />
     <Compile Include="Product\DeleteUserProduct.cs" />
     <Compile Include="Product\GetUserProducts.cs" />
     <Compile Include="Product\SetUserProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ubication\GetBarrios.cs" />
+    <Compile Include="Ubication\GetCantones.cs" />
+    <Compile Include="Ubication\GetDistritos.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\com.Goval.FacturaDigital.DataContracts\com.Goval.FacturaDigital.DataContracts.csproj">

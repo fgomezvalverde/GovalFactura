@@ -44,7 +44,7 @@ namespace com.Goval.FacturaDigital
 
 
             RootPage = new RootPage();
-            MainPage = RootPage;
+            MainPage = new TestPage();
             
         }
 
