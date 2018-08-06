@@ -13,5 +13,7 @@ namespace com.Goval.FacturaDigital.DataContracts.BaseModel
         public string DeviceId { get; set; }
         
         public string SSOT { get; set; }
+
+        public Boolean IsProductionStage { get; set; } = false;
     }
 }

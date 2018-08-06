@@ -42,6 +42,7 @@
     <Compile Include="Authentication\ValidateUserWithHacienda.cs" />
     <Compile Include="Bill\CreateBill.cs" />
     <Compile Include="Bill\GetUserBills.cs" />
+    <Compile Include="Bill\TryToBillWithHacienda.cs" />
     <Compile Include="Client\AddUserClient.cs" />
     <Compile Include="Client\DeleteUserClient.cs" />
     <Compile Include="Client\GetUserClients.cs" />

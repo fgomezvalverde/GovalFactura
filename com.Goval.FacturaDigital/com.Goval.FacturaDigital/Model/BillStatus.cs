@@ -10,7 +10,6 @@ namespace com.Goval.FacturaDigital.Model
     {
         Processing, Error, Done
 
-
     }
 
     

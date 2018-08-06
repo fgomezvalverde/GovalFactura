@@ -8,8 +8,8 @@
         <StackLayout>
             <LocalPicker:BindablePicker x:Name="ProvincePicker" ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.ProvinciaType}" SelectedItem="{Binding User.IdentificationType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
             </LocalPicker:BindablePicker>
-            <LocalPicker:BindablePicker FatherPickerName="ProvincePicker"  SelectedItem="{Binding User.IdentificationType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
-            </LocalPicker:BindablePicker>
+            <!--LocalPicker:BindablePicker FatherPickerName="ProvincePicker"  SelectedItem="{Binding User.IdentificationType}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+            </-->
             <Button Text="Press Me" Clicked="Button_Clicked" />
         </StackLayout>
     </ContentPage.Content>

@@ -17,6 +17,13 @@
         <ScrollView>
             <StackLayout BackgroundColor="#EEEEEE" Padding="20" Spacing="15">
                 <StackLayout>
+                    <StackLayout>
+                        <Label FontAttributes="Bold" Text="{Binding Status, StringFormat='Estado: {0}'}" HorizontalOptions="StartAndExpand" />
+                        <Editor x:Name="EditorSystemMessage" IsEnabled="False" Text="{Binding SystemMesagges}" HorizontalOptions="FillAndExpand"/>
+                        <Button x:Name="Button_RetryBill" TextColor="White" IsEnabled="False" IsVisible="False" BackgroundColor="#90A4AE" Text="Reintentar" Clicked="Button_RetryBill_Clicked"  HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
                     <Label FontAttributes="Bold" Text="Productos Asociados" HorizontalOptions="StartAndExpand" />
                     <ListView BackgroundColor="White" x:Name="ProductListView" HasUnevenRows="true" ItemsSource="{Binding SoldProductsJSON.ClientProducts, Mode=TwoWay}" ItemSelected="ProductListView_ItemSelected"  HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                         <ListView.ItemTemplate>

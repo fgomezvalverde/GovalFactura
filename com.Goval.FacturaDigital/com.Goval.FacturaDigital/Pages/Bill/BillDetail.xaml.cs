@@ -27,6 +27,14 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             StatusPicker.SelectedIndexChanged += SetStatusClicked;*/
             this.BindingContext = ActualBill;
             ProductListView.HeightRequest = pCurrentBill.SoldProductsJSON.ClientProducts.Count * 60;
+
+
+            if (pCurrentBill.Status.ToLower().Equals("error"))
+            {
+                Button_RetryBill.IsEnabled = true;
+                Button_RetryBill.IsVisible = true;
+            }
+            
         }
 
         /*private async void Button_SeeBill_Clicked(object sender, EventArgs e)
@@ -88,6 +96,61 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }*/
         }
 
+        private async void Button_RetryBill_Clicked(object sender, EventArgs e)
+        {
+            App.ShowLoading(true);
+            ActualBill = this.BindingContext as DataContracts.Model.Bill;
+            ActualBill.EmissionDate = null;
+            ActualBill.LastSendDate = null;
+            ActualBill.ClientId = ActualBill.SoldProductsJSON.ClientId;
+            try
+            {
+                // Remove Unused Products
+                ActualBill.SoldProductsJSON.RemoveProductsWithoutQuantity();
 
+                var vRetryBillProxy= new BusinessProxy.Bill.TryToBillWithHacienda();
+                var vBillRequest = new BusinessProxy.Models.BillRequest
+                {
+                    SSOT = App.SSOT,
+                    User = App.ActualUser,
+                    ClientBill = ActualBill,
+                };
+                var vRetryResponse = await vRetryBillProxy.GetDataAsync(vBillRequest);
+
+                // For testing
+                var jsonTEST = Newtonsoft.Json.JsonConvert.SerializeObject(vBillRequest);
+                if (vRetryResponse != null)
+                {
+                    if (vRetryResponse.IsSuccessful)
+                    {
+                        App.ShowLoading(false);
+
+                        Button_RetryBill.IsEnabled = false;
+                        Button_RetryBill.IsVisible = false;
+
+                        await Toasts.ToastRunner.ShowSuccessToast("", "Se ha podido enviar con éxito");
+                    }
+                    else
+                    {
+                        App.ShowLoading(false);
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vRetryResponse.UserMessage);
+                        await DisplayAlert("", vRetryResponse.TechnicalMessage, "Ok");
+                    }
+                    EditorSystemMessage.Text = vRetryResponse.UserMessage;
+                }
+                else
+                {
+                    App.ShowLoading(false);
+                    await DisplayAlert("", "Respuesta Null", "Ok");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
+            }
+
+            
+        }
     }
 }
