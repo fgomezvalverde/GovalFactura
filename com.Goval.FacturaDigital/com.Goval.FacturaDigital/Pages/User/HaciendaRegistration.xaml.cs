@@ -3,6 +3,8 @@ using com.Goval.FacturaDigital.BusinessProxy.Models;
 using com.Goval.FacturaDigital.Utils;
 using Newtonsoft.Json;
 using Plugin.FilePicker;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.User
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HaciendaRegistration : ContentPage
     {
         Byte[] File = null;
@@ -78,21 +80,41 @@ namespace com.Goval.FacturaDigital.Pages.User
         }
         private async void LoadFile_Clicked(object sender, EventArgs e)
         {
-            var vFile = await CrossFilePicker.Current.PickFile();
-
-            if (vFile != null && vFile.DataArray != null)
+            App.ShowLoading(true);
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+            if (status != PermissionStatus.Granted)
             {
-                if (vFile.FileName.Contains(".p12"))
-                {
-                    File = vFile.DataArray;
-                    await DisplayAlert("", vFile.FileName, "Ok");
-                }
-                else
-                {
-                    await DisplayAlert("Archivo Incorrecto", "Tiene que ser de extensión .p12", "Ok");
-                }
-                
+                await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage);
+
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                //Best practice to always check that the key exists
+                if (results.ContainsKey(Permission.Storage))
+                    status = results[Permission.Storage];
             }
+
+            if (status == PermissionStatus.Granted)
+            {
+                var vFile = await CrossFilePicker.Current.PickFile();
+
+                if (vFile != null && vFile.DataArray != null)
+                {
+                    if (vFile.FileName.Contains(".p12"))
+                    {
+                        File = vFile.DataArray;
+                        await DisplayAlert("", vFile.FileName, "Ok");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Archivo Incorrecto", "Tiene que ser de extensión .p12", "Ok");
+                    }
+
+                }
+            }
+            else if (status != PermissionStatus.Unknown)
+            {
+                await DisplayAlert("No hay Permisos", "Agrega el permiso de storage", "OK");
+            }
+            App.ShowLoading(false);
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Acr.UserDialogs;
 using com.Goval.FacturaDigital.Abstraction.DependencyServices;
-using com.Goval.FacturaDigital.Amazon;
 using com.Goval.FacturaDigital.DataContracts.Model;
 using com.Goval.FacturaDigital.Pages.MasterDetail;
 using com.Goval.FacturaDigital.Test;
 using com.Goval.FacturaDigital.Utils;
+using Microsoft.AppCenter;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using System;
@@ -62,7 +62,10 @@ namespace com.Goval.FacturaDigital
 
         protected async override void OnStart()
         {
-
+            AppCenter.Start("android=18e4f6ce-b09e-494e-b039-e4ceac96916d;" +
+                  "uwp={Your UWP App secret here};" +
+                  "ios={Your iOS App secret here}",
+                  typeof(Microsoft.AppCenter.Analytics.Analytics), typeof(Microsoft.AppCenter.Crashes.Crashes));
             if (App.ActualUser == null)
             {
                 await MainPage.Navigation.PushModalAsync(

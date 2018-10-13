@@ -1,5 +1,4 @@
-﻿using com.Goval.FacturaDigital.Amazon;
-using com.Goval.FacturaDigital.BusinessProxy.Authentication;
+﻿using com.Goval.FacturaDigital.BusinessProxy.Authentication;
 using com.Goval.FacturaDigital.BusinessProxy.Models;
 using Newtonsoft.Json;
 using System;
@@ -13,7 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Login
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
         public LoginPage()

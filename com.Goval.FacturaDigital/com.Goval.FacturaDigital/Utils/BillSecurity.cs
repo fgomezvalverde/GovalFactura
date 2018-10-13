@@ -1,5 +1,4 @@
-﻿using com.Goval.FacturaDigital.Amazon;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,64 +8,6 @@ namespace com.Goval.FacturaDigital.Utils
 {
     public static class BillSecurity
     {
-        public async static Task<List<Model.Bill>> GetBillList()
-        {
-            var billList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Bill>();
-            if (billList != null && billList.Count != 0)
-            {
-                if (billList.Exists(bill => bill.Id == ConfigurationConstants.StarterBillNumber))
-                {
-                    var billResult = billList.Where(bill => bill.Id != ConfigurationConstants.StarterBillNumber);
-
-                    if (billResult != null)
-                    {
-                        return billResult.ToList();
-                    }
-                    else
-                    {
-                        return new List<Model.Bill>();
-                    }
-                }
-                else
-                {
-                    throw new Exception("GetBillList.No estaba el Bill base con el Numbero:" + ConfigurationConstants.StarterBillNumber);
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public async static Task SaveBaseBill()
-        {
-            await DynamoDBManager.GetInstance().SaveAsync<Model.Bill>(
-                new Model.Bill {Id = ConfigurationConstants.StarterBillNumber });
-
-        }
-
-        public async static Task<int> GetNextBillNumber()
-        {
-            var billList = await DynamoDBManager.GetInstance().GetItemsAsync<Model.Bill>();
-            if (billList != null && billList.Count != 0)
-            {
-                if (billList.Exists(bill => bill.Id == ConfigurationConstants.StarterBillNumber))
-                {
-                    var billResult = billList.OrderByDescending(bill => bill.Id);
-                    return billResult.First().Id + 1;
-                }
-                else
-                {
-                    throw new Exception("GetNextBillNumber.No estaba el Bill base con el Numbero:" + ConfigurationConstants.StarterBillNumber);
-                }
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-
         public async static Task<Dictionary<string, string>> BillToDictionary(Model.Bill ActualBill)
         {
             return await Task.Run(() => { 

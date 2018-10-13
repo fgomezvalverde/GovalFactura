@@ -11,14 +11,14 @@
                     <Label FontAttributes="Bold" Text="Nombre" HorizontalOptions="StartAndExpand" />
                     <Entry
                                 Text="{Binding User.Name, Mode=TwoWay}"
-                                Placeholder="Ingrese el nombre" BackgroundColor="White"
+                                Placeholder="Ingrese el Nombre Completo" BackgroundColor="White"
                     />
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Nombre Comercial" HorizontalOptions="StartAndExpand" />
                     <Entry
                                 Text="{Binding User.ComercialName, Mode=TwoWay}"
-                                Placeholder="Ingrese el nombre" BackgroundColor="White"
+                                Placeholder="Ingrese el nombre comercial" BackgroundColor="White"
                     />
                 </StackLayout>
                 <StackLayout>
@@ -53,13 +53,21 @@
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Provincia" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.ProvinciaType}" SelectedItem="{Binding User.ProvinciaCode}" BackgroundColor="White" Title="Seleccionar la Provincia" HorizontalOptions="FillAndExpand">
-                    </LocalPicker:BindablePicker>
+                    <!--LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.ProvinciaType}" SelectedItem="{Binding User.ProvinciaCode}" BackgroundColor="White" Title="Seleccionar la Provincia" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker-->
+                    <Entry
+                                Text="{Binding User.ProvinciaCode, Mode=TwoWay}"
+                                Placeholder="Ingrese la Provincia" BackgroundColor="White"
+                    />
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Cantón" HorizontalOptions="StartAndExpand" />
-                    <LocalPicker:BindablePicker  SelectedItem="{Binding User.ProvinciaCode}" BackgroundColor="White" Title="Seleccionar la Provincia" HorizontalOptions="FillAndExpand">
-                    </LocalPicker:BindablePicker>
+                    <!--LocalPicker:BindablePicker  SelectedItem="{Binding User.ProvinciaCode}" BackgroundColor="White" Title="Seleccionar la Provincia" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker-->
+                    <Entry
+                                Text="{Binding User.CantonCode, Mode=TwoWay}"
+                                Placeholder="Ingrese el Cantón" BackgroundColor="White"
+                    />
                 </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Distrito" HorizontalOptions="StartAndExpand" />

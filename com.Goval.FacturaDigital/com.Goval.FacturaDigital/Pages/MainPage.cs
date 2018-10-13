@@ -1,6 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Pages.Bill;
 using com.Goval.FacturaDigital.Pages.Client;
-using com.Goval.FacturaDigital.Pages.Configuracion;
 using com.Goval.FacturaDigital.Pages.Product;
 using System;
 using System.Collections.Generic;
@@ -24,8 +23,7 @@ namespace com.Goval.FacturaDigital.Pages
             var productPage = new ProductList();
             productPage.Title = "Productos";
 
-            var configurationPage = new ConfigurationPage();
-            configurationPage.Title = "Configuración";
+
 
             Children.Add(
                 new NavigationPage(billPage) { Title= "Facturas" });
@@ -34,8 +32,6 @@ namespace com.Goval.FacturaDigital.Pages
             Children.Add(
                 new NavigationPage(productPage) { Title = "Productos" });
 
-            Children.Add(
-                new NavigationPage(configurationPage) { Title = "Config" });
         }
     }
 }

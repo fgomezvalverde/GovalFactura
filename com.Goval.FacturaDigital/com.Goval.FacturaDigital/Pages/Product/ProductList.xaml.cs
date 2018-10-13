@@ -1,5 +1,4 @@
-﻿using com.Goval.FacturaDigital.Amazon;
-using Plugin.Connectivity;
+﻿using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Product
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductList : ContentPage
     {
         public ProductList()

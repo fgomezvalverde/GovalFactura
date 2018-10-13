@@ -9,7 +9,6 @@ namespace com.Goval.FacturaDigital.Abstraction.DependencyServices
 {
     public interface IReportingService
     {
-        Task<Stream> CreateAndRunReport(Dictionary<string, string> pBill, string pBillNumber, string pExcelFileName);
 
         void SaveAndOpenFile(string pFileName, byte[] pData);
         

@@ -138,6 +138,13 @@
                         Keyboard="Numeric"
                     />
                 </StackLayout>
+                <StackLayout >
+                    <Label FontAttributes="Bold" Text="Naturaleza de Descuento" HorizontalOptions="StartAndExpand" />
+                    <Entry
+                               Text="{Binding DiscountNature, Mode=TwoWay}"
+                                Placeholder="Ingrese la razón del descuento" BackgroundColor="White"
+                              />
+                </StackLayout>
                 <StackLayout>
                     <Label FontAttributes="Bold" Text="Impuesto" HorizontalOptions="StartAndExpand" />
                     <Entry
@@ -146,8 +153,13 @@
                         Keyboard="Numeric"
                     />
                 </StackLayout>
+                    <StackLayout>
+                    <Label FontAttributes="Bold" Text="Tipo de Impuesto" HorizontalOptions="StartAndExpand" />
+                    <LocalPicker:BindablePicker ItemsDictionarySource="{x:Static DataContracts:CatalogsDataSource.TaxType}" SelectedItem="{Binding TaxCode}" BackgroundColor="White" Title="Seleccionar el tipo" HorizontalOptions="FillAndExpand">
+                    </LocalPicker:BindablePicker>
+                </StackLayout>
 
-                <StackLayout BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="75" Orientation="Horizontal" Padding="10">
+            <StackLayout BackgroundColor="White" HorizontalOptions="FillAndExpand" HeightRequest="75" Orientation="Horizontal" Padding="10">
                     <Label Text="Cambiar Productos Asociados" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" FontSize="Large"/>
                     <Image Source="ic_chevron_right.png" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"/>
                     <StackLayout.GestureRecognizers>

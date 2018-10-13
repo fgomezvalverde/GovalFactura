@@ -1,6 +1,7 @@
 ﻿using com.Goval.FacturaDigital.Abstraction.DependencyServices;
-using com.Goval.FacturaDigital.Amazon;
 using com.Goval.FacturaDigital.Test;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Bill
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BillDetail : ContentPage
     {
         DataContracts.Model.Bill ActualBill;
@@ -20,6 +21,8 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
         public BillDetail(DataContracts.Model.Bill pCurrentBill)
         {
+            pCurrentBill.DiscountNature = pCurrentBill.SoldProductsJSON.DiscountNature;
+            pCurrentBill.TaxCode = pCurrentBill.SoldProductsJSON.TaxCode;
             InitializeComponent();
             ActualBill = pCurrentBill;
            /* StatusPicker.ItemsSource = Enum.GetNames(typeof(Model.BillStatus));
@@ -29,12 +32,17 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             ProductListView.HeightRequest = pCurrentBill.SoldProductsJSON.ClientProducts.Count * 60;
 
 
-            if (pCurrentBill.Status.ToLower().Equals("error"))
+            if (pCurrentBill.Status.Equals(Model.BillStatus.Error.ToString()))
             {
                 Button_RetryBill.IsEnabled = true;
                 Button_RetryBill.IsVisible = true;
             }
-            
+            if(pCurrentBill.Status.Equals(Model.BillStatus.Processing.ToString()))
+            {
+                Button_RetryBillStatus.IsEnabled = true;
+                Button_RetryBillStatus.IsVisible = true;
+            }
+
         }
 
         /*private async void Button_SeeBill_Clicked(object sender, EventArgs e)
@@ -95,7 +103,6 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 await Toasts.ToastRunner.ShowInformativeToast("Sistema", "El status esta vacío");
             }*/
         }
-
         private async void Button_RetryBill_Clicked(object sender, EventArgs e)
         {
             App.ShowLoading(true);
@@ -133,8 +140,11 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                     else
                     {
                         App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vRetryResponse.UserMessage);
-                        await DisplayAlert("", vRetryResponse.TechnicalMessage, "Ok");
+                        await DisplayAlert("",
+                            string.IsNullOrEmpty(vRetryResponse.TechnicalMessage) ?
+                            vRetryResponse.UserMessage: vRetryResponse.TechnicalMessage, "Ok");
+                        //await Toasts.ToastRunner.ShowErrorToast("Sistema", vRetryResponse.UserMessage);
+                        //await DisplayAlert("", vRetryResponse.TechnicalMessage, "Ok");
                     }
                     EditorSystemMessage.Text = vRetryResponse.UserMessage;
                 }
@@ -151,6 +161,113 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             }
 
             
+        }
+
+        private async void Button_SeeBill_Clicked(object sender, EventArgs e)
+        {
+            try {
+                var vGetBillInvoiceClient = new BusinessProxy.Bill.GetBillInvoice();
+                var vBillRequest = new BusinessProxy.Models.BillRequest
+                {
+                    SSOT = App.SSOT,
+                    User = App.ActualUser,
+                    ClientBill = ActualBill,
+                };
+                var vGetBillInvoiceResponse = await vGetBillInvoiceClient.GetDataAsync(vBillRequest);
+
+                if (vGetBillInvoiceResponse.IsSuccessful)
+                {
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+                    if (status != PermissionStatus.Granted)
+                    {
+                        await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage);
+
+                        var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                        //Best practice to always check that the key exists
+                        if (results.ContainsKey(Permission.Storage))
+                            status = results[Permission.Storage];
+                    }
+
+                    if (status == PermissionStatus.Granted)
+                    {
+                        DependencyService.Get<IReportingService>().SaveAndOpenFile("Factura" + ActualBill.ConsecutiveNumber + ".pdf",
+                            vGetBillInvoiceResponse.PdfInvoice);
+                    }
+                    else if (status != PermissionStatus.Unknown)
+                    {
+                        await DisplayAlert("No hay Permisos", "Agrega el permiso de storage", "OK");
+                    }
+                    
+                }
+                else
+                {
+                    await this.DisplayAlert("Error",string.IsNullOrEmpty(vGetBillInvoiceResponse.UserMessage)?
+                        vGetBillInvoiceResponse.TechnicalMessage: vGetBillInvoiceResponse.UserMessage, "ok");
+                }
+                
+            }
+            catch (Exception vEx)
+            {
+                await this.DisplayAlert("Error",vEx.ToString(),"ok");
+            }
+            
+        }
+
+        private async void Button_RetryBillStatus_Clicked(object sender, EventArgs e)
+        {
+            App.ShowLoading(true);
+            ActualBill = this.BindingContext as DataContracts.Model.Bill;
+            ActualBill.EmissionDate = null;
+            ActualBill.LastSendDate = null;
+            ActualBill.ClientId = ActualBill.SoldProductsJSON.ClientId;
+            try
+            {
+                // Remove Unused Products
+                ActualBill.SoldProductsJSON.RemoveProductsWithoutQuantity();
+
+                var vRetryBillProxy = new BusinessProxy.Bill.TryToRefreshBillStatus();
+                var vBillRequest = new BusinessProxy.Models.BillRequest
+                {
+                    SSOT = App.SSOT,
+                    User = App.ActualUser,
+                    ClientBill = ActualBill,
+                };
+                var vRetryResponse = await vRetryBillProxy.GetDataAsync(vBillRequest);
+
+                // For testing
+                var jsonTEST = Newtonsoft.Json.JsonConvert.SerializeObject(vBillRequest);
+                if (vRetryResponse != null)
+                {
+                    if (vRetryResponse.IsSuccessful)
+                    {
+                        App.ShowLoading(false);
+
+                        Button_RetryBill.IsEnabled = false;
+                        Button_RetryBill.IsVisible = false;
+
+                        Label_Status.Text = "Estado: " + Model.BillStatus.Done.ToString();
+
+                        await Toasts.ToastRunner.ShowSuccessToast("", "Se ha podido realizar la transacción con exito");
+                    }
+                    else
+                    {
+                        App.ShowLoading(false);
+                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vRetryResponse.UserMessage);
+                        await DisplayAlert("", vRetryResponse.TechnicalMessage, "Ok");
+                    }
+                    EditorSystemMessage.Text = vRetryResponse.UserMessage;
+                }
+                else
+                {
+                    App.ShowLoading(false);
+                    await DisplayAlert("", "Respuesta Null", "Ok");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
+            }
         }
     }
 }

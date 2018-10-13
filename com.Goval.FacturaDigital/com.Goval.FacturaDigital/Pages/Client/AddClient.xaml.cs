@@ -1,5 +1,4 @@
-﻿using com.Goval.FacturaDigital.Amazon;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Client
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     [AddINotifyPropertyChangedInterface]
     public partial class AddClient : ContentPage
     {

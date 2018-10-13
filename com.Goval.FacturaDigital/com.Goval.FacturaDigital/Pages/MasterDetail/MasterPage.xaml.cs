@@ -1,6 +1,5 @@
 ﻿using com.Goval.FacturaDigital.Pages.Bill;
 using com.Goval.FacturaDigital.Pages.Client;
-using com.Goval.FacturaDigital.Pages.Configuracion;
 using com.Goval.FacturaDigital.Pages.Product;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.MasterDetail
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MasterPage : ContentPage
     {
         public ListView ListView { get { return listView; } }

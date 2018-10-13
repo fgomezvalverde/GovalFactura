@@ -24,6 +24,7 @@ namespace com.Goval.FacturaDigital.Droid
 
             UserDialogs.Init(this);
             DependencyService.Register<ToastNotificatorImplementation>();
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
             ToastNotificatorImplementation.Init(this);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);

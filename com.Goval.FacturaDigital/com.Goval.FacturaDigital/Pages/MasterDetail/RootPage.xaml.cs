@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.MasterDetail
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RootPage : MasterDetailPage
     {
         public RootPage()
@@ -20,10 +20,10 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
             BackgroundColor = Color.FromHex("#455A64");
             masterPage.ListView.ItemSelected += OnItemSelected;
 
-            if (Device.RuntimePlatform == Device.Windows)
+            /*if (Device.RuntimePlatform == Device.Windows)
             {
                 MasterBehavior = MasterBehavior.Popover;
-            }
+            }*/
 
             Detail = new NavigationPage(new Bill.BillList());
         }
@@ -69,11 +69,6 @@ namespace com.Goval.FacturaDigital.Pages.MasterDetail
                         masterPage.ListView.SelectedItem = null;
                         this.IsPresented = false;
                         return;
-                        break;
-
-
-                    case PageType.Configuration:
-                        newPage = new Configuracion.ConfigurationPage();
                         break;
                     default:
                         newPage = new Bill.BillList();

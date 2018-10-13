@@ -1,5 +1,4 @@
 ﻿using com.Goval.FacturaDigital.Abstraction.DependencyServices;
-using com.Goval.FacturaDigital.Amazon;
 using com.Goval.FacturaDigital.Test;
 using com.Goval.FacturaDigital.Utils;
 using System;
@@ -13,12 +12,14 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Bill
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddBill : ContentPage
     {
         DataContracts.Model.Bill ActualBill;
         public AddBill(DataContracts.Model.Bill pClient)
         {
+            pClient.DiscountNature = pClient.SoldProductsJSON.DiscountNature;
+            pClient.TaxCode = pClient.SoldProductsJSON.TaxCode;
             InitializeComponent();
             this.BindingContext = pClient;
             if (pClient.SoldProductsJSON != null && pClient.SoldProductsJSON.ClientProducts != null && pClient.SoldProductsJSON.ClientProducts.Any())
@@ -122,10 +123,11 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                     User = App.ActualUser,
                     ClientBill = ActualBill,
                 };
-                var vCreateBillsResponse = await vCreateUserBills.GetDataAsync(vBillRequest);
-
                 // For testing
                 var jsonTEST = Newtonsoft.Json.JsonConvert.SerializeObject(vBillRequest);
+                var vCreateBillsResponse = await vCreateUserBills.GetDataAsync(vBillRequest);
+
+                
                 if (vCreateBillsResponse != null)
                 {
                     if (vCreateBillsResponse.IsSuccessful)
@@ -146,8 +148,10 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                     else
                     {
                         App.ShowLoading(false);
-                        await Toasts.ToastRunner.ShowErrorToast("Sistema", vCreateBillsResponse.UserMessage);
-                        await DisplayAlert("", vCreateBillsResponse.TechnicalMessage, "Ok");
+                        //await Toasts.ToastRunner.ShowErrorToast("Sistema", vCreateBillsResponse.UserMessage);
+                        await DisplayAlert("", string.IsNullOrEmpty(vCreateBillsResponse.UserMessage) ?
+                        vCreateBillsResponse.TechnicalMessage : vCreateBillsResponse.UserMessage, "Ok");
+                        await Navigation.PopToRootAsync();
                     }
                 }
                 else
@@ -157,9 +161,9 @@ namespace com.Goval.FacturaDigital.Pages.Bill
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception vEx)
             {
-                await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
+                await DisplayAlert("Error", vEx.ToString(), "Ok");
             }
         }
 

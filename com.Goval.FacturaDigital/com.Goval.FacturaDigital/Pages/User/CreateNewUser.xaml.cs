@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace com.Goval.FacturaDigital.Pages.User
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+	//[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CreateNewUser : ContentPage
 	{
 		public CreateNewUser ()

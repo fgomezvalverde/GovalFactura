@@ -1,5 +1,4 @@
 ﻿using com.Goval.FacturaDigital.Abstraction.DependencyServices;
-using com.Goval.FacturaDigital.Amazon;
 using com.Goval.FacturaDigital.BusinessProxy.Authentication;
 using com.Goval.FacturaDigital.BusinessProxy.Models;
 using System;
@@ -13,7 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Test
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestPage : ContentPage
     {
         public TestPage()

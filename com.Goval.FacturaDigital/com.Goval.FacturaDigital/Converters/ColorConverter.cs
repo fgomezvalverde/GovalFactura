@@ -22,6 +22,8 @@ namespace com.Goval.FacturaDigital.Converters
                     return Color.FromHex("#e03b24");
                 case Model.BillStatus.Processing:
                     return Color.FromHex("#ffcc00");
+                case Model.BillStatus.Rejected:
+                    return Color.FromHex("#ffcc00");
                 default:
                     return Color.FromHex("#87a2c7");
             }

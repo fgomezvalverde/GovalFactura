@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Client
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClientProductSelection : ContentPage
     {
         public static Boolean IsSwitchAvailable = true;

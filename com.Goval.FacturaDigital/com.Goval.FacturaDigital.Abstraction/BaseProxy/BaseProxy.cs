@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,12 +11,13 @@ using System.Threading.Tasks;
 
 namespace com.Goval.FacturaDigital.Abstraction.BaseProxy
 {
-    public abstract class BaseProxy<Request, Response>
+    public abstract class BaseProxy<Request, Response> 
     {
         const string MethodType = "POST";
         const string ContentType = @"application/json; charset=utf-8";
-        const string BaseDomainURL = "http://facturagovalservices.azurewebsites.net/";
-        //const string BaseDomainURL = "http://192.168.1.103:8081/";
+        //const string BaseDomainURL = "http://facturagovalservices.azurewebsites.net/";
+        const string BaseDomainURL ="http://fgomezvalverde-001-site1.dtempurl.com/";
+        //const string BaseDomainURL = "http://192.168.2.4:8081/";
 
         public abstract string OperationoAddress
         { get; }
@@ -36,7 +38,12 @@ namespace com.Goval.FacturaDigital.Abstraction.BaseProxy
             try
             {
                 var vClient = (HttpWebRequest) CreateClient(pBaseUrl);
-                var data = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(pRequest));
+                JsonSerializerSettings microsoftDateFormatSettings = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+                };
+                var vJsonRequest = JsonConvert.SerializeObject(pRequest, microsoftDateFormatSettings);
+                var data = new UTF8Encoding().GetBytes(vJsonRequest);
                 using (var stream = await vClient.GetRequestStreamAsync())
                 {
                     stream.Write(data, 0, data.Length);
@@ -51,7 +58,16 @@ namespace com.Goval.FacturaDigital.Abstraction.BaseProxy
             }
             catch (WebException ex)
             {
-                var resp = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                string vError = ex.ToString();
+                if (ex.Response != null)
+                {
+                    var vStream = ex.Response.GetResponseStream();
+                    if (vStream != null)
+                    {
+                        vError = new StreamReader(vStream).ReadToEnd();
+                    }
+                }
+                Debug.WriteLine("BaseProxy.GetDataAsync.WebException:" + vError);
                 return default(Response);
 
             }

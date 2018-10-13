@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using com.Goval.FacturaDigital.DataContracts.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using com.Goval.FacturaDigital.Amazon;
 using Newtonsoft.Json;
 
 namespace com.Goval.FacturaDigital.Pages.Product
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddProduct : ContentPage
     {
         public AddProduct()

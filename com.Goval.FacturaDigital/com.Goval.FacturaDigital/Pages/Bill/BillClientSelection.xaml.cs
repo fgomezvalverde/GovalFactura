@@ -1,5 +1,4 @@
-﻿using com.Goval.FacturaDigital.Amazon;
-using com.Goval.FacturaDigital.Utils;
+﻿using com.Goval.FacturaDigital.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using Xamarin.Forms.Xaml;
 
 namespace com.Goval.FacturaDigital.Pages.Bill
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BillClientSelection : ContentPage
     {
         public BillClientSelection()
