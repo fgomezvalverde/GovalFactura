@@ -16,8 +16,8 @@ namespace com.Goval.FacturaDigital.Abstraction.BaseProxy
         const string MethodType = "POST";
         const string ContentType = @"application/json; charset=utf-8";
         //const string BaseDomainURL = "http://facturagovalservices.azurewebsites.net/";
-        const string BaseDomainURL ="http://fgomezvalverde-001-site1.dtempurl.com/";
-        //const string BaseDomainURL = "http://192.168.2.4:8081/";
+        //const string BaseDomainURL ="http://fgomezvalverde-001-site1.dtempurl.com/";
+        const string BaseDomainURL = "http://192.168.1.104:8081/";
 
         public abstract string OperationoAddress
         { get; }

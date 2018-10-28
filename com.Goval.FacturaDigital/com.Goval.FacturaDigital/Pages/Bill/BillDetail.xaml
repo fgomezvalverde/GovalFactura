@@ -181,6 +181,7 @@
 
 
                 <Button TextColor="White" BackgroundColor="#90A4AE" Text="Ver Factura" Clicked="Button_SeeBill_Clicked" HorizontalOptions="FillAndExpand"/>
+                <Button TextColor="White" BackgroundColor="#90A4AE" Text="Anular Factura" Clicked="Button_Invalidate_Bill_Clicked" HorizontalOptions="FillAndExpand"/>
                 <!--Button x:Name="" Text="Guardar Borrador" Clicked="Save_Changes"  HorizontalOptions="FillAndExpand"/-->
             </StackLayout>
         </ScrollView>

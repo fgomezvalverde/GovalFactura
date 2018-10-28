@@ -1,4 +1,6 @@
 ﻿using com.Goval.FacturaDigital.Abstraction.DependencyServices;
+using com.Goval.FacturaDigital.BusinessProxy.Models;
+using com.Goval.FacturaDigital.DataContracts.Model;
 using com.Goval.FacturaDigital.Test;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
@@ -267,6 +269,44 @@ namespace com.Goval.FacturaDigital.Pages.Bill
             catch (Exception ex)
             {
                 await Toasts.ToastRunner.ShowErrorToast("Sistema", ex.Message);
+            }
+        }
+
+        private async void Button_Invalidate_Bill_Clicked(object sender, EventArgs e)
+        {
+            string vMessage = string.Format("¿Estás seguro que deseas anular la factura N*{0}?", ActualBill.BillId);
+            var vAnswer = await DisplayAlert("Anular Factura", vMessage, "Si", "No");
+            if (vAnswer)
+            {
+                ReferenceDocument vReferenceDocument = new ReferenceDocument();
+                vReferenceDocument.ReferenceCode = "01";
+                vReferenceDocument.ReferenceDocumentType = "01";//Por ahora siempre Factura Electronica
+                vReferenceDocument.ReferenceDescription = "Factura rechazada con disconformidades";
+
+                DebitCreditNoteBillRequest vDebitCreditNoteRequest = new DebitCreditNoteBillRequest {
+                    SSOT = App.SSOT,
+                    User = App.ActualUser,
+                    ClientBill = ActualBill,
+                    ReferenceDocument = vReferenceDocument
+                };
+
+                var vInvalidateBillClient = new BusinessProxy.Bill.InvalidateBill();
+                var vResponse = await vInvalidateBillClient.GetDataAsync(vDebitCreditNoteRequest);
+                if (vResponse != null)
+                {
+                    if (vResponse.IsSuccessful)
+                    {
+                        await DisplayAlert("", "La factura se ha anulado", "Ok");
+                    }
+                    else
+                    {
+                        await DisplayAlert("", vResponse.TechnicalMessage,"Ok");
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("", "Problema al contactar el servidor", "Ok");
+                }
             }
         }
     }

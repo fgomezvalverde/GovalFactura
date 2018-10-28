@@ -43,6 +43,7 @@
     <Compile Include="Bill\CreateBill.cs" />
     <Compile Include="Bill\GetBillInvoice.cs" />
     <Compile Include="Bill\GetUserBills.cs" />
+    <Compile Include="Bill\InvalidateBill.cs" />
     <Compile Include="Bill\TryToBillWithHacienda.cs" />
     <Compile Include="Bill\TryToRefreshBillStatus.cs" />
     <Compile Include="Client\AddUserClient.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Models\BillResponse.cs" />
     <Compile Include="Models\ClientRequest.cs" />
     <Compile Include="Models\ClientResponse.cs" />
+    <Compile Include="Models\DebitCreditNoteBillRequest.cs" />
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Models\LoginResponse.cs" />
     <Compile Include="Models\ProductRequest.cs" />

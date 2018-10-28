@@ -44,6 +44,7 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Exoneration.cs" />
     <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\ReferenceDocument.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
