@@ -274,7 +274,7 @@ namespace com.Goval.FacturaDigital.Pages.Bill
 
         private async void Button_Invalidate_Bill_Clicked(object sender, EventArgs e)
         {
-            string vMessage = string.Format("¿Estás seguro que deseas anular la factura N*{0}?", ActualBill.BillId);
+            string vMessage = string.Format("¿Estás seguro que deseas anular la factura N*{0}?", ActualBill.ConsecutiveNumber);
             var vAnswer = await DisplayAlert("Anular Factura", vMessage, "Si", "No");
             if (vAnswer)
             {

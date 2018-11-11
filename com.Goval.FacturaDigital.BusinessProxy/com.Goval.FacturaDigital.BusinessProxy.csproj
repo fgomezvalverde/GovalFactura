@@ -50,6 +50,7 @@
     <Compile Include="Client\DeleteUserClient.cs" />
     <Compile Include="Client\GetUserClients.cs" />
     <Compile Include="Client\SetUserClient.cs" />
+    <Compile Include="CreditNote\GetUserCreditNotes.cs" />
     <Compile Include="Models\BillRequest.cs" />
     <Compile Include="Models\BillResponse.cs" />
     <Compile Include="Models\ClientRequest.cs" />
